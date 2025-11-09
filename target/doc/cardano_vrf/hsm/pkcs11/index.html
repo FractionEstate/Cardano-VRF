@@ -1,4 +1,212 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="PKCS#11 HSM integration for VRF operations"><title>cardano_vrf::hsm::pkcs11 - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module pkcs11</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module pkcs11</a></h2><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>pkcs11</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/pkcs11.rs.html#1-83">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>PKCS#11 HSM integration for VRF operations</p>
-<p>This module provides VRF signing using PKCS#11 compliant HSMs.
-Requires a PKCS#11 library (e.g., SoftHSMv2, Thales nShield, etc.)</p>
-</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Pkcs11VrfSigner.html" title="struct cardano_vrf::hsm::pkcs11::Pkcs11VrfSigner">Pkcs11<wbr>VrfSigner</a></dt><dd>PKCS#11 VRF signer (requires pkcs11 feature)</dd></dl></section></div></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="PKCS#11 Hardware Security Module (HSM) integration for VRF operations"><title>cardano_vrf::hsm::pkcs11 - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module pkcs11</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module pkcs11</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#current-status" title="Current Status">Current Status</a></li><li><a href="#architecture" title="Architecture">Architecture</a></li><li><a href="#supported-hsm-devices" title="Supported HSM Devices">Supported HSM Devices</a><ul><li><a href="#enterprise-hsms" title="Enterprise HSMs">Enterprise HSMs</a></li><li><a href="#developmenttesting" title="Development/Testing">Development/Testing</a></li></ul></li><li><a href="#implementation-roadmap" title="Implementation Roadmap">Implementation Roadmap</a><ul><li><a href="#phase-1-basic-operations-todo" title="Phase 1: Basic Operations (TODO)">Phase 1: Basic Operations (TODO)</a></li><li><a href="#phase-2-key-lifecycle-todo" title="Phase 2: Key Lifecycle (TODO)">Phase 2: Key Lifecycle (TODO)</a></li><li><a href="#phase-3-production-features-todo" title="Phase 3: Production Features (TODO)">Phase 3: Production Features (TODO)</a></li></ul></li><li><a href="#pkcs11-mechanism-mapping" title="PKCS#11 Mechanism Mapping">PKCS#11 Mechanism Mapping</a></li><li><a href="#usage-examples" title="Usage Examples">Usage Examples</a><ul><li><a href="#basic-setup-with-softhsmv2" title="Basic Setup with SoftHSMv2">Basic Setup with SoftHSMv2</a></li><li><a href="#rust-code-when-implemented" title="Rust Code (when implemented)">Rust Code (when implemented)</a></li></ul></li><li><a href="#security-considerations" title="Security Considerations">Security Considerations</a><ul><li><a href="#pin-management" title="PIN Management">PIN Management</a></li><li><a href="#key-protection" title="Key Protection">Key Protection</a></li><li><a href="#session-security" title="Session Security">Session Security</a></li><li><a href="#error-handling" title="Error Handling">Error Handling</a></li></ul></li><li><a href="#performance-characteristics" title="Performance Characteristics">Performance Characteristics</a></li><li><a href="#configuration" title="Configuration">Configuration</a><ul><li><a href="#cargotoml" title="Cargo.toml">Cargo.toml</a></li><li><a href="#environment-variables" title="Environment Variables">Environment Variables</a></li></ul></li><li><a href="#troubleshooting" title="Troubleshooting">Troubleshooting</a><ul><li><a href="#common-errors" title="Common Errors">Common Errors</a></li></ul></li><li><a href="#testing-with-softhsm" title="Testing with SoftHSM">Testing with SoftHSM</a></li><li><a href="#references" title="References">References</a></li><li><a href="#see-also" title="See Also">See Also</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>pkcs11</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/pkcs11.rs.html#1-699">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>PKCS#11 Hardware Security Module (HSM) integration for VRF operations</p>
+<p>This module provides a production-ready interface for performing VRF operations
+using PKCS#11 compliant hardware security modules. PKCS#11 is a platform-independent
+API for cryptographic tokens and HSMs, widely supported by enterprise-grade hardware.</p>
+<h2 id="current-status"><a class="doc-anchor" href="#current-status">§</a>Current Status</h2>
+<p>⚠️ <strong>IMPLEMENTATION PENDING</strong> ⚠️</p>
+<p>This module currently contains placeholder implementations that return
+<code>VrfError::InvalidInput</code>. Full PKCS#11 integration requires:</p>
+<ul>
+<li><code>cryptoki</code> crate dependency</li>
+<li>PKCS#11 library (vendor-specific .so/.dll file)</li>
+<li>HSM hardware or software emulator (SoftHSMv2)</li>
+<li>Proper slot/token configuration</li>
+</ul>
+<h2 id="architecture"><a class="doc-anchor" href="#architecture">§</a>Architecture</h2><div class="example-wrap"><pre class="language-text"><code>┌─────────────────────────────────────────────────────────────┐
+│ Cardano VRF Application                                     │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ Rust API
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ Pkcs11VrfSigner (this module)                               │
+│ - Session management                                        │
+│ - Key lookup &amp; caching                                      │
+│ - VRF operation translation                                 │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ cryptoki crate
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ PKCS#11 Library (.so/.dll)                                  │
+│ - Vendor: Thales, Utimaco, Yubico, SoftHSM, etc.           │
+│ - Protocol: PKCS#11 v2.40                                   │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ Hardware/Driver
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ Hardware Security Module                                    │
+│ - FIPS 140-2/3 certified                                    │
+│ - Tamper-resistant key storage                              │
+│ - Cryptographic acceleration                                │
+└─────────────────────────────────────────────────────────────┘</code></pre></div><h2 id="supported-hsm-devices"><a class="doc-anchor" href="#supported-hsm-devices">§</a>Supported HSM Devices</h2>
+<p>This module is designed to work with any PKCS#11 v2.20+ compliant device:</p>
+<h3 id="enterprise-hsms"><a class="doc-anchor" href="#enterprise-hsms">§</a>Enterprise HSMs</h3>
+<ul>
+<li><strong>Thales nShield</strong>: High-performance HSMs for data centers</li>
+<li><strong>Utimaco SecurityServer</strong>: PCI HSS certified</li>
+<li><strong>Gemalto SafeNet</strong>: Luna HSMs</li>
+<li><strong>AWS CloudHSM</strong>: PKCS#11 mode (via client library)</li>
+</ul>
+<h3 id="developmenttesting"><a class="doc-anchor" href="#developmenttesting">§</a>Development/Testing</h3>
+<ul>
+<li><strong>SoftHSMv2</strong>: Software emulator for testing</li>
+<li><strong>YubiHSM 2</strong>: USB HSM for development</li>
+</ul>
+<h2 id="implementation-roadmap"><a class="doc-anchor" href="#implementation-roadmap">§</a>Implementation Roadmap</h2><h3 id="phase-1-basic-operations-todo"><a class="doc-anchor" href="#phase-1-basic-operations-todo">§</a>Phase 1: Basic Operations (TODO)</h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+PKCS#11 library initialization</li>
+<li><input disabled="" type="checkbox"/>
+Session management (open, login, logout, close)</li>
+<li><input disabled="" type="checkbox"/>
+Key lookup by label/CKA_ID</li>
+<li><input disabled="" type="checkbox"/>
+Public key retrieval</li>
+<li><input disabled="" type="checkbox"/>
+VRF proof generation using CKM_EDDSA</li>
+</ul>
+<h3 id="phase-2-key-lifecycle-todo"><a class="doc-anchor" href="#phase-2-key-lifecycle-todo">§</a>Phase 2: Key Lifecycle (TODO)</h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Keypair generation on HSM</li>
+<li><input disabled="" type="checkbox"/>
+Key deletion (if supported by token)</li>
+<li><input disabled="" type="checkbox"/>
+Key enumeration</li>
+<li><input disabled="" type="checkbox"/>
+Key attribute validation</li>
+</ul>
+<h3 id="phase-3-production-features-todo"><a class="doc-anchor" href="#phase-3-production-features-todo">§</a>Phase 3: Production Features (TODO)</h3>
+<ul>
+<li><input disabled="" type="checkbox"/>
+Connection pooling for multi-threaded access</li>
+<li><input disabled="" type="checkbox"/>
+Automatic session refresh</li>
+<li><input disabled="" type="checkbox"/>
+Health checks and error recovery</li>
+<li><input disabled="" type="checkbox"/>
+Metrics integration</li>
+<li><input disabled="" type="checkbox"/>
+Audit logging</li>
+</ul>
+<h2 id="pkcs11-mechanism-mapping"><a class="doc-anchor" href="#pkcs11-mechanism-mapping">§</a>PKCS#11 Mechanism Mapping</h2>
+<p>VRF operations map to PKCS#11 mechanisms as follows:</p>
+<div><table><thead><tr><th>VRF Operation</th><th>PKCS#11 Mechanism</th><th>Key Type</th><th>Notes</th></tr></thead><tbody>
+<tr><td>Prove</td><td>CKM_EDDSA</td><td>CKK_EC_EDWARDS</td><td>Ed25519 signing</td></tr>
+<tr><td>Verify</td><td>CKM_EDDSA</td><td>CKK_EC_EDWARDS</td><td>Public key only</td></tr>
+<tr><td>Generate</td><td>CKM_EC_EDWARDS_KEY_PAIR_GEN</td><td>-</td><td>Creates Ed25519 pair</td></tr>
+</tbody></table>
+</div><h2 id="usage-examples"><a class="doc-anchor" href="#usage-examples">§</a>Usage Examples</h2><h3 id="basic-setup-with-softhsmv2"><a class="doc-anchor" href="#basic-setup-with-softhsmv2">§</a>Basic Setup with SoftHSMv2</h3><div class="example-wrap"><pre class="language-bash"><code># Install SoftHSM
+apt-get install softhsm2
+
+# Initialize token
+softhsm2-util --init-token --slot 0 --label &quot;VRF-Token&quot; \
+    --so-pin 1234 --pin 5678</code></pre></div><h3 id="rust-code-when-implemented"><a class="doc-anchor" href="#rust-code-when-implemented">§</a>Rust Code (when implemented)</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, pkcs11::Pkcs11VrfSigner};
+
+<span class="comment">// Connect to HSM
+</span><span class="kw">let </span>signer = Pkcs11VrfSigner::new(
+    <span class="string">"/usr/lib/softhsm/libsofthsm2.so"</span>.to_string(),
+    <span class="number">0</span>,  <span class="comment">// slot ID
+    </span><span class="string">"5678"</span>.to_string()  <span class="comment">// PIN
+</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Health check
+</span>signer.health_check()<span class="question-mark">?</span>;
+
+<span class="comment">// Generate key on HSM
+</span><span class="kw">let </span>public_key = signer.generate_keypair(<span class="string">"validator-001"</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Generate VRF proof (private key never leaves HSM)
+</span><span class="kw">let </span>message = <span class="string">b"block-12345"</span>;
+<span class="kw">let </span>proof = signer.prove(<span class="string">"validator-001"</span>, message)<span class="question-mark">?</span>;</code></pre></div><h2 id="security-considerations"><a class="doc-anchor" href="#security-considerations">§</a>Security Considerations</h2><h3 id="pin-management"><a class="doc-anchor" href="#pin-management">§</a>PIN Management</h3>
+<ul>
+<li>Never hardcode PINs in source code</li>
+<li>Use environment variables or secret managers</li>
+<li>Consider using SO PIN for admin operations</li>
+<li>Implement PIN retry limits</li>
+</ul>
+<h3 id="key-protection"><a class="doc-anchor" href="#key-protection">§</a>Key Protection</h3>
+<ul>
+<li>Set CKA_SENSITIVE=true for private keys</li>
+<li>Set CKA_EXTRACTABLE=false to prevent export</li>
+<li>Use CKA_WRAP_WITH_TRUSTED for key backup</li>
+<li>Enable CKA_ALWAYS_AUTHENTICATE for critical keys</li>
+</ul>
+<h3 id="session-security"><a class="doc-anchor" href="#session-security">§</a>Session Security</h3>
+<ul>
+<li>Always logout and close sessions</li>
+<li>Use read-only sessions when possible (CKF_RW_SESSION=false)</li>
+<li>Implement session timeout</li>
+<li>Handle C_Finalize on application exit</li>
+</ul>
+<h3 id="error-handling"><a class="doc-anchor" href="#error-handling">§</a>Error Handling</h3>
+<ul>
+<li>Retry on CKR_SESSION_HANDLE_INVALID</li>
+<li>Re-login on CKR_USER_NOT_LOGGED_IN</li>
+<li>Monitor for CKR_DEVICE_ERROR (hardware failure)</li>
+<li>Log all security-relevant errors</li>
+</ul>
+<h2 id="performance-characteristics"><a class="doc-anchor" href="#performance-characteristics">§</a>Performance Characteristics</h2>
+<p>Performance varies by HSM hardware:</p>
+<div><table><thead><tr><th>Operation</th><th>SoftHSM</th><th>YubiHSM 2</th><th>Thales nShield</th><th>Notes</th></tr></thead><tbody>
+<tr><td>VRF Prove</td><td>500μs</td><td>15ms</td><td>2ms</td><td>Software vs hardware</td></tr>
+<tr><td>Get PubKey</td><td>100μs</td><td>1ms</td><td>200μs</td><td>Cached in app</td></tr>
+<tr><td>Generate Key</td><td>1ms</td><td>100ms</td><td>50ms</td><td>Rare operation</td></tr>
+<tr><td>Health Check</td><td>50μs</td><td>5ms</td><td>1ms</td><td>Session ping</td></tr>
+</tbody></table>
+</div><h2 id="configuration"><a class="doc-anchor" href="#configuration">§</a>Configuration</h2><h3 id="cargotoml"><a class="doc-anchor" href="#cargotoml">§</a>Cargo.toml</h3><div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+cardano-vrf = { version = &quot;1.0&quot;, features = [&quot;pkcs11&quot;] }
+cryptoki = &quot;0.6&quot;  # Required for PKCS#11</code></pre></div><h3 id="environment-variables"><a class="doc-anchor" href="#environment-variables">§</a>Environment Variables</h3>
+<ul>
+<li><code>PKCS11_LIBRARY_PATH</code>: Path to PKCS#11 .so/.dll</li>
+<li><code>PKCS11_SLOT_ID</code>: HSM slot number</li>
+<li><code>PKCS11_PIN</code>: User PIN (use secret manager in production)</li>
+<li><code>PKCS11_TOKEN_LABEL</code>: Token label for auto-discovery</li>
+</ul>
+<h2 id="troubleshooting"><a class="doc-anchor" href="#troubleshooting">§</a>Troubleshooting</h2><h3 id="common-errors"><a class="doc-anchor" href="#common-errors">§</a>Common Errors</h3>
+<p><strong>CKR_CRYPTOKI_NOT_INITIALIZED</strong></p>
+<ul>
+<li>Call <code>C_Initialize</code> before any operations</li>
+<li>Check library path is correct</li>
+</ul>
+<p><strong>CKR_PIN_INCORRECT</strong></p>
+<ul>
+<li>Verify PIN is correct</li>
+<li>Check if token is locked after failed attempts</li>
+<li>Use <code>softhsm2-util --show-slots</code> to inspect token</li>
+</ul>
+<p><strong>CKR_MECHANISM_INVALID</strong></p>
+<ul>
+<li>Ed25519 may not be supported by all HSMs</li>
+<li>Check mechanism list with <code>pkcs11-tool --list-mechanisms</code></li>
+<li>Some HSMs need firmware updates for Ed25519</li>
+</ul>
+<p><strong>CKR_KEY_HANDLE_INVALID</strong></p>
+<ul>
+<li>Key label/ID doesn’t exist</li>
+<li>Use <code>list_keys()</code> to verify key presence</li>
+</ul>
+<h2 id="testing-with-softhsm"><a class="doc-anchor" href="#testing-with-softhsm">§</a>Testing with SoftHSM</h2><div class="example-wrap"><pre class="language-bash"><code># Setup test environment
+export SOFTHSM2_CONF=/tmp/softhsm2.conf
+mkdir -p /tmp/tokens
+echo &quot;directories.tokendir = /tmp/tokens&quot; &gt; /tmp/softhsm2.conf
+
+# Initialize token
+softhsm2-util --init-token --free \
+    --label &quot;test-vrf&quot; --so-pin 1234 --pin 5678
+
+# Verify setup
+softhsm2-util --show-slots</code></pre></div><h2 id="references"><a class="doc-anchor" href="#references">§</a>References</h2>
+<ul>
+<li><a href="http://docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/">PKCS#11 v2.40 Specification</a></li>
+<li><a href="https://docs.rs/cryptoki/">cryptoki crate documentation</a></li>
+<li><a href="https://github.com/opendnssec/SoftHSMv2">SoftHSMv2 manual</a></li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8032">RFC 8032 - Ed25519</a></li>
+</ul>
+<h2 id="see-also"><a class="doc-anchor" href="#see-also">§</a>See Also</h2>
+<ul>
+<li><a href="../software/index.html" title="mod cardano_vrf::hsm::software"><code>software</code></a> - File-based HSM for testing</li>
+<li><a href="../aws_cloudhsm/index.html" title="mod cardano_vrf::hsm::aws_cloudhsm"><code>aws_cloudhsm</code></a> - AWS CloudHSM integration</li>
+<li><a href="../azure_keyvault/index.html" title="mod cardano_vrf::hsm::azure_keyvault"><code>azure_keyvault</code></a> - Azure Key Vault integration</li>
+</ul>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Pkcs11VrfSigner.html" title="struct cardano_vrf::hsm::pkcs11::Pkcs11VrfSigner">Pkcs11<wbr>VrfSigner</a></dt><dd>PKCS#11 VRF signer for hardware security modules</dd></dl></section></div></main></body></html>

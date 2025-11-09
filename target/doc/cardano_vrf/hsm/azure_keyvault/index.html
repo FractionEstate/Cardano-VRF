@@ -1,2 +1,338 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Azure Key Vault integration for VRF operations"><title>cardano_vrf::hsm::azure_keyvault - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module azure_keyvault</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module azure_<wbr>keyvault</a></h2><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>azure_<wbr>keyvault</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/azure_keyvault.rs.html#1-92">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Azure Key Vault integration for VRF operations</p>
-</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.AzureKeyVaultVrfSigner.html" title="struct cardano_vrf::hsm::azure_keyvault::AzureKeyVaultVrfSigner">Azure<wbr>KeyVault<wbr>VrfSigner</a></dt><dd>Azure Key Vault VRF signer</dd></dl></section></div></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Azure Key Vault integration for production VRF operations"><title>cardano_vrf::hsm::azure_keyvault - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module azure_keyvault</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module azure_<wbr>keyvault</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#current-status" title="Current Status">Current Status</a></li><li><a href="#architecture" title="Architecture">Architecture</a></li><li><a href="#azure-key-vault-features" title="Azure Key Vault Features">Azure Key Vault Features</a><ul><li><a href="#security--compliance" title="Security &#38; Compliance">Security &amp; Compliance</a></li><li><a href="#availability--performance" title="Availability &#38; Performance">Availability &amp; Performance</a></li><li><a href="#tiers-comparison" title="Tiers Comparison">Tiers Comparison</a></li></ul></li><li><a href="#setup-instructions" title="Setup Instructions">Setup Instructions</a><ul><li><a href="#1-create-azure-key-vault" title="1. Create Azure Key Vault">1. Create Azure Key Vault</a></li><li><a href="#2-configure-authentication" title="2. Configure Authentication">2. Configure Authentication</a></li><li><a href="#3-network-configuration" title="3. Network Configuration">3. Network Configuration</a></li><li><a href="#4-enable-diagnostic-logging" title="4. Enable Diagnostic Logging">4. Enable Diagnostic Logging</a></li></ul></li><li><a href="#usage-examples" title="Usage Examples">Usage Examples</a><ul><li><a href="#basic-usage-with-service-principal-when-implemented" title="Basic Usage with Service Principal (when implemented)">Basic Usage with Service Principal (when implemented)</a></li><li><a href="#production-with-managed-identity-recommended" title="Production with Managed Identity (recommended)">Production with Managed Identity (recommended)</a></li><li><a href="#with-environment-variables" title="With Environment Variables">With Environment Variables</a></li></ul></li><li><a href="#security-best-practices" title="Security Best Practices">Security Best Practices</a><ul><li><a href="#authentication" title="Authentication">Authentication</a></li><li><a href="#rbac-permissions" title="RBAC Permissions">RBAC Permissions</a></li><li><a href="#network-security" title="Network Security">Network Security</a></li><li><a href="#key-management" title="Key Management">Key Management</a></li><li><a href="#monitoring" title="Monitoring">Monitoring</a></li></ul></li><li><a href="#performance-characteristics" title="Performance Characteristics">Performance Characteristics</a></li><li><a href="#error-handling" title="Error Handling">Error Handling</a><ul><li><a href="#401-unauthorized" title="401 Unauthorized">401 Unauthorized</a></li><li><a href="#403-forbidden" title="403 Forbidden">403 Forbidden</a></li><li><a href="#404-not-found" title="404 Not Found">404 Not Found</a></li><li><a href="#429-too-many-requests" title="429 Too Many Requests">429 Too Many Requests</a></li><li><a href="#503-service-unavailable" title="503 Service Unavailable">503 Service Unavailable</a></li></ul></li><li><a href="#cost-optimization" title="Cost Optimization">Cost Optimization</a><ul><li><a href="#standard-tier" title="Standard Tier">Standard Tier</a></li><li><a href="#premium-tier-hsm-backed" title="Premium Tier (HSM-backed)">Premium Tier (HSM-backed)</a></li></ul></li><li><a href="#implementation-notes" title="Implementation Notes">Implementation Notes</a><ul><li><a href="#dependencies" title="Dependencies">Dependencies</a></li><li><a href="#initialization" title="Initialization">Initialization</a></li><li><a href="#key-generation" title="Key Generation">Key Generation</a></li><li><a href="#signing-operation" title="Signing Operation">Signing Operation</a></li></ul></li><li><a href="#troubleshooting" title="Troubleshooting">Troubleshooting</a><ul><li><a href="#authentication-issues" title="Authentication Issues">Authentication Issues</a></li><li><a href="#network-connectivity" title="Network Connectivity">Network Connectivity</a></li><li><a href="#key-operations" title="Key Operations">Key Operations</a></li><li><a href="#audit-logs" title="Audit Logs">Audit Logs</a></li></ul></li><li><a href="#references" title="References">References</a></li><li><a href="#see-also" title="See Also">See Also</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>azure_<wbr>keyvault</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/azure_keyvault.rs.html#1-1113">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Azure Key Vault integration for production VRF operations</p>
+<p>This module provides VRF operations using Azure Key Vault, Microsoft’s cloud-based
+key management service with HSM backing (Premium tier). Key Vault offers FIPS 140-2
+Level 2 (Standard) or Level 3 (Premium with HSM) validated security.</p>
+<h2 id="current-status"><a class="doc-anchor" href="#current-status">§</a>Current Status</h2>
+<p>⚠️ <strong>IMPLEMENTATION PENDING</strong> ⚠️</p>
+<p>This module contains placeholder implementations. Full Azure Key Vault support requires:</p>
+<ul>
+<li>Azure Key Vault instance (Premium tier for HSM backing)</li>
+<li>Azure AD service principal with Key Vault permissions</li>
+<li>Azure SDK for Rust (<code>azure_security_keyvault</code>, <code>azure_identity</code>)</li>
+<li>Network connectivity to <code>*.vault.azure.net</code></li>
+<li>RBAC permissions: Key Vault Crypto User or Crypto Officer</li>
+</ul>
+<h2 id="architecture"><a class="doc-anchor" href="#architecture">§</a>Architecture</h2><div class="example-wrap"><pre class="language-text"><code>┌─────────────────────────────────────────────────────────────┐
+│ Cardano VRF Application (Azure VM/AKS/Container)            │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ Rust API
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ AzureKeyVaultVrfSigner (this module)                        │
+│ - Authentication (AAD)                                      │
+│ - Key client management                                     │
+│ - Retry &amp; error handling                                    │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ HTTPS REST API
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ Azure Key Vault REST API                                    │
+│ - TLS 1.2+ encrypted                                        │
+│ - Azure AD token authentication                             │
+│ - Global service (per-region deployment)                    │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ Azure backbone network
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ Azure Key Vault (Premium Tier)                              │
+│ ┌─────────────────────────────────────────────────────────┐ │
+│ │ HSM Pool (Thales nShield)                               │ │
+│ │ - FIPS 140-2 Level 3                                    │ │
+│ │ - Multi-tenant (logically isolated)                     │ │
+│ │ - Automatic key replication                             │ │
+│ └─────────────────────────────────────────────────────────┘ │
+│ Geo-replication (optional secondary region)                 │
+└─────────────────────────────────────────────────────────────┘</code></pre></div><h2 id="azure-key-vault-features"><a class="doc-anchor" href="#azure-key-vault-features">§</a>Azure Key Vault Features</h2><h3 id="security--compliance"><a class="doc-anchor" href="#security--compliance">§</a>Security &amp; Compliance</h3>
+<ul>
+<li><strong>FIPS 140-2 Level 2</strong> (Standard tier) - software-protected keys</li>
+<li><strong>FIPS 140-2 Level 3</strong> (Premium tier) - HSM-protected keys</li>
+<li><strong>Multi-tenant</strong> with logical isolation</li>
+<li><strong>Azure AD integration</strong> for authentication and RBAC</li>
+<li><strong>Audit logging</strong> via Azure Monitor</li>
+</ul>
+<h3 id="availability--performance"><a class="doc-anchor" href="#availability--performance">§</a>Availability &amp; Performance</h3>
+<ul>
+<li><strong>99.99% SLA</strong> (Premium tier)</li>
+<li><strong>Geo-replication</strong> to paired regions</li>
+<li><strong>Global service</strong> with regional deployments</li>
+<li><strong>REST API</strong> accessible from anywhere</li>
+<li><strong>Private endpoint</strong> support for VNet isolation</li>
+</ul>
+<h3 id="tiers-comparison"><a class="doc-anchor" href="#tiers-comparison">§</a>Tiers Comparison</h3><div><table><thead><tr><th>Feature</th><th>Standard</th><th>Premium</th></tr></thead><tbody>
+<tr><td>Key Storage</td><td>Software</td><td>HSM</td></tr>
+<tr><td>FIPS 140-2</td><td>Level 2</td><td>Level 3</td></tr>
+<tr><td>Performance</td><td>~200ms</td><td>~100ms</td></tr>
+<tr><td>Cost/month</td><td>$0.03/10K ops</td><td>$1.00 + ops</td></tr>
+<tr><td>Recommended</td><td>Testing</td><td>Production</td></tr>
+</tbody></table>
+</div><h2 id="setup-instructions"><a class="doc-anchor" href="#setup-instructions">§</a>Setup Instructions</h2><h3 id="1-create-azure-key-vault"><a class="doc-anchor" href="#1-create-azure-key-vault">§</a>1. Create Azure Key Vault</h3><div class="example-wrap"><pre class="language-bash"><code># Create resource group
+az group create --name cardano-vrf-rg --location eastus
+
+# Create Premium Key Vault (with HSM)
+az keyvault create \
+    --name cardano-vrf-kv \
+    --resource-group cardano-vrf-rg \
+    --location eastus \
+    --sku premium \
+    --enable-rbac-authorization true
+
+# Verify creation
+az keyvault show --name cardano-vrf-kv</code></pre></div><h3 id="2-configure-authentication"><a class="doc-anchor" href="#2-configure-authentication">§</a>2. Configure Authentication</h3><h4 id="option-a-managed-identity-recommended-for-azure-vmsaks"><a class="doc-anchor" href="#option-a-managed-identity-recommended-for-azure-vmsaks">§</a>Option A: Managed Identity (Recommended for Azure VMs/AKS)</h4><div class="example-wrap"><pre class="language-bash"><code># Enable system-assigned managed identity on VM
+az vm identity assign --resource-group cardano-vrf-rg --name vrf-vm
+
+# Grant Key Vault permissions
+az role assignment create \
+    --role &quot;Key Vault Crypto User&quot; \
+    --assignee-object-id &lt;VM-IDENTITY-OBJECT-ID&gt; \
+    --scope /subscriptions/&lt;SUB-ID&gt;/resourceGroups/cardano-vrf-rg/providers/Microsoft.KeyVault/vaults/cardano-vrf-kv</code></pre></div><h4 id="option-b-service-principal-for-devtesting"><a class="doc-anchor" href="#option-b-service-principal-for-devtesting">§</a>Option B: Service Principal (For dev/testing)</h4><div class="example-wrap"><pre class="language-bash"><code># Create service principal
+az ad sp create-for-rbac --name cardano-vrf-sp
+# Save: appId (client_id), password (client_secret), tenant
+
+# Grant Key Vault permissions
+az role assignment create \
+    --role &quot;Key Vault Crypto Officer&quot; \
+    --assignee &lt;APP-ID&gt; \
+    --scope /subscriptions/&lt;SUB-ID&gt;/resourceGroups/cardano-vrf-rg/providers/Microsoft.KeyVault/vaults/cardano-vrf-kv</code></pre></div><h3 id="3-network-configuration"><a class="doc-anchor" href="#3-network-configuration">§</a>3. Network Configuration</h3><div class="example-wrap"><pre class="language-bash"><code># Option: Enable firewall (recommended)
+az keyvault network-rule add \
+    --name cardano-vrf-kv \
+    --ip-address &lt;YOUR-VM-PUBLIC-IP&gt;
+
+# Option: Private endpoint (best security)
+az network private-endpoint create \
+    --name kv-private-endpoint \
+    --resource-group cardano-vrf-rg \
+    --vnet-name cardano-vnet \
+    --subnet cardano-subnet \
+    --private-connection-resource-id &lt;KEYVAULT-RESOURCE-ID&gt; \
+    --group-id vault \
+    --connection-name kv-connection</code></pre></div><h3 id="4-enable-diagnostic-logging"><a class="doc-anchor" href="#4-enable-diagnostic-logging">§</a>4. Enable Diagnostic Logging</h3><div class="example-wrap"><pre class="language-bash"><code># Create Log Analytics workspace
+az monitor log-analytics workspace create \
+    --resource-group cardano-vrf-rg \
+    --workspace-name cardano-vrf-logs
+
+# Enable diagnostics
+az monitor diagnostic-settings create \
+    --name kv-diagnostics \
+    --resource &lt;KEYVAULT-RESOURCE-ID&gt; \
+    --workspace &lt;WORKSPACE-ID&gt; \
+    --logs &#39;[{&quot;category&quot;: &quot;AuditEvent&quot;, &quot;enabled&quot;: true}]&#39; \
+    --metrics &#39;[{&quot;category&quot;: &quot;AllMetrics&quot;, &quot;enabled&quot;: true}]&#39;</code></pre></div><h2 id="usage-examples"><a class="doc-anchor" href="#usage-examples">§</a>Usage Examples</h2><h3 id="basic-usage-with-service-principal-when-implemented"><a class="doc-anchor" href="#basic-usage-with-service-principal-when-implemented">§</a>Basic Usage with Service Principal (when implemented)</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, azure_keyvault::AzureKeyVaultVrfSigner};
+
+<span class="comment">// Create signer with service principal
+</span><span class="kw">let </span>signer = AzureKeyVaultVrfSigner::new(
+    <span class="string">"https://cardano-vrf-kv.vault.azure.net"</span>.to_string(),
+    <span class="string">"app-client-id-guid"</span>.to_string(),
+    <span class="string">"client-secret-value"</span>.to_string(),
+    <span class="string">"tenant-id-guid"</span>.to_string()
+)<span class="question-mark">?</span>;
+
+<span class="comment">// Generate HSM-backed keypair
+</span><span class="kw">let </span>public_key = signer.generate_keypair(<span class="string">"validator-001"</span>)<span class="question-mark">?</span>;
+<span class="macro">println!</span>(<span class="string">"Public key: {:?}"</span>, hex::encode(public_key));
+
+<span class="comment">// Generate VRF proof
+</span><span class="kw">let </span>message = <span class="string">b"block-12345"</span>;
+<span class="kw">let </span>proof = signer.prove(<span class="string">"validator-001"</span>, message)<span class="question-mark">?</span>;</code></pre></div><h3 id="production-with-managed-identity-recommended"><a class="doc-anchor" href="#production-with-managed-identity-recommended">§</a>Production with Managed Identity (recommended)</h3>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// When using Managed Identity, credentials are automatic
+</span><span class="kw">use </span>azure_identity::DefaultAzureCredential;
+<span class="kw">use </span>azure_security_keyvault::KeyClient;
+
+<span class="kw">let </span>credential = DefaultAzureCredential::default();
+<span class="kw">let </span>client = KeyClient::new(
+    <span class="string">"https://cardano-vrf-kv.vault.azure.net"</span>,
+    credential
+)<span class="question-mark">?</span>;
+
+<span class="comment">// No client_id/secret needed!</span></code></pre></div><h3 id="with-environment-variables"><a class="doc-anchor" href="#with-environment-variables">§</a>With Environment Variables</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::azure_keyvault::AzureKeyVaultVrfSigner;
+
+<span class="kw">let </span>signer = AzureKeyVaultVrfSigner::new(
+    std::env::var(<span class="string">"AZURE_KEYVAULT_URL"</span>)<span class="question-mark">?</span>,
+    std::env::var(<span class="string">"AZURE_CLIENT_ID"</span>)<span class="question-mark">?</span>,
+    std::env::var(<span class="string">"AZURE_CLIENT_SECRET"</span>)<span class="question-mark">?</span>,
+    std::env::var(<span class="string">"AZURE_TENANT_ID"</span>)<span class="question-mark">?</span>,
+)<span class="question-mark">?</span>;</code></pre></div><h2 id="security-best-practices"><a class="doc-anchor" href="#security-best-practices">§</a>Security Best Practices</h2><h3 id="authentication"><a class="doc-anchor" href="#authentication">§</a>Authentication</h3>
+<ul>
+<li>✅ Use <strong>Managed Identity</strong> for Azure-hosted applications</li>
+<li>✅ Use <strong>Azure Key Vault</strong> to store application secrets</li>
+<li>✅ Rotate service principal credentials every 90 days</li>
+<li>❌ Never commit credentials to version control</li>
+<li>❌ Never use access keys when Managed Identity is available</li>
+</ul>
+<h3 id="rbac-permissions"><a class="doc-anchor" href="#rbac-permissions">§</a>RBAC Permissions</h3>
+<ul>
+<li>✅ Use <strong>Key Vault Crypto User</strong> for normal operations</li>
+<li>✅ Use <strong>Key Vault Crypto Officer</strong> for key management</li>
+<li>✅ Apply <strong>least privilege</strong> principle</li>
+<li>✅ Use <strong>Azure AD groups</strong> for permission management</li>
+<li>❌ Avoid using legacy “access policies” model</li>
+</ul>
+<h3 id="network-security"><a class="doc-anchor" href="#network-security">§</a>Network Security</h3>
+<ul>
+<li>✅ Enable <strong>firewall rules</strong> to restrict access</li>
+<li>✅ Use <strong>private endpoints</strong> for VNet isolation</li>
+<li>✅ Enable <strong>Azure Private Link</strong> for zero internet exposure</li>
+<li>✅ Use <strong>VNet service endpoints</strong> as minimum</li>
+<li>❌ Never leave Key Vault open to all networks in production</li>
+</ul>
+<h3 id="key-management"><a class="doc-anchor" href="#key-management">§</a>Key Management</h3>
+<ul>
+<li>✅ Use <strong>Premium tier</strong> (HSM-backed) for production keys</li>
+<li>✅ Enable <strong>soft delete</strong> (90-day recovery window)</li>
+<li>✅ Enable <strong>purge protection</strong> (prevents permanent deletion)</li>
+<li>✅ Configure <strong>key rotation</strong> policies</li>
+<li>✅ Tag keys with environment and purpose</li>
+</ul>
+<h3 id="monitoring"><a class="doc-anchor" href="#monitoring">§</a>Monitoring</h3>
+<ul>
+<li>✅ Enable <strong>diagnostic settings</strong> to Log Analytics</li>
+<li>✅ Set alerts for failed authentication attempts</li>
+<li>✅ Monitor <strong>service health</strong> dashboard</li>
+<li>✅ Track <strong>request metrics</strong> and latency</li>
+<li>✅ Review <strong>audit logs</strong> regularly for compliance</li>
+</ul>
+<h2 id="performance-characteristics"><a class="doc-anchor" href="#performance-characteristics">§</a>Performance Characteristics</h2>
+<p>Azure Key Vault performance (Premium tier):</p>
+<div><table><thead><tr><th>Operation</th><th>Latency</th><th>Throughput</th><th>Notes</th></tr></thead><tbody>
+<tr><td>VRF Prove</td><td>50-100ms</td><td>100/sec</td><td>Ed25519 signing</td></tr>
+<tr><td>Get PubKey</td><td>20-50ms</td><td>200/sec</td><td>Should be cached</td></tr>
+<tr><td>Generate Key</td><td>200-500ms</td><td>10/sec</td><td>One-time operation</td></tr>
+<tr><td>Health Check</td><td>10-30ms</td><td>200/sec</td><td>API availability</td></tr>
+</tbody></table>
+</div>
+<p><strong>Geographic Latency</strong>:</p>
+<ul>
+<li>Same region: 50-100ms</li>
+<li>Cross-region: 100-300ms</li>
+<li>Global: 200-500ms</li>
+</ul>
+<h2 id="error-handling"><a class="doc-anchor" href="#error-handling">§</a>Error Handling</h2>
+<p>Common Azure Key Vault errors:</p>
+<h3 id="401-unauthorized"><a class="doc-anchor" href="#401-unauthorized">§</a>401 Unauthorized</h3>
+<ul>
+<li><strong>Cause</strong>: Invalid credentials or expired token</li>
+<li><strong>Recovery</strong>: Re-authenticate, check service principal permissions</li>
+</ul>
+<h3 id="403-forbidden"><a class="doc-anchor" href="#403-forbidden">§</a>403 Forbidden</h3>
+<ul>
+<li><strong>Cause</strong>: Insufficient RBAC permissions</li>
+<li><strong>Recovery</strong>: Grant appropriate role (Key Vault Crypto User/Officer)</li>
+</ul>
+<h3 id="404-not-found"><a class="doc-anchor" href="#404-not-found">§</a>404 Not Found</h3>
+<ul>
+<li><strong>Cause</strong>: Key doesn’t exist or Key Vault URL incorrect</li>
+<li><strong>Recovery</strong>: Verify key name and vault URL</li>
+</ul>
+<h3 id="429-too-many-requests"><a class="doc-anchor" href="#429-too-many-requests">§</a>429 Too Many Requests</h3>
+<ul>
+<li><strong>Cause</strong>: Rate limiting (5000 requests per 10s for Premium)</li>
+<li><strong>Recovery</strong>: Implement exponential backoff, cache public keys</li>
+</ul>
+<h3 id="503-service-unavailable"><a class="doc-anchor" href="#503-service-unavailable">§</a>503 Service Unavailable</h3>
+<ul>
+<li><strong>Cause</strong>: Temporary Azure service issue</li>
+<li><strong>Recovery</strong>: Implement retry logic with backoff</li>
+</ul>
+<h2 id="cost-optimization"><a class="doc-anchor" href="#cost-optimization">§</a>Cost Optimization</h2>
+<p>Azure Key Vault pricing (as of 2024):</p>
+<h3 id="standard-tier"><a class="doc-anchor" href="#standard-tier">§</a>Standard Tier</h3>
+<ul>
+<li>No monthly fee</li>
+<li>$0.03 per 10,000 operations</li>
+<li>Good for development/testing</li>
+</ul>
+<h3 id="premium-tier-hsm-backed"><a class="doc-anchor" href="#premium-tier-hsm-backed">§</a>Premium Tier (HSM-backed)</h3>
+<ul>
+<li>$1.00 per key per month</li>
+<li>$0.15 per 10,000 operations</li>
+<li>Required for production</li>
+</ul>
+<p><strong>Cost-saving strategies</strong>:</p>
+<ul>
+<li>Cache public keys to reduce API calls</li>
+<li>Use Standard tier for non-production environments</li>
+<li>Consolidate multiple applications to one Key Vault</li>
+<li>Delete unused keys (mind soft-delete retention)</li>
+<li>Monitor usage with Azure Cost Management</li>
+</ul>
+<h2 id="implementation-notes"><a class="doc-anchor" href="#implementation-notes">§</a>Implementation Notes</h2>
+<p>When implementing this module:</p>
+<h3 id="dependencies"><a class="doc-anchor" href="#dependencies">§</a>Dependencies</h3><div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+azure_security_keyvault = &quot;0.17&quot;     # Key Vault SDK
+azure_identity = &quot;0.17&quot;              # Authentication
+azure_core = &quot;0.17&quot;                  # Core Azure types
+tokio = { version = &quot;1.0&quot;, features = [&quot;full&quot;] }  # Async runtime</code></pre></div><h3 id="initialization"><a class="doc-anchor" href="#initialization">§</a>Initialization</h3>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>azure_identity::ClientSecretCredential;
+<span class="kw">use </span>azure_security_keyvault::KeyClient;
+
+<span class="comment">// Create credential
+</span><span class="kw">let </span>credential = ClientSecretCredential::new(
+    tenant_id,
+    client_id,
+    client_secret
+);
+
+<span class="comment">// Create key client
+</span><span class="kw">let </span>client = KeyClient::new(<span class="kw-2">&amp;</span>vault_url, Arc::new(credential))<span class="question-mark">?</span>;</code></pre></div><h3 id="key-generation"><a class="doc-anchor" href="#key-generation">§</a>Key Generation</h3>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>azure_security_keyvault::KeyVaultKey;
+
+<span class="comment">// Generate Ed25519 key
+</span><span class="kw">let </span>key_options = CreateKeyOptions::new()
+    .key_type(KeyType::EllipticCurve)
+    .curve(KeyCurveName::Ed25519)
+    .key_operations(<span class="macro">vec!</span>[KeyOperation::Sign, KeyOperation::Verify])
+    .enabled(<span class="bool-val">true</span>);
+
+<span class="kw">let </span>key = client.create_key(key_name, key_options).<span class="kw">await</span><span class="question-mark">?</span>;</code></pre></div><h3 id="signing-operation"><a class="doc-anchor" href="#signing-operation">§</a>Signing Operation</h3>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>azure_security_keyvault::SignatureAlgorithm;
+
+<span class="comment">// Sign with EdDSA
+</span><span class="kw">let </span>signature = client.sign(
+    key_name,
+    SignatureAlgorithm::EdDSA,
+    message
+).<span class="kw">await</span><span class="question-mark">?</span>;</code></pre></div><h2 id="troubleshooting"><a class="doc-anchor" href="#troubleshooting">§</a>Troubleshooting</h2><h3 id="authentication-issues"><a class="doc-anchor" href="#authentication-issues">§</a>Authentication Issues</h3><div class="example-wrap"><pre class="language-bash"><code># Test service principal
+az login --service-principal \
+    --username &lt;CLIENT-ID&gt; \
+    --password &lt;CLIENT-SECRET&gt; \
+    --tenant &lt;TENANT-ID&gt;
+
+# Verify permissions
+az role assignment list \
+    --assignee &lt;CLIENT-ID&gt; \
+    --scope &lt;KEYVAULT-RESOURCE-ID&gt;</code></pre></div><h3 id="network-connectivity"><a class="doc-anchor" href="#network-connectivity">§</a>Network Connectivity</h3><div class="example-wrap"><pre class="language-bash"><code># Test Key Vault endpoint
+curl -I https://cardano-vrf-kv.vault.azure.net
+
+# Check DNS resolution
+nslookup cardano-vrf-kv.vault.azure.net
+
+# Verify firewall rules
+az keyvault network-rule list --name cardano-vrf-kv</code></pre></div><h3 id="key-operations"><a class="doc-anchor" href="#key-operations">§</a>Key Operations</h3><div class="example-wrap"><pre class="language-bash"><code># List all keys
+az keyvault key list --vault-name cardano-vrf-kv
+
+# Get specific key
+az keyvault key show --vault-name cardano-vrf-kv --name validator-001
+
+# Test signing
+echo &quot;test data&quot; | az keyvault key sign \
+    --vault-name cardano-vrf-kv \
+    --name validator-001 \
+    --algorithm ES256K \
+    --data-type text</code></pre></div><h3 id="audit-logs"><a class="doc-anchor" href="#audit-logs">§</a>Audit Logs</h3><div class="example-wrap"><pre class="language-bash"><code># Query Key Vault logs
+az monitor log-analytics query \
+    --workspace &lt;WORKSPACE-ID&gt; \
+    --analytics-query &quot;AzureDiagnostics | where ResourceProvider == &#39;MICROSOFT.KEYVAULT&#39; | where Category == &#39;AuditEvent&#39; | take 100&quot;</code></pre></div><h2 id="references"><a class="doc-anchor" href="#references">§</a>References</h2>
+<ul>
+<li><a href="https://docs.microsoft.com/en-us/azure/key-vault/">Azure Key Vault Documentation</a></li>
+<li><a href="https://github.com/Azure/azure-sdk-for-rust">Azure SDK for Rust</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/key-vault/general/best-practices">Key Vault Best Practices</a></li>
+<li><a href="https://docs.microsoft.com/en-us/azure/key-vault/general/rbac-guide">RBAC Permissions Reference</a></li>
+</ul>
+<h2 id="see-also"><a class="doc-anchor" href="#see-also">§</a>See Also</h2>
+<ul>
+<li><a href="../software/index.html" title="mod cardano_vrf::hsm::software"><code>software</code></a> - File-based HSM for testing</li>
+<li><a href="../pkcs11/index.html" title="mod cardano_vrf::hsm::pkcs11"><code>pkcs11</code></a> - Generic PKCS#11 HSM support</li>
+<li><a href="../aws_cloudhsm/index.html" title="mod cardano_vrf::hsm::aws_cloudhsm"><code>aws_cloudhsm</code></a> - AWS CloudHSM integration</li>
+</ul>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.AzureKeyVaultVrfSigner.html" title="struct cardano_vrf::hsm::azure_keyvault::AzureKeyVaultVrfSigner">Azure<wbr>KeyVault<wbr>VrfSigner</a></dt><dd>Azure Key Vault VRF signer for cloud-native production workloads</dd></dl></section></div></main></body></html>

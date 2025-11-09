@@ -1,4 +1,82 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Software-based VRF signer for testing and development"><title>cardano_vrf::hsm::software - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module software</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module software</a></h2><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>software</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/software.rs.html#1-231">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Software-based VRF signer for testing and development</p>
-<p>This module provides a software implementation of the HSM trait
-that stores keys in encrypted files. NOT for production use.</p>
-</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.SoftwareVrfSigner.html" title="struct cardano_vrf::hsm::software::SoftwareVrfSigner">Software<wbr>VrfSigner</a></dt><dd>Software-based VRF signer (for testing only)</dd></dl></section></div></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Software-based VRF signer for testing and development"><title>cardano_vrf::hsm::software - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module software</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module software</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#security-warning" title="Security Warning">Security Warning</a></li><li><a href="#architecture" title="Architecture">Architecture</a></li><li><a href="#thread-safety" title="Thread Safety">Thread Safety</a></li><li><a href="#examples" title="Examples">Examples</a><ul><li><a href="#basic-usage" title="Basic Usage">Basic Usage</a></li><li><a href="#key-migration" title="Key Migration">Key Migration</a></li></ul></li><li><a href="#performance" title="Performance">Performance</a></li><li><a href="#storage-format" title="Storage Format">Storage Format</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>software</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/software.rs.html#1-759">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Software-based VRF signer for testing and development</p>
+<p>Provides a file-based HSM implementation that stores VRF keys in encrypted files.
+This is intended <strong>ONLY for testing and development</strong> - use a real HSM in production.</p>
+<h2 id="security-warning"><a class="doc-anchor" href="#security-warning">§</a>Security Warning</h2>
+<p>⚠️ <strong>DO NOT USE IN PRODUCTION</strong> ⚠️</p>
+<p>This implementation:</p>
+<ul>
+<li>Stores keys on disk with basic file permissions</li>
+<li>Does not provide tamper-resistant key storage</li>
+<li>Does not provide secure key generation hardware</li>
+<li>Is vulnerable to memory dumps and side-channel attacks</li>
+<li>Lacks audit logging and access controls</li>
+</ul>
+<p>For production deployments, use a real HSM:</p>
+<ul>
+<li><a href="../pkcs11/struct.Pkcs11VrfSigner.html" title="struct cardano_vrf::hsm::pkcs11::Pkcs11VrfSigner"><code>Pkcs11VrfSigner</code></a> for hardware HSMs</li>
+<li><a href="../aws_cloudhsm/struct.AwsCloudHsmVrfSigner.html" title="struct cardano_vrf::hsm::aws_cloudhsm::AwsCloudHsmVrfSigner"><code>AwsCloudHsmVrfSigner</code></a> for AWS CloudHSM</li>
+<li><a href="../azure_keyvault/struct.AzureKeyVaultVrfSigner.html" title="struct cardano_vrf::hsm::azure_keyvault::AzureKeyVaultVrfSigner"><code>AzureKeyVaultVrfSigner</code></a> for Azure Key Vault</li>
+</ul>
+<h2 id="architecture"><a class="doc-anchor" href="#architecture">§</a>Architecture</h2>
+<p>Keys are stored as files in the specified directory with the structure:</p>
+<div class="example-wrap"><pre class="language-text"><code>storage_path/
+├── key-id-1.key  (64 bytes: seed || public_key)
+├── key-id-2.key
+└── .health_check (temporary file for health checks)</code></pre></div><h2 id="thread-safety"><a class="doc-anchor" href="#thread-safety">§</a>Thread Safety</h2>
+<p>This implementation is thread-safe using <code>RwLock</code> for concurrent access.
+Multiple threads can read keys simultaneously, but writes are exclusive.</p>
+<h2 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h2><h3 id="basic-usage"><a class="doc-anchor" href="#basic-usage">§</a>Basic Usage</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
+<span class="kw">use </span>tempfile::tempdir;
+
+<span class="comment">// Create signer with temporary directory
+</span><span class="kw">let </span>temp_dir = tempdir().unwrap();
+<span class="kw">let </span>signer = SoftwareVrfSigner::new(
+    temp_dir.path().to_str().unwrap().to_string()
+)<span class="question-mark">?</span>;
+
+<span class="comment">// Health check
+</span>signer.health_check()<span class="question-mark">?</span>;
+
+<span class="comment">// Generate a new VRF keypair
+</span><span class="kw">let </span>public_key = signer.generate_keypair(<span class="string">"validator-key-001"</span>)<span class="question-mark">?</span>;
+<span class="macro">println!</span>(<span class="string">"Generated public key: {:?}"</span>, hex::encode(public_key));
+
+<span class="comment">// Generate VRF proof
+</span><span class="kw">let </span>message = <span class="string">b"Block slot 12345"</span>;
+<span class="kw">let </span>proof = signer.prove(<span class="string">"validator-key-001"</span>, message)<span class="question-mark">?</span>;
+<span class="macro">assert_eq!</span>(proof.len(), <span class="number">80</span>); <span class="comment">// Draft-03 proof size
+
+// List all keys
+</span><span class="kw">let </span>keys = signer.list_keys()<span class="question-mark">?</span>;
+<span class="macro">println!</span>(<span class="string">"Available keys: {:?}"</span>, keys);
+
+<span class="comment">// Clean up
+</span>signer.delete_key(<span class="string">"validator-key-001"</span>)<span class="question-mark">?</span>;</code></pre></div><h3 id="key-migration"><a class="doc-anchor" href="#key-migration">§</a>Key Migration</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
+
+<span class="kw">let </span>signer = SoftwareVrfSigner::new(
+    temp_dir.path().to_str().unwrap().to_string()
+)<span class="question-mark">?</span>;
+
+<span class="comment">// Generate key in software for testing
+</span><span class="kw">let </span>pk = signer.generate_keypair(<span class="string">"test-key"</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// Later, migrate to real HSM by:
+// 1. Exporting the key securely
+// 2. Importing into hardware HSM
+// 3. Verifying proofs match
+// 4. Deleting software copy
+</span>signer.delete_key(<span class="string">"test-key"</span>)<span class="question-mark">?</span>;</code></pre></div><h2 id="performance"><a class="doc-anchor" href="#performance">§</a>Performance</h2>
+<ul>
+<li>Key generation: ~20μs (Ed25519 keypair generation)</li>
+<li>Proof generation: ~1.2ms (VRF-03 proof)</li>
+<li>Key loading: ~10μs (cached), ~100μs (from disk)</li>
+<li>File I/O is the main bottleneck for cold key access</li>
+</ul>
+<h2 id="storage-format"><a class="doc-anchor" href="#storage-format">§</a>Storage Format</h2>
+<p>Keys are stored as 64-byte files with Ed25519 expanded secret key format:</p>
+<div class="example-wrap"><pre class="language-text"><code>Bytes 0-31:  Seed (random 32 bytes)
+Bytes 32-63: Public key (derived from seed)</code></pre></div>
+<p>File permissions are set to <code>0600</code> (owner read/write only) on Unix systems.</p>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.SoftwareVrfSigner.html" title="struct cardano_vrf::hsm::software::SoftwareVrfSigner">Software<wbr>VrfSigner</a></dt><dd>Software-based VRF signer for development and testing</dd></dl></section></div></main></body></html>

@@ -1,2 +1,268 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="AWS CloudHSM integration for VRF operations"><title>cardano_vrf::hsm::aws_cloudhsm - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module aws_cloudhsm</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module aws_<wbr>cloudhsm</a></h2><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>aws_<wbr>cloudhsm</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/aws_cloudhsm.rs.html#1-82">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>AWS CloudHSM integration for VRF operations</p>
-</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.AwsCloudHsmVrfSigner.html" title="struct cardano_vrf::hsm::aws_cloudhsm::AwsCloudHsmVrfSigner">AwsCloud<wbr>HsmVrf<wbr>Signer</a></dt><dd>AWS CloudHSM VRF signer</dd></dl></section></div></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="AWS CloudHSM integration for production VRF operations"><title>cardano_vrf::hsm::aws_cloudhsm - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module aws_cloudhsm</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module aws_<wbr>cloudhsm</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#current-status" title="Current Status">Current Status</a></li><li><a href="#architecture" title="Architecture">Architecture</a></li><li><a href="#aws-cloudhsm-features" title="AWS CloudHSM Features">AWS CloudHSM Features</a><ul><li><a href="#security--compliance" title="Security &#38; Compliance">Security &amp; Compliance</a></li><li><a href="#availability--performance" title="Availability &#38; Performance">Availability &amp; Performance</a></li><li><a href="#integration" title="Integration">Integration</a></li></ul></li><li><a href="#setup-instructions" title="Setup Instructions">Setup Instructions</a><ul><li><a href="#1-provision-cloudhsm-cluster" title="1. Provision CloudHSM Cluster">1. Provision CloudHSM Cluster</a></li><li><a href="#2-install-cloudhsm-client" title="2. Install CloudHSM Client">2. Install CloudHSM Client</a></li><li><a href="#3-configure-client" title="3. Configure Client">3. Configure Client</a></li><li><a href="#4-create-crypto-user-cu" title="4. Create Crypto User (CU)">4. Create Crypto User (CU)</a></li></ul></li><li><a href="#usage-examples" title="Usage Examples">Usage Examples</a><ul><li><a href="#basic-usage-when-implemented" title="Basic Usage (when implemented)">Basic Usage (when implemented)</a></li><li><a href="#production-deployment-with-secrets-manager" title="Production Deployment with Secrets Manager">Production Deployment with Secrets Manager</a></li></ul></li><li><a href="#security-best-practices" title="Security Best Practices">Security Best Practices</a><ul><li><a href="#credential-management" title="Credential Management">Credential Management</a></li><li><a href="#network-security" title="Network Security">Network Security</a></li><li><a href="#key-management" title="Key Management">Key Management</a></li><li><a href="#monitoring" title="Monitoring">Monitoring</a></li></ul></li><li><a href="#performance-characteristics" title="Performance Characteristics">Performance Characteristics</a></li><li><a href="#error-handling" title="Error Handling">Error Handling</a><ul><li><a href="#ckr_user_not_logged_in" title="CKR_USER_NOT_LOGGED_IN">CKR_USER_NOT_LOGGED_IN</a></li><li><a href="#ckr_device_error" title="CKR_DEVICE_ERROR">CKR_DEVICE_ERROR</a></li><li><a href="#ckr_session_handle_invalid" title="CKR_SESSION_HANDLE_INVALID">CKR_SESSION_HANDLE_INVALID</a></li><li><a href="#connection-timeout" title="Connection Timeout">Connection Timeout</a></li></ul></li><li><a href="#cost-optimization" title="Cost Optimization">Cost Optimization</a></li><li><a href="#implementation-notes" title="Implementation Notes">Implementation Notes</a><ul><li><a href="#dependencies" title="Dependencies">Dependencies</a></li><li><a href="#initialization" title="Initialization">Initialization</a></li><li><a href="#key-generation" title="Key Generation">Key Generation</a></li></ul></li><li><a href="#troubleshooting" title="Troubleshooting">Troubleshooting</a><ul><li><a href="#client-daemon-issues" title="Client Daemon Issues">Client Daemon Issues</a></li><li><a href="#connectivity-issues" title="Connectivity Issues">Connectivity Issues</a></li><li><a href="#key-not-found" title="Key Not Found">Key Not Found</a></li></ul></li><li><a href="#references" title="References">References</a></li><li><a href="#see-also" title="See Also">See Also</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="../index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">hsm</a></div><h1>Module <span>aws_<wbr>cloudhsm</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/hsm/aws_cloudhsm.rs.html#1-756">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>AWS CloudHSM integration for production VRF operations</p>
+<p>This module provides VRF operations using AWS CloudHSM, Amazon’s managed hardware
+security module service. AWS CloudHSM offers FIPS 140-2 Level 3 validated HSMs
+running in AWS infrastructure with single-tenant access.</p>
+<h2 id="current-status"><a class="doc-anchor" href="#current-status">§</a>Current Status</h2>
+<p>⚠️ <strong>IMPLEMENTATION PENDING</strong> ⚠️</p>
+<p>This module contains placeholder implementations. Full AWS CloudHSM support requires:</p>
+<ul>
+<li>AWS CloudHSM cluster provisioned and activated</li>
+<li>CloudHSM Client software installed (<code>cloudhsm-client</code>)</li>
+<li>PKCS#11 library: <code>/opt/cloudhsm/lib/libcloudhsm_pkcs11.so</code></li>
+<li>Network connectivity to cluster ENIs in VPC</li>
+<li>CU (Crypto User) credentials configured</li>
+</ul>
+<h2 id="architecture"><a class="doc-anchor" href="#architecture">§</a>Architecture</h2><div class="example-wrap"><pre class="language-text"><code>┌─────────────────────────────────────────────────────────────┐
+│ Cardano VRF Application (EC2/ECS/Lambda)                    │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ Rust API
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ AwsCloudHsmVrfSigner (this module)                          │
+│ - Session management                                        │
+│ - Credential handling                                       │
+│ - Failover logic                                            │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ PKCS#11 via CloudHSM Client
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ CloudHSM Client Daemon (cloudhsm_client)                    │
+│ - TLS 1.2 encrypted communication                           │
+│ - Connection pooling to HSM cluster                         │
+│ - Automatic failover                                        │
+└─────────────────────┬───────────────────────────────────────┘
+                      │ Private VPC network
+                      ▼
+┌─────────────────────────────────────────────────────────────┐
+│ AWS CloudHSM Cluster (Multi-AZ)                             │
+│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐            │
+│ │ HSM (AZ 1)  │ │ HSM (AZ 2)  │ │ HSM (AZ 3)  │            │
+│ │ Cavium      │ │ Cavium      │ │ Cavium      │            │
+│ │ Nitrox V    │ │ Nitrox V    │ │ Nitrox V    │            │
+│ └─────────────┘ └─────────────┘ └─────────────┘            │
+│ Key synchronization (automatic)                             │
+└─────────────────────────────────────────────────────────────┘</code></pre></div><h2 id="aws-cloudhsm-features"><a class="doc-anchor" href="#aws-cloudhsm-features">§</a>AWS CloudHSM Features</h2><h3 id="security--compliance"><a class="doc-anchor" href="#security--compliance">§</a>Security &amp; Compliance</h3>
+<ul>
+<li><strong>FIPS 140-2 Level 3</strong> validated</li>
+<li><strong>Single-tenant</strong> dedicated HSMs</li>
+<li><strong>Tamper-resistant</strong> hardware</li>
+<li><strong>Zero AWS access</strong> to key material</li>
+<li><strong>Customer-owned</strong> encryption keys</li>
+</ul>
+<h3 id="availability--performance"><a class="doc-anchor" href="#availability--performance">§</a>Availability &amp; Performance</h3>
+<ul>
+<li><strong>Multi-AZ</strong> deployment for high availability</li>
+<li><strong>Automatic key replication</strong> across HSMs in cluster</li>
+<li><strong>Low latency</strong> operations (&lt;10ms within same region)</li>
+<li><strong>Concurrent operations</strong> across multiple HSMs</li>
+<li><strong>CloudWatch</strong> metrics integration</li>
+</ul>
+<h3 id="integration"><a class="doc-anchor" href="#integration">§</a>Integration</h3>
+<ul>
+<li><strong>PKCS#11</strong> standard API (similar to other HSMs)</li>
+<li><strong>JCE</strong> provider for Java applications</li>
+<li><strong>OpenSSL</strong> dynamic engine</li>
+<li><strong>KMS integration</strong> for key import/export</li>
+</ul>
+<h2 id="setup-instructions"><a class="doc-anchor" href="#setup-instructions">§</a>Setup Instructions</h2><h3 id="1-provision-cloudhsm-cluster"><a class="doc-anchor" href="#1-provision-cloudhsm-cluster">§</a>1. Provision CloudHSM Cluster</h3><div class="example-wrap"><pre class="language-bash"><code># Create cluster
+aws cloudhsmv2 create-cluster \
+    --hsm-type hsm1.medium \
+    --subnet-ids subnet-abc123 subnet-def456 subnet-ghi789
+
+# Initialize cluster (one-time)
+aws cloudhsmv2 create-hsm \
+    --cluster-id cluster-abc123 \
+    --availability-zone us-east-1a
+
+# Wait for HSM to be active
+aws cloudhsmv2 describe-clusters --filters clusterIds=cluster-abc123</code></pre></div><h3 id="2-install-cloudhsm-client"><a class="doc-anchor" href="#2-install-cloudhsm-client">§</a>2. Install CloudHSM Client</h3><div class="example-wrap"><pre class="language-bash"><code># Amazon Linux 2 / RHEL / CentOS
+wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/EL7/cloudhsm-client-latest.el7.x86_64.rpm
+sudo yum install -y ./cloudhsm-client-latest.el7.x86_64.rpm
+sudo yum install -y cloudhsm-client-pkcs11
+
+# Ubuntu / Debian
+wget https://s3.amazonaws.com/cloudhsmv2-software/CloudHsmClient/Bionic/cloudhsm-client_latest_amd64.deb
+sudo dpkg -i cloudhsm-client_latest_amd64.deb
+sudo apt install -y cloudhsm-client-pkcs11</code></pre></div><h3 id="3-configure-client"><a class="doc-anchor" href="#3-configure-client">§</a>3. Configure Client</h3><div class="example-wrap"><pre class="language-bash"><code># Configure cluster connection
+sudo /opt/cloudhsm/bin/configure -a &lt;cluster-ENI-IP&gt;
+
+# Start client daemon
+sudo systemctl start cloudhsm-client
+sudo systemctl enable cloudhsm-client
+
+# Verify connectivity
+/opt/cloudhsm/bin/cloudhsm_mgmt_util /opt/cloudhsm/etc/cloudhsm_mgmt_util.cfg</code></pre></div><h3 id="4-create-crypto-user-cu"><a class="doc-anchor" href="#4-create-crypto-user-cu">§</a>4. Create Crypto User (CU)</h3><div class="example-wrap"><pre class="language-bash"><code># Login as CO (Crypto Officer)
+aws cloudhsmv2 describe-clusters | grep CustomerCaCertificate
+/opt/cloudhsm/bin/cloudhsm_mgmt_util
+
+# In cloudhsm_mgmt_util:
+loginHSM CO admin &lt;password&gt;
+createUser CU vrf_user &lt;password&gt;
+quit</code></pre></div><h2 id="usage-examples"><a class="doc-anchor" href="#usage-examples">§</a>Usage Examples</h2><h3 id="basic-usage-when-implemented"><a class="doc-anchor" href="#basic-usage-when-implemented">§</a>Basic Usage (when implemented)</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, aws_cloudhsm::AwsCloudHsmVrfSigner};
+
+<span class="comment">// Create signer with cluster credentials
+</span><span class="kw">let </span>signer = AwsCloudHsmVrfSigner::new(
+    <span class="string">"cluster-abc123"</span>.to_string(),
+    <span class="string">"vrf_user"</span>.to_string(),
+    <span class="string">"secure_password"</span>.to_string()
+)<span class="question-mark">?</span>;
+
+<span class="comment">// Generate keypair on HSM
+</span><span class="kw">let </span>public_key = signer.generate_keypair(<span class="string">"validator-001"</span>)<span class="question-mark">?</span>;
+<span class="macro">println!</span>(<span class="string">"Public key: {:?}"</span>, hex::encode(public_key));
+
+<span class="comment">// Generate VRF proof
+</span><span class="kw">let </span>message = <span class="string">b"block-12345"</span>;
+<span class="kw">let </span>proof = signer.prove(<span class="string">"validator-001"</span>, message)<span class="question-mark">?</span>;</code></pre></div><h3 id="production-deployment-with-secrets-manager"><a class="doc-anchor" href="#production-deployment-with-secrets-manager">§</a>Production Deployment with Secrets Manager</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, aws_cloudhsm::AwsCloudHsmVrfSigner};
+<span class="comment">// Fetch credentials from AWS Secrets Manager
+// let secret = fetch_secret("prod/cloudhsm/credentials").await?;
+
+</span><span class="kw">let </span>signer = AwsCloudHsmVrfSigner::new(
+    std::env::var(<span class="string">"CLOUDHSM_CLUSTER_ID"</span>)<span class="question-mark">?</span>,
+    secret.get(<span class="string">"username"</span>).unwrap().clone(),
+    secret.get(<span class="string">"password"</span>).unwrap().clone(),
+)<span class="question-mark">?</span>;
+
+<span class="comment">// Health check before operations
+</span>signer.health_check()<span class="question-mark">?</span>;</code></pre></div><h2 id="security-best-practices"><a class="doc-anchor" href="#security-best-practices">§</a>Security Best Practices</h2><h3 id="credential-management"><a class="doc-anchor" href="#credential-management">§</a>Credential Management</h3>
+<ul>
+<li>✅ Store credentials in <strong>AWS Secrets Manager</strong></li>
+<li>✅ Rotate passwords regularly (90 days recommended)</li>
+<li>✅ Use <strong>IAM roles</strong> for EC2/ECS/Lambda permissions</li>
+<li>❌ Never hardcode credentials in source code</li>
+<li>❌ Never commit credentials to version control</li>
+</ul>
+<h3 id="network-security"><a class="doc-anchor" href="#network-security">§</a>Network Security</h3>
+<ul>
+<li>✅ Deploy HSMs in <strong>private subnets</strong></li>
+<li>✅ Use <strong>Security Groups</strong> to restrict access</li>
+<li>✅ Enable <strong>VPC Flow Logs</strong> for audit</li>
+<li>✅ Use <strong>PrivateLink</strong> for AWS service access</li>
+<li>❌ Never expose HSM ENIs to public internet</li>
+</ul>
+<h3 id="key-management"><a class="doc-anchor" href="#key-management">§</a>Key Management</h3>
+<ul>
+<li>✅ Set keys as <strong>non-extractable</strong> (CKA_EXTRACTABLE=false)</li>
+<li>✅ Set keys as <strong>sensitive</strong> (CKA_SENSITIVE=true)</li>
+<li>✅ Enable <strong>CloudWatch</strong> logging for key operations</li>
+<li>✅ Backup keys using <strong>CloudHSM backup</strong> feature</li>
+<li>✅ Test <strong>disaster recovery</strong> procedures</li>
+</ul>
+<h3 id="monitoring"><a class="doc-anchor" href="#monitoring">§</a>Monitoring</h3>
+<ul>
+<li>✅ Monitor CloudWatch metrics: <code>NumberOfUsers</code>, <code>HSMTemperature</code></li>
+<li>✅ Set alarms for <code>HSMUnhealthy</code> state</li>
+<li>✅ Track <code>ClientConnections</code> and session counts</li>
+<li>✅ Log all crypto operations for compliance</li>
+</ul>
+<h2 id="performance-characteristics"><a class="doc-anchor" href="#performance-characteristics">§</a>Performance Characteristics</h2>
+<p>AWS CloudHSM performance (hsm1.medium):</p>
+<div><table><thead><tr><th>Operation</th><th>Latency</th><th>Throughput</th><th>Notes</th></tr></thead><tbody>
+<tr><td>VRF Prove</td><td>8-12ms</td><td>100/sec per HSM</td><td>Ed25519 signing</td></tr>
+<tr><td>Get PubKey</td><td>1-2ms</td><td>500/sec</td><td>Cached locally</td></tr>
+<tr><td>Generate Key</td><td>50-100ms</td><td>20/sec</td><td>One-time operation</td></tr>
+<tr><td>Health Check</td><td>2-5ms</td><td>200/sec</td><td>Network ping</td></tr>
+</tbody></table>
+</div>
+<p><strong>Scaling</strong>: Add more HSMs to cluster for higher throughput</p>
+<h2 id="error-handling"><a class="doc-anchor" href="#error-handling">§</a>Error Handling</h2>
+<p>Common CloudHSM errors and recovery:</p>
+<h3 id="ckr_user_not_logged_in"><a class="doc-anchor" href="#ckr_user_not_logged_in">§</a>CKR_USER_NOT_LOGGED_IN</h3>
+<ul>
+<li><strong>Cause</strong>: Session timeout or invalid credentials</li>
+<li><strong>Recovery</strong>: Re-authenticate with CU credentials</li>
+</ul>
+<h3 id="ckr_device_error"><a class="doc-anchor" href="#ckr_device_error">§</a>CKR_DEVICE_ERROR</h3>
+<ul>
+<li><strong>Cause</strong>: HSM hardware issue or network failure</li>
+<li><strong>Recovery</strong>: Client auto-fails over to another HSM in cluster</li>
+</ul>
+<h3 id="ckr_session_handle_invalid"><a class="doc-anchor" href="#ckr_session_handle_invalid">§</a>CKR_SESSION_HANDLE_INVALID</h3>
+<ul>
+<li><strong>Cause</strong>: Session expired or client restarted</li>
+<li><strong>Recovery</strong>: Create new session</li>
+</ul>
+<h3 id="connection-timeout"><a class="doc-anchor" href="#connection-timeout">§</a>Connection Timeout</h3>
+<ul>
+<li><strong>Cause</strong>: Network issue or client daemon down</li>
+<li><strong>Recovery</strong>: Check <code>cloudhsm-client</code> service status</li>
+</ul>
+<h2 id="cost-optimization"><a class="doc-anchor" href="#cost-optimization">§</a>Cost Optimization</h2>
+<p>CloudHSM costs (as of 2024):</p>
+<ul>
+<li><strong>HSM instance</strong>: <del>$1.60/hour (</del>$1,152/month)</li>
+<li><strong>Minimum</strong>: 2 HSMs for HA (~$2,304/month)</li>
+<li><strong>No data transfer charges</strong> within same region</li>
+</ul>
+<p>Cost-saving strategies:</p>
+<ul>
+<li>Use <strong>minimum 2 HSMs</strong> for production (HA requirement)</li>
+<li><strong>Scale up</strong> temporarily for high-load events</li>
+<li>Use <strong>SoftHSM</strong> for development/testing</li>
+<li>Consider <strong>AWS KMS</strong> for less sensitive keys</li>
+</ul>
+<h2 id="implementation-notes"><a class="doc-anchor" href="#implementation-notes">§</a>Implementation Notes</h2>
+<p>When implementing this module:</p>
+<h3 id="dependencies"><a class="doc-anchor" href="#dependencies">§</a>Dependencies</h3><div class="example-wrap"><pre class="language-toml"><code>[dependencies]
+aws-sdk-cloudhsmv2 = &quot;1.0&quot;  # For cluster management
+cryptoki = &quot;0.6&quot;             # PKCS#11 bindings
+aws-config = &quot;1.0&quot;           # AWS SDK configuration
+tokio = { version = &quot;1.0&quot;, features = [&quot;full&quot;] }  # Async runtime</code></pre></div><h3 id="initialization"><a class="doc-anchor" href="#initialization">§</a>Initialization</h3>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="comment">// Use CloudHSM PKCS#11 library
+</span><span class="kw">let </span>pkcs11 = Pkcs11::new(<span class="string">"/opt/cloudhsm/lib/libcloudhsm_pkcs11.so"</span>)<span class="question-mark">?</span>;
+
+<span class="comment">// CloudHSM uses slot 0
+</span><span class="kw">let </span>slot = <span class="number">0</span>;
+
+<span class="comment">// Open session and login
+</span><span class="kw">let </span>session = pkcs11.open_session(slot, CKF_SERIAL_SESSION | CKF_RW_SESSION)<span class="question-mark">?</span>;
+session.login(CKU_USER, <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span>cu_password))<span class="question-mark">?</span>;</code></pre></div><h3 id="key-generation"><a class="doc-anchor" href="#key-generation">§</a>Key Generation</h3>
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cryptoki::mechanism::Mechanism;
+<span class="kw">use </span>cryptoki::object::{Attribute, AttributeType};
+
+<span class="kw">let </span>pub_template = <span class="macro">vec!</span>[
+    Attribute::Label(key_id.as_bytes().to_vec()),
+    Attribute::Verify(<span class="bool-val">true</span>),
+];
+
+<span class="kw">let </span>priv_template = <span class="macro">vec!</span>[
+    Attribute::Label(key_id.as_bytes().to_vec()),
+    Attribute::Sign(<span class="bool-val">true</span>),
+    Attribute::Sensitive(<span class="bool-val">true</span>),      <span class="comment">// Cannot read private key
+    </span>Attribute::Extractable(<span class="bool-val">false</span>),   <span class="comment">// Cannot export
+    </span>Attribute::Token(<span class="bool-val">true</span>),          <span class="comment">// Persistent across sessions
+</span>];
+
+session.generate_key_pair(
+    <span class="kw-2">&amp;</span>Mechanism::EcEdwardsKeyPairGen,
+    <span class="kw-2">&amp;</span>pub_template,
+    <span class="kw-2">&amp;</span>priv_template
+)<span class="question-mark">?</span>;</code></pre></div><h2 id="troubleshooting"><a class="doc-anchor" href="#troubleshooting">§</a>Troubleshooting</h2><h3 id="client-daemon-issues"><a class="doc-anchor" href="#client-daemon-issues">§</a>Client Daemon Issues</h3><div class="example-wrap"><pre class="language-bash"><code># Check daemon status
+sudo systemctl status cloudhsm-client
+
+# View logs
+sudo journalctl -u cloudhsm-client -f
+
+# Restart daemon
+sudo systemctl restart cloudhsm-client</code></pre></div><h3 id="connectivity-issues"><a class="doc-anchor" href="#connectivity-issues">§</a>Connectivity Issues</h3><div class="example-wrap"><pre class="language-bash"><code># Test HSM connectivity
+/opt/cloudhsm/bin/cloudhsm_mgmt_util /opt/cloudhsm/etc/cloudhsm_mgmt_util.cfg
+
+# Check network path
+nc -zv &lt;HSM-ENI-IP&gt; 2223</code></pre></div><h3 id="key-not-found"><a class="doc-anchor" href="#key-not-found">§</a>Key Not Found</h3><div class="example-wrap"><pre class="language-bash"><code># List all keys via PKCS#11
+pkcs11-tool --module /opt/cloudhsm/lib/libcloudhsm_pkcs11.so \
+    --login --pin &lt;CU-password&gt; --list-objects</code></pre></div><h2 id="references"><a class="doc-anchor" href="#references">§</a>References</h2>
+<ul>
+<li><a href="https://docs.aws.amazon.com/cloudhsm/">AWS CloudHSM Documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-library.html">CloudHSM Client SDK</a></li>
+<li><a href="https://docs.aws.amazon.com/cloudhsm/latest/userguide/best-practices.html">Best Practices Guide</a></li>
+<li><a href="http://docs.oasis-open.org/pkcs11/pkcs11-base/v2.40/">PKCS#11 Reference</a></li>
+</ul>
+<h2 id="see-also"><a class="doc-anchor" href="#see-also">§</a>See Also</h2>
+<ul>
+<li><a href="../software/index.html" title="mod cardano_vrf::hsm::software"><code>software</code></a> - File-based HSM for testing</li>
+<li><a href="../pkcs11/index.html" title="mod cardano_vrf::hsm::pkcs11"><code>pkcs11</code></a> - Generic PKCS#11 HSM support</li>
+<li><a href="../azure_keyvault/index.html" title="mod cardano_vrf::hsm::azure_keyvault"><code>azure_keyvault</code></a> - Azure Key Vault integration</li>
+</ul>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.AwsCloudHsmVrfSigner.html" title="struct cardano_vrf::hsm::aws_cloudhsm::AwsCloudHsmVrfSigner">AwsCloud<wbr>HsmVrf<wbr>Signer</a></dt><dd>AWS CloudHSM VRF signer for production workloads</dd></dl></section></div></main></body></html>
