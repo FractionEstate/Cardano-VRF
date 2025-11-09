@@ -1,0 +1,59 @@
+[package]
+name = "cardano-vrf"
+version = "0.1.0"
+edition = "2021"
+authors = ["FractionEstate"]
+license = "MIT OR Apache-2.0"
+description = "Pure Rust implementation of Cardano's VRF (Verifiable Random Function) - ECVRF-ED25519-SHA512"
+repository = "https://github.com/FractionEstate/Cardano-VRF"
+keywords = ["cardano", "vrf", "cryptography", "blockchain", "verifiable-random-function"]
+categories = ["cryptography", "no-std"]
+readme = "README.md"
+
+[dependencies]
+# Core cryptographic dependencies
+curve25519-dalek = { version = "4.1", default-features = false, features = ["digest", "alloc"] }
+sha2 = { version = "0.10", default-features = false }
+zeroize = { version = "1.7", default-features = false, features = ["derive", "alloc"] }
+ed25519-dalek = { version = "2.1", default-features = false }
+subtle = { version = "2.6", default-features = false }
+
+# Field arithmetic
+num-bigint = { version = "0.4", default-features = false }
+num-traits = { version = "0.2", default-features = false }
+
+# Utilities
+once_cell = { version = "1.19", default-features = false, features = ["alloc"] }
+thiserror = "1.0"
+hex = { version = "0.4", optional = true }
+serde = { version = "1.0", optional = true, features = ["derive"] }
+
+# HSM and production dependencies
+getrandom = { version = "0.2", optional = true }
+tempfile = { version = "3.0", optional = true }
+
+[dev-dependencies]
+hex = "0.4"
+serde_json = "1.0"
+rand = "0.8"
+tempfile = "3.0"
+getrandom = "0.2"
+
+[features]
+default = ["std", "hsm-software"]
+std = ["sha2/std", "zeroize/std", "num-bigint/std", "num-traits/std", "once_cell/std", "ed25519-dalek/std"]
+serde = ["dep:serde", "hex"]
+vrf-debug = []  # Enable verbose VRF debugging output
+hsm-software = ["getrandom", "tempfile"]  # Software HSM for testing
+# Future HSM backends (placeholders for now):
+# hsm-pkcs11 = ["cryptoki"]
+# hsm-aws-cloudhsm = ["aws-sdk-cloudhsmv2"]
+# hsm-azure-keyvault = ["azure_security_keyvault"]
+
+[[example]]
+name = "basic_usage"
+required-features = []
+
+[[example]]
+name = "keypair_generation"
+required-features = []
