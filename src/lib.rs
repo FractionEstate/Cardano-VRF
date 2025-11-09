@@ -82,37 +82,89 @@ pub use hsm::{HsmConfig, HsmFactory, HsmVrfSigner, HsmVrfVerifier};
 pub use metrics::VrfMetrics;
 pub use logging::{VrfLogger, LogLevel, VrfOperation};
 
-/// Error types for VRF operations
+/// Error types returned by VRF operations
+///
+/// These errors represent the various failure modes that can occur during
+/// VRF proof generation, verification, and related cryptographic operations.
+///
+/// # Security Considerations
+///
+/// Error types are deliberately generic to avoid leaking information about
+/// why a particular operation failed. Detailed error information is only
+/// available via debug logging when the `vrf-debug` feature is enabled.
 #[derive(Debug, thiserror::Error, Clone, PartialEq, Eq)]
 pub enum VrfError {
-    /// Invalid proof provided
+    /// The provided VRF proof is malformed or invalid
+    ///
+    /// This can occur if:
+    /// - The proof bytes cannot be parsed (wrong length, invalid encoding)
+    /// - The proof components (Gamma, c, s) are not valid curve points/scalars
+    /// - The proof was corrupted or tampered with
     #[error("Invalid VRF proof")]
     InvalidProof,
 
-    /// Invalid public key
+    /// The public key is malformed or not a valid Ed25519 point
+    ///
+    /// This occurs when the 32-byte public key cannot be decompressed to
+    /// a valid point on the Edwards curve, or represents a point with
+    /// invalid properties (e.g., not in the correct subgroup).
     #[error("Invalid public key")]
     InvalidPublicKey,
 
-    /// Invalid secret key
+    /// The secret key is malformed or has an invalid format
+    ///
+    /// For VRF operations, secret keys are 64 bytes (32-byte seed + 32-byte public key).
+    /// This error indicates the key doesn't meet these requirements.
     #[error("Invalid secret key")]
     InvalidSecretKey,
 
-    /// Invalid point encoding
+    /// Failed to decode bytes as an Edwards curve point
+    ///
+    /// This occurs during hash-to-curve or proof parsing when bytes
+    /// cannot be decompressed to a valid Edwards point.
     #[error("Invalid point encoding")]
     InvalidPoint,
 
-    /// Invalid scalar encoding
+    /// Failed to decode bytes as a valid scalar value
+    ///
+    /// Scalars must be in the range [0, L) where L is the order of
+    /// the Ed25519 group. This error indicates invalid encoding.
     #[error("Invalid scalar encoding")]
     InvalidScalar,
 
-    /// Verification failed
+    /// VRF proof verification failed
+    ///
+    /// The proof is well-formed but the verification equation does not hold.
+    /// This means either:
+    /// - The proof was not generated with the claimed public key
+    /// - The proof was generated for a different message
+    /// - The proof has been tampered with
+    ///
+    /// This is the expected error for invalid/forged proofs.
     #[error("VRF verification failed")]
     VerificationFailed,
 
-    /// Invalid input parameter
+    /// Generic invalid input error with descriptive message
+    ///
+    /// Used for various input validation failures such as incorrect
+    /// buffer sizes, invalid parameters, or HSM-specific errors.
     #[error("Invalid input: {0}")]
     InvalidInput(String),
 }
 
-/// Result type for VRF operations
+/// Result type alias for VRF operations
+///
+/// All VRF functions return this type, which is either a successful
+/// value of type `T` or a [`VrfError`].
+///
+/// # Examples
+///
+/// ```rust
+/// use cardano_vrf::{VrfResult, VrfError};
+///
+/// fn validate_proof() -> VrfResult<bool> {
+///     // ... validation logic
+///     Ok(true)
+/// }
+/// ```
 pub type VrfResult<T> = Result<T, VrfError>;

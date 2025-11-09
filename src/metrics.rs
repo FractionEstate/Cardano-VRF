@@ -30,6 +30,7 @@ impl Default for VrfMetrics {
 }
 
 impl VrfMetrics {
+    /// Creates a new metrics collector
     pub fn new() -> Self {
         Self {
             prove_total: Arc::new(AtomicU64::new(0)),
@@ -193,12 +194,14 @@ pub struct MetricsTimer {
 }
 
 impl MetricsTimer {
+    /// Starts a new timer
     pub fn new() -> Self {
         Self {
             start: Instant::now(),
         }
     }
 
+    /// Gets elapsed time since timer creation
     pub fn elapsed(&self) -> std::time::Duration {
         self.start.elapsed()
     }

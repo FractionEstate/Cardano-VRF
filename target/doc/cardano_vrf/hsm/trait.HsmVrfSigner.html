@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Trait for VRF signing operations delegated to an HSM"><title>HsmVrfSigner in cardano_vrf::hsm - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc trait"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">HsmVrfSigner</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">HsmVrf<wbr>Signer</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#thread-safety" title="Thread Safety">Thread Safety</a></li><li><a href="#security-considerations" title="Security Considerations">Security Considerations</a></li></ul><h3><a href="#required-methods">Required Methods</a></h3><ul class="block"><li><a href="#tymethod.delete_key" title="delete_key">delete_key</a></li><li><a href="#tymethod.generate_keypair" title="generate_keypair">generate_keypair</a></li><li><a href="#tymethod.get_public_key" title="get_public_key">get_public_key</a></li><li><a href="#tymethod.health_check" title="health_check">health_check</a></li><li><a href="#tymethod.list_keys" title="list_keys">list_keys</a></li><li><a href="#tymethod.prove" title="prove">prove</a></li></ul><h3><a href="#implementors">Implementors</a></h3></section><div id="rustdoc-modnav"><h2><a href="index.html">In cardano_<wbr>vrf::<wbr>hsm</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">cardano_vrf</a>::<wbr><a href="index.html">hsm</a></div><h1>Trait <span class="trait">HsmVrf<wbr>Signer</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/cardano_vrf/hsm/mod.rs.html#85-231">Source</a> </span></div><pre class="rust item-decl"><code>pub trait HsmVrfSigner: <a class="trait" href="https://doc.rust-lang.org/1.91.0/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> + <a class="trait" href="https://doc.rust-lang.org/1.91.0/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> {
+    // Required methods
+    fn <a href="#tymethod.prove" class="fn">prove</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>, message: &amp;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>]) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.0/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>&gt;&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.get_public_key" class="fn">get_public_key</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>; <a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.array.html">32</a>]&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.generate_keypair" class="fn">generate_keypair</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>; <a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.array.html">32</a>]&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.delete_key" class="fn">delete_key</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.unit.html">()</a>&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.list_keys" class="fn">list_keys</a>(&amp;self) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.0/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.0/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;;
+<span class="item-spacer"></span>    fn <a href="#tymethod.health_check" class="fn">health_check</a>(&amp;self) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.unit.html">()</a>&gt;;
+}</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Trait for VRF signing operations delegated to an HSM</p>
+<p>Implementors of this trait handle VRF proof generation using private keys
+stored securely in an HSM. The private key never leaves the HSM hardware.</p>
+<h2 id="thread-safety"><a class="doc-anchor" href="#thread-safety">§</a>Thread Safety</h2>
+<p>Implementations must be <code>Send + Sync</code> to support concurrent proof generation
+in multi-threaded applications. HSM vendors typically handle internal locking.</p>
+<h2 id="security-considerations"><a class="doc-anchor" href="#security-considerations">§</a>Security Considerations</h2>
+<ul>
+<li><strong>Key Isolation</strong>: Private keys must never be exportable</li>
+<li><strong>Audit Logging</strong>: All operations should be logged by the HSM</li>
+<li><strong>Rate Limiting</strong>: Consider implementing request throttling</li>
+<li><strong>Access Control</strong>: Use HSM-native access controls for key_id</li>
+</ul>
+</div></details><h2 id="required-methods" class="section-header">Required Methods<a href="#required-methods" class="anchor">§</a></h2><div class="methods"><details class="toggle method-toggle" open><summary><section id="tymethod.prove" class="method"><a class="src rightside" href="../../src/cardano_vrf/hsm/mod.rs.html#119">Source</a><h4 class="code-header">fn <a href="#tymethod.prove" class="fn">prove</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>, message: &amp;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>]) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.0/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>Generate a VRF proof using an HSM-stored private key</p>
+<p>This is the core VRF operation. The HSM uses the stored private key
+to generate a proof that the VRF output was computed correctly for
+the given message.</p>
+<h5 id="arguments"><a class="doc-anchor" href="#arguments">§</a>Arguments</h5>
+<ul>
+<li><code>key_id</code> - Identifier for the VRF signing key in the HSM (e.g., key alias, slot ID)</li>
+<li><code>message</code> - Arbitrary message bytes to prove</li>
+</ul>
+<h5 id="returns"><a class="doc-anchor" href="#returns">§</a>Returns</h5>
+<p>VRF proof bytes (80 bytes for Draft-03, 128 bytes for Draft-13)</p>
+<h5 id="errors"><a class="doc-anchor" href="#errors">§</a>Errors</h5>
+<ul>
+<li><a href="../enum.VrfError.html#variant.InvalidInput" title="variant cardano_vrf::VrfError::InvalidInput"><code>VrfError::InvalidInput</code></a> if key_id is not found or inaccessible</li>
+<li>HSM-specific errors (connection failures, authentication errors)</li>
+</ul>
+<h5 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+
+<span class="kw">let </span>hsm = SoftwareHsm::new();
+hsm.generate_keypair(<span class="string">"slot-1"</span>)<span class="question-mark">?</span>;
+
+<span class="kw">let </span>proof = hsm.prove(<span class="string">"slot-1"</span>, <span class="string">b"block-12345"</span>)<span class="question-mark">?</span>;</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.get_public_key" class="method"><a class="src rightside" href="../../src/cardano_vrf/hsm/mod.rs.html#137">Source</a><h4 class="code-header">fn <a href="#tymethod.get_public_key" class="fn">get_public_key</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>; <a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.array.html">32</a>]&gt;</h4></section></summary><div class="docblock"><p>Retrieve the public key for an HSM-stored private key</p>
+<p>Public keys can be safely exported from the HSM for verification
+operations that don’t require the private key.</p>
+<h5 id="arguments-1"><a class="doc-anchor" href="#arguments-1">§</a>Arguments</h5>
+<ul>
+<li><code>key_id</code> - Identifier for the VRF signing key</li>
+</ul>
+<h5 id="returns-1"><a class="doc-anchor" href="#returns-1">§</a>Returns</h5>
+<p>32-byte Ed25519 public key in compressed format</p>
+<h5 id="errors-1"><a class="doc-anchor" href="#errors-1">§</a>Errors</h5>
+<p>Returns <a href="../enum.VrfError.html#variant.InvalidInput" title="variant cardano_vrf::VrfError::InvalidInput"><code>VrfError::InvalidInput</code></a> if key_id is not found</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.generate_keypair" class="method"><a class="src rightside" href="../../src/cardano_vrf/hsm/mod.rs.html#170">Source</a><h4 class="code-header">fn <a href="#tymethod.generate_keypair" class="fn">generate_keypair</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>; <a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.array.html">32</a>]&gt;</h4></section></summary><div class="docblock"><p>Generate a new VRF keypair in the HSM</p>
+<p>Creates a new Ed25519 keypair with the private key stored securely
+in the HSM. The private key is generated within the HSM and never
+exported.</p>
+<h5 id="arguments-2"><a class="doc-anchor" href="#arguments-2">§</a>Arguments</h5>
+<ul>
+<li><code>key_id</code> - Identifier to assign to the new key</li>
+</ul>
+<h5 id="returns-2"><a class="doc-anchor" href="#returns-2">§</a>Returns</h5>
+<p>Public key of the newly generated keypair</p>
+<h5 id="errors-2"><a class="doc-anchor" href="#errors-2">§</a>Errors</h5>
+<ul>
+<li><a href="../enum.VrfError.html#variant.InvalidInput" title="variant cardano_vrf::VrfError::InvalidInput"><code>VrfError::InvalidInput</code></a> if key_id already exists</li>
+<li>HSM-specific errors (out of storage, permission denied)</li>
+</ul>
+<h5 id="examples-1"><a class="doc-anchor" href="#examples-1">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+
+<span class="kw">let </span>hsm = SoftwareHsm::new();
+<span class="kw">let </span>public_key = hsm.generate_keypair(<span class="string">"validator-001"</span>)<span class="question-mark">?</span>;
+<span class="macro">println!</span>(<span class="string">"Public key: {:02x?}"</span>, <span class="kw-2">&amp;</span>public_key[<span class="number">0</span>..<span class="number">8</span>]);</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.delete_key" class="method"><a class="src rightside" href="../../src/cardano_vrf/hsm/mod.rs.html#190">Source</a><h4 class="code-header">fn <a href="#tymethod.delete_key" class="fn">delete_key</a>(&amp;self, key_id: &amp;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.str.html">str</a>) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Delete a key from the HSM</p>
+<p><strong>⚠️ WARNING</strong>: This is a destructive operation that permanently
+deletes the private key. There is no recovery mechanism.</p>
+<h5 id="security"><a class="doc-anchor" href="#security">§</a>Security</h5>
+<ul>
+<li>Ensure proper access controls prevent unauthorized deletion</li>
+<li>Log all deletion attempts for audit purposes</li>
+<li>Consider implementing a key lifecycle policy with soft-delete</li>
+</ul>
+<h5 id="arguments-3"><a class="doc-anchor" href="#arguments-3">§</a>Arguments</h5>
+<ul>
+<li><code>key_id</code> - Identifier of the key to delete</li>
+</ul>
+<h5 id="errors-3"><a class="doc-anchor" href="#errors-3">§</a>Errors</h5>
+<p>Returns <a href="../enum.VrfError.html#variant.InvalidInput" title="variant cardano_vrf::VrfError::InvalidInput"><code>VrfError::InvalidInput</code></a> if key_id is not found</p>
+</div></details><details class="toggle method-toggle" open><summary><section id="tymethod.list_keys" class="method"><a class="src rightside" href="../../src/cardano_vrf/hsm/mod.rs.html#216">Source</a><h4 class="code-header">fn <a href="#tymethod.list_keys" class="fn">list_keys</a>(&amp;self) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.0/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/1.91.0/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;</h4></section></summary><div class="docblock"><p>List all VRF keys available in the HSM</p>
+<p>Returns identifiers of all VRF keys accessible with current credentials.
+Useful for key discovery and management operations.</p>
+<h5 id="returns-3"><a class="doc-anchor" href="#returns-3">§</a>Returns</h5>
+<p>Vector of key identifiers (e.g., aliases, labels)</p>
+<h5 id="examples-2"><a class="doc-anchor" href="#examples-2">§</a>Examples</h5>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+
+<span class="kw">let </span>hsm = SoftwareHsm::new();
+hsm.generate_keypair(<span class="string">"key-1"</span>)<span class="question-mark">?</span>;
+hsm.generate_keypair(<span class="string">"key-2"</span>)<span class="question-mark">?</span>;
+
+<span class="kw">let </span>keys = hsm.list_keys()<span class="question-mark">?</span>;
+<span class="macro">assert!</span>(keys.contains(<span class="kw-2">&amp;</span><span class="string">"key-1"</span>.to_string()));</code></pre></div></div></details><details class="toggle method-toggle" open><summary><section id="tymethod.health_check" class="method"><a class="src rightside" href="../../src/cardano_vrf/hsm/mod.rs.html#230">Source</a><h4 class="code-header">fn <a href="#tymethod.health_check" class="fn">health_check</a>(&amp;self) -&gt; <a class="type" href="../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.unit.html">()</a>&gt;</h4></section></summary><div class="docblock"><p>Test HSM connectivity and authentication</p>
+<p>Verifies that the HSM is reachable, credentials are valid, and
+basic operations can be performed. Use this for health monitoring.</p>
+<h5 id="returns-4"><a class="doc-anchor" href="#returns-4">§</a>Returns</h5>
+<p><code>Ok(())</code> if the HSM is healthy and accessible</p>
+<h5 id="errors-4"><a class="doc-anchor" href="#errors-4">§</a>Errors</h5>
+<p>Various errors depending on failure mode (network, authentication, etc.)</p>
+</div></details></div><h2 id="implementors" class="section-header">Implementors<a href="#implementors" class="anchor">§</a></h2><div id="implementors-list"><section id="impl-HsmVrfSigner-for-AwsCloudHsmVrfSigner" class="impl"><a class="src rightside" href="../../src/cardano_vrf/hsm/aws_cloudhsm.rs.html#43-67">Source</a><a href="#impl-HsmVrfSigner-for-AwsCloudHsmVrfSigner" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.HsmVrfSigner.html" title="trait cardano_vrf::hsm::HsmVrfSigner">HsmVrfSigner</a> for <a class="struct" href="aws_cloudhsm/struct.AwsCloudHsmVrfSigner.html" title="struct cardano_vrf::hsm::aws_cloudhsm::AwsCloudHsmVrfSigner">AwsCloudHsmVrfSigner</a></h3></section><section id="impl-HsmVrfSigner-for-AzureKeyVaultVrfSigner" class="impl"><a class="src rightside" href="../../src/cardano_vrf/hsm/azure_keyvault.rs.html#52-76">Source</a><a href="#impl-HsmVrfSigner-for-AzureKeyVaultVrfSigner" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.HsmVrfSigner.html" title="trait cardano_vrf::hsm::HsmVrfSigner">HsmVrfSigner</a> for <a class="struct" href="azure_keyvault/struct.AzureKeyVaultVrfSigner.html" title="struct cardano_vrf::hsm::azure_keyvault::AzureKeyVaultVrfSigner">AzureKeyVaultVrfSigner</a></h3></section><section id="impl-HsmVrfSigner-for-Pkcs11VrfSigner" class="impl"><a class="src rightside" href="../../src/cardano_vrf/hsm/pkcs11.rs.html#48-78">Source</a><a href="#impl-HsmVrfSigner-for-Pkcs11VrfSigner" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.HsmVrfSigner.html" title="trait cardano_vrf::hsm::HsmVrfSigner">HsmVrfSigner</a> for <a class="struct" href="pkcs11/struct.Pkcs11VrfSigner.html" title="struct cardano_vrf::hsm::pkcs11::Pkcs11VrfSigner">Pkcs11VrfSigner</a></h3></section><section id="impl-HsmVrfSigner-for-SoftwareVrfSigner" class="impl"><a class="src rightside" href="../../src/cardano_vrf/hsm/software.rs.html#100-191">Source</a><a href="#impl-HsmVrfSigner-for-SoftwareVrfSigner" class="anchor">§</a><h3 class="code-header">impl <a class="trait" href="trait.HsmVrfSigner.html" title="trait cardano_vrf::hsm::HsmVrfSigner">HsmVrfSigner</a> for <a class="struct" href="software/struct.SoftwareVrfSigner.html" title="struct cardano_vrf::hsm::software::SoftwareVrfSigner">SoftwareVrfSigner</a></h3></section></div><script src="../../trait.impl/cardano_vrf/hsm/trait.HsmVrfSigner.js" async></script></section></div></main></body></html>

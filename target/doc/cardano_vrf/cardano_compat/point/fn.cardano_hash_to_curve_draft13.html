@@ -1,0 +1,41 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Hash arbitrary data to an Edwards curve point (Draft-13, Try-And-Increment)"><title>cardano_hash_to_curve_draft13 in cardano_vrf::cardano_compat::point - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../../" data-static-root-path="../../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../../static.files/storage-e2aeef58.js"></script><script defer src="sidebar-items.js"></script><script defer src="../../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../../static.files/favicon-044be391.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">cardano_hash_to_curve_draft13</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">cardano_<wbr>hash_<wbr>to_<wbr>curve_<wbr>draft13</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#algorithm" title="Algorithm">Algorithm</a></li><li><a href="#differences-from-draft-03" title="Differences from Draft-03">Differences from Draft-03</a></li><li><a href="#arguments" title="Arguments">Arguments</a></li><li><a href="#returns" title="Returns">Returns</a></li><li><a href="#errors" title="Errors">Errors</a></li><li><a href="#examples" title="Examples">Examples</a></li></ul></section><div id="rustdoc-modnav"><h2><a href="index.html">In cardano_<wbr>vrf::<wbr>cardano_<wbr>compat::<wbr>point</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../../index.html">cardano_vrf</a>::<wbr><a href="../index.html">cardano_compat</a>::<wbr><a href="index.html">point</a></div><h1>Function <span class="fn">cardano_<wbr>hash_<wbr>to_<wbr>curve_<wbr>draft13</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../../src/cardano_vrf/cardano_compat/point.rs.html#213-260">Source</a> </span></div><pre class="rust item-decl"><code>pub fn cardano_hash_to_curve_draft13(
+    pk: &amp;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>],
+    message: &amp;[<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>],
+) -&gt; <a class="type" href="../../type.VrfResult.html" title="type cardano_vrf::VrfResult">VrfResult</a>&lt;(EdwardsPoint, [<a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.u8.html">u8</a>; <a class="primitive" href="https://doc.rust-lang.org/1.91.0/std/primitive.array.html">32</a>])&gt;</code></pre><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Hash arbitrary data to an Edwards curve point (Draft-13, Try-And-Increment)</p>
+<p>Implements the hash-to-curve operation for IETF VRF Draft-13 using the
+Try-And-Increment method. This variant is designed for batch verification
+compatibility.</p>
+<h2 id="algorithm"><a class="doc-anchor" href="#algorithm">§</a>Algorithm</h2>
+<ol>
+<li>Compute <code>r = SHA-512(suite || 0x01 || public_key || message)</code></li>
+<li>Take first 32 bytes and clear sign bit</li>
+<li>Attempt to decompress as Edwards Y coordinate</li>
+<li>If decompression fails, increment counter and retry</li>
+<li>Clear cofactor from resulting point</li>
+</ol>
+<h2 id="differences-from-draft-03"><a class="doc-anchor" href="#differences-from-draft-03">§</a>Differences from Draft-03</h2>
+<ul>
+<li>Uses Suite ID <code>0x03</code> instead of <code>0x04</code></li>
+<li>Supports batch verification of multiple proofs</li>
+<li>Identical try-and-increment fallback logic</li>
+</ul>
+<h2 id="arguments"><a class="doc-anchor" href="#arguments">§</a>Arguments</h2>
+<ul>
+<li><code>pk</code> - Public key bytes (domain separation)</li>
+<li><code>message</code> - Message bytes to hash to curve</li>
+</ul>
+<h2 id="returns"><a class="doc-anchor" href="#returns">§</a>Returns</h2>
+<p>A tuple containing:</p>
+<ul>
+<li>The curve point (torsion-free, in prime-order subgroup)</li>
+<li>The compressed point bytes (32 bytes)</li>
+</ul>
+<h2 id="errors"><a class="doc-anchor" href="#errors">§</a>Errors</h2>
+<p>Returns <a href="../../enum.VrfError.html#variant.InvalidPoint" title="variant cardano_vrf::VrfError::InvalidPoint"><code>VrfError::InvalidPoint</code></a> if no valid point found after 256 attempts</p>
+<h2 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::cardano_compat::point::cardano_hash_to_curve_draft13;
+
+<span class="kw">let </span>public_key = [<span class="number">0u8</span>; <span class="number">32</span>];
+<span class="kw">let </span>message = <span class="string">b"batch verification"</span>;
+<span class="kw">let </span>(point, point_bytes) = cardano_hash_to_curve_draft13(<span class="kw-2">&amp;</span>public_key, message)
+    .expect(<span class="string">"hash-to-curve failed"</span>);</code></pre></div></div></details></section></div></main></body></html>

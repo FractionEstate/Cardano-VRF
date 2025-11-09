@@ -12,6 +12,28 @@ pub struct AzureKeyVaultVrfSigner {
 }
 
 impl AzureKeyVaultVrfSigner {
+    /// Creates a new Azure Key Vault VRF signer
+    ///
+    /// # Arguments
+    ///
+    /// * `vault_url` - Azure Key Vault URL (e.g., `https://myvault.vault.azure.net`)
+    /// * `client_id` - Azure AD application (client) ID
+    /// * `client_secret` - Azure AD application client secret
+    /// * `tenant_id` - Azure AD tenant ID
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// use cardano_vrf::hsm::AzureKeyVaultVrfSigner;
+    ///
+    /// let signer = AzureKeyVaultVrfSigner::new(
+    ///     "https://myvault.vault.azure.net".to_string(),
+    ///     "app-client-id".to_string(),
+    ///     "client-secret".to_string(),
+    ///     "tenant-id".to_string()
+    /// )?;
+    /// # Ok::<(), cardano_vrf::VrfError>(())
+    /// ```
     pub fn new(
         vault_url: String,
         client_id: String,

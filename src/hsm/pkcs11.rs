@@ -14,6 +14,26 @@ pub struct Pkcs11VrfSigner {
 }
 
 impl Pkcs11VrfSigner {
+    /// Creates a new PKCS#11 VRF signer
+    ///
+    /// # Arguments
+    ///
+    /// * `library_path` - Path to PKCS#11 library (e.g., `/usr/lib/libsofthsm2.so`)
+    /// * `slot_id` - HSM slot identifier
+    /// * `pin` - PIN for HSM access
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// use cardano_vrf::hsm::Pkcs11VrfSigner;
+    ///
+    /// let signer = Pkcs11VrfSigner::new(
+    ///     "/usr/lib/softhsm/libsofthsm2.so".to_string(),
+    ///     0,
+    ///     "1234".to_string()
+    /// )?;
+    /// # Ok::<(), cardano_vrf::VrfError>(())
+    /// ```
     pub fn new(library_path: String, slot_id: u64, pin: String) -> VrfResult<Self> {
         // Note: Actual PKCS#11 implementation would use cryptoki crate
         // This is a placeholder showing the API structure

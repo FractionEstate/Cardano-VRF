@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"constant":["OUTPUT_SIZE","PROOF_SIZE","PUBLIC_KEY_SIZE","SECRET_KEY_SIZE","SEED_SIZE"],"struct":["VrfDraft03"]};

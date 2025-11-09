@@ -1,7 +1,30 @@
-//! Edwards point operations and cofactor clearing
+//! Edwards curve point operations and hash-to-curve implementations
 //!
-//! This module implements operations on Edwards curve points, including
-//! Cardano-specific cofactor clearing that differs from standard implementations.
+//! This module provides Cardano-compatible implementations of cryptographic
+//! operations on Edwards curve points, including:
+//!
+//! - Cofactor clearing for security
+//! - Hash-to-curve for Draft-03 (Elligator2-based)
+//! - Hash-to-curve for Draft-13 (Try-And-Increment)
+//!
+//! # Security Considerations
+//!
+//! ## Cofactor Clearing
+//!
+//! All hash-to-curve functions in this module return points that have been
+//! cleared of the cofactor (multiplied by 8). This is **critical** for
+//! curve25519-dalek v4 compatibility:
+//!
+//! - Points with torsion can cause distributive property failures
+//! - `P * (a + b) != P * a + P * b` when P has torsion
+//! - VRF verification relies on this property holding
+//!
+//! ## Domain Separation
+//!
+//! Each hash-to-curve variant uses a unique suite identifier to prevent
+//! cross-protocol attacks:
+//! - Draft-03: `0x04` (ECVRF-ED25519-SHA512-ELL2)
+//! - Draft-13: `0x03` (ECVRF-ED25519-SHA512-TAI)
 
 use curve25519_dalek::edwards::{CompressedEdwardsY, EdwardsPoint};
 use sha2::{Digest, Sha512};
@@ -9,22 +32,87 @@ use sha2::{Digest, Sha512};
 use crate::common::{SUITE_DRAFT03, SUITE_DRAFT13, ONE};
 use crate::{VrfError, VrfResult};
 
-/// Cardano-specific cofactor clearing
+/// Clear the cofactor from an Edwards curve point (Cardano-compatible)
 ///
-/// This multiplies the point by 8 (the cofactor of Ed25519)
+/// Multiplies the input point by 8 (the cofactor of Ed25519) to ensure
+/// it lies in the prime-order subgroup. This prevents small-subgroup
+/// attacks and ensures compatibility with curve25519-dalek v4.
+///
+/// # Arguments
+///
+/// * `point` - The Edwards point to clear
+///
+/// # Returns
+///
+/// A point in the prime-order subgroup (torsion-free)
+///
+/// # Security
+///
+/// This operation is **essential** for VRF security. Points with torsion
+/// can cause verification failures due to arithmetic property violations
+/// in curve25519-dalek v4.
+///
+/// # Examples
+///
+/// ```rust
+/// use cardano_vrf::cardano_compat::point::cardano_clear_cofactor;
+/// use curve25519_dalek::constants::ED25519_BASEPOINT_POINT;
+///
+/// let cleared = cardano_clear_cofactor(&ED25519_BASEPOINT_POINT);
+/// // cleared is guaranteed torsion-free
+/// ```
 #[must_use]
 pub fn cardano_clear_cofactor(point: &EdwardsPoint) -> EdwardsPoint {
     point.mul_by_cofactor()
 }
 
-/// Hash to curve for Draft-03 (Cardano-compatible)
+/// Hash arbitrary data to an Edwards curve point (Draft-03, Elligator2-based)
+///
+/// Implements the hash-to-curve operation for IETF VRF Draft-03 using a
+/// simplified Elligator2 approach. The output is deterministic and uniformly
+/// distributed over the prime-order subgroup.
+///
+/// # Algorithm
+///
+/// 1. Compute `r = SHA-512(suite || 0x01 || public_key || message)`
+/// 2. Take first 32 bytes and clear sign bit
+/// 3. Attempt to decompress as Edwards Y coordinate
+/// 4. If decompression fails, try again with incrementing counter
+/// 5. Clear cofactor from resulting point
 ///
 /// # Arguments
-/// * `pk` - Public key bytes
-/// * `message` - Message to hash
+///
+/// * `pk` - Public key bytes (domain separation)
+/// * `message` - Message bytes to hash to curve
 ///
 /// # Returns
-/// Tuple of (point on curve, compressed representation bytes)
+///
+/// A tuple containing:
+/// - The curve point (torsion-free, in prime-order subgroup)
+/// - The compressed point bytes (32 bytes)
+///
+/// # Errors
+///
+/// Returns [`VrfError::InvalidPoint`] if:
+/// - No valid point can be found after 256 retry attempts (extremely unlikely)
+/// - This indicates a catastrophic hash function failure
+///
+/// # Security
+///
+/// - Uses Suite ID `0x04` for domain separation
+/// - Clears cofactor to prevent torsion-related attacks
+/// - Output is indistinguishable from random points
+///
+/// # Examples
+///
+/// ```rust
+/// use cardano_vrf::cardano_compat::point::cardano_hash_to_curve;
+///
+/// let public_key = [0u8; 32];
+/// let message = b"test message";
+/// let (point, point_bytes) = cardano_hash_to_curve(&public_key, message)
+///     .expect("hash-to-curve failed");
+/// ```
 pub fn cardano_hash_to_curve(
     pk: &[u8],
     message: &[u8],
@@ -77,14 +165,51 @@ pub fn cardano_hash_to_curve(
     }
 }
 
-/// Hash to curve for Draft-13 (batch-compatible)
+/// Hash arbitrary data to an Edwards curve point (Draft-13, Try-And-Increment)
+///
+/// Implements the hash-to-curve operation for IETF VRF Draft-13 using the
+/// Try-And-Increment method. This variant is designed for batch verification
+/// compatibility.
+///
+/// # Algorithm
+///
+/// 1. Compute `r = SHA-512(suite || 0x01 || public_key || message)`
+/// 2. Take first 32 bytes and clear sign bit
+/// 3. Attempt to decompress as Edwards Y coordinate
+/// 4. If decompression fails, increment counter and retry
+/// 5. Clear cofactor from resulting point
+///
+/// # Differences from Draft-03
+///
+/// - Uses Suite ID `0x03` instead of `0x04`
+/// - Supports batch verification of multiple proofs
+/// - Identical try-and-increment fallback logic
 ///
 /// # Arguments
-/// * `pk` - Public key bytes
-/// * `message` - Message to hash
+///
+/// * `pk` - Public key bytes (domain separation)
+/// * `message` - Message bytes to hash to curve
 ///
 /// # Returns
-/// Tuple of (point on curve, compressed representation bytes)
+///
+/// A tuple containing:
+/// - The curve point (torsion-free, in prime-order subgroup)
+/// - The compressed point bytes (32 bytes)
+///
+/// # Errors
+///
+/// Returns [`VrfError::InvalidPoint`] if no valid point found after 256 attempts
+///
+/// # Examples
+///
+/// ```rust
+/// use cardano_vrf::cardano_compat::point::cardano_hash_to_curve_draft13;
+///
+/// let public_key = [0u8; 32];
+/// let message = b"batch verification";
+/// let (point, point_bytes) = cardano_hash_to_curve_draft13(&public_key, message)
+///     .expect("hash-to-curve failed");
+/// ```
 pub fn cardano_hash_to_curve_draft13(
     pk: &[u8],
     message: &[u8],
@@ -155,6 +280,15 @@ mod tests {
         let message = b"test";
 
         let result = cardano_hash_to_curve(&pk, message);
+        assert!(result.is_ok());
+    }
+
+    #[test]
+    fn test_hash_to_curve_draft13() {
+        let pk = [0u8; 32];
+        let message = b"test";
+
+        let result = cardano_hash_to_curve_draft13(&pk, message);
         assert!(result.is_ok());
     }
 }

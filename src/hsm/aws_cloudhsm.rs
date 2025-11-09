@@ -11,6 +11,26 @@ pub struct AwsCloudHsmVrfSigner {
 }
 
 impl AwsCloudHsmVrfSigner {
+    /// Creates a new AWS CloudHSM VRF signer
+    ///
+    /// # Arguments
+    ///
+    /// * `cluster_id` - AWS CloudHSM cluster identifier
+    /// * `user` - HSM user name
+    /// * `password` - HSM user password
+    ///
+    /// # Example
+    ///
+    /// ```no_run
+    /// use cardano_vrf::hsm::AwsCloudHsmVrfSigner;
+    ///
+    /// let signer = AwsCloudHsmVrfSigner::new(
+    ///     "cluster-abc123".to_string(),
+    ///     "crypto_user".to_string(),
+    ///     "password".to_string()
+    /// )?;
+    /// # Ok::<(), cardano_vrf::VrfError>(())
+    /// ```
     pub fn new(cluster_id: String, user: String, password: String) -> VrfResult<Self> {
         Ok(Self {
             cluster_id,

@@ -7,9 +7,13 @@ use std::fmt;
 /// Log level for VRF operations
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
 pub enum LogLevel {
+    /// Debug-level logging for detailed diagnostics
     Debug,
+    /// Informational messages about normal operations
     Info,
+    /// Warning messages about potential issues
     Warning,
+    /// Error messages for operation failures
     Error,
 }
 
@@ -27,10 +31,15 @@ impl fmt::Display for LogLevel {
 /// VRF operation types for logging
 #[derive(Debug, Clone, Copy)]
 pub enum VrfOperation {
+    /// VRF proof generation
     Prove,
+    /// VRF proof verification
     Verify,
+    /// VRF keypair generation
     KeyGeneration,
+    /// VRF key retrieval from storage
     KeyRetrieval,
+    /// HSM-related operations
     HsmOperation,
 }
 
@@ -59,6 +68,13 @@ pub struct LogEntry {
 }
 
 impl LogEntry {
+    /// Creates a new log entry
+    ///
+    /// # Arguments
+    ///
+    /// * `level` - Log severity level
+    /// * `operation` - VRF operation being logged
+    /// * `message` - Descriptive message
     pub fn new(level: LogLevel, operation: VrfOperation, message: String) -> Self {
         Self {
             timestamp: std::time::SystemTime::now(),
@@ -71,16 +87,19 @@ impl LogEntry {
         }
     }
 
+    /// Adds key identifier to log entry
     pub fn with_key_id(mut self, key_id: String) -> Self {
         self.key_id = Some(key_id);
         self
     }
 
+    /// Adds operation duration to log entry
     pub fn with_duration(mut self, duration: std::time::Duration) -> Self {
         self.duration_us = Some(duration.as_micros() as u64);
         self
     }
 
+    /// Adds success/failure status to log entry
     pub fn with_success(mut self, success: bool) -> Self {
         self.success = Some(success);
         self
@@ -148,10 +167,16 @@ pub struct VrfLogger {
 }
 
 impl VrfLogger {
+    /// Creates a new logger with specified minimum level
+    ///
+    /// # Arguments
+    ///
+    /// * `min_level` - Minimum log level to output
     pub fn new(min_level: LogLevel) -> Self {
         Self { min_level }
     }
 
+    /// Logs an entry if it meets the minimum level threshold
     pub fn log(&self, entry: LogEntry) {
         if entry.level >= self.min_level {
             // In production, this would go to a proper logging framework
@@ -160,18 +185,54 @@ impl VrfLogger {
         }
     }
 
+    /// Log a debug-level message
+    ///
+    /// Debug messages are typically used for detailed diagnostic information
+    /// useful during development and troubleshooting.
+    ///
+    /// # Arguments
+    ///
+    /// * `operation` - The VRF operation being performed
+    /// * `message` - Descriptive message
     pub fn debug(&self, operation: VrfOperation, message: String) {
         self.log(LogEntry::new(LogLevel::Debug, operation, message));
     }
 
+    /// Log an info-level message
+    ///
+    /// Info messages record normal operational events such as successful
+    /// proof generation or verification.
+    ///
+    /// # Arguments
+    ///
+    /// * `operation` - The VRF operation being performed
+    /// * `message` - Descriptive message
     pub fn info(&self, operation: VrfOperation, message: String) {
         self.log(LogEntry::new(LogLevel::Info, operation, message));
     }
 
+    /// Log a warning-level message
+    ///
+    /// Warnings indicate potential issues that don't prevent operation
+    /// but may require attention (e.g., degraded performance, retries).
+    ///
+    /// # Arguments
+    ///
+    /// * `operation` - The VRF operation being performed
+    /// * `message` - Descriptive message
     pub fn warning(&self, operation: VrfOperation, message: String) {
         self.log(LogEntry::new(LogLevel::Warning, operation, message));
     }
 
+    /// Log an error-level message
+    ///
+    /// Errors indicate operation failures that require immediate attention.
+    /// These should be monitored and alerted on in production systems.
+    ///
+    /// # Arguments
+    ///
+    /// * `operation` - The VRF operation that failed
+    /// * `message` - Error description
     pub fn error(&self, operation: VrfOperation, message: String) {
         self.log(LogEntry::new(LogLevel::Error, operation, message));
     }
