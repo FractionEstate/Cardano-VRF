@@ -1,3 +1,73 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Production monitoring and metrics"><title>cardano_vrf::metrics - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module metrics</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module metrics</a></h2><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate cardano_<wbr>vrf</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">cardano_vrf</a></div><h1>Module <span>metrics</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/cardano_vrf/metrics.rs.html#1-246">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Production monitoring and metrics</p>
-<p>Provides Prometheus-compatible metrics for VRF operations</p>
-</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.MetricsTimer.html" title="struct cardano_vrf::metrics::MetricsTimer">Metrics<wbr>Timer</a></dt><dd>Timer for measuring operation duration</dd><dt><a class="struct" href="struct.VrfMetrics.html" title="struct cardano_vrf::metrics::VrfMetrics">VrfMetrics</a></dt><dd>Metrics collector for VRF operations</dd></dl></section></div></main></body></html>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Production monitoring and metrics for VRF operations"><title>cardano_vrf::metrics - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2"href="../../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../../static.files/rustdoc-e56847b5.css"><meta name="rustdoc-vars" data-root-path="../../" data-static-root-path="../../static.files/" data-current-crate="cardano_vrf" data-themes="" data-resource-suffix="" data-rustdoc-version="1.91.0 (f8297e351 2025-10-28)" data-channel="1.91.0" data-search-js="search-e256b49e.js" data-stringdex-js="stringdex-c3e638e9.js" data-settings-js="settings-c38705f0.js" ><script src="../../static.files/storage-e2aeef58.js"></script><script defer src="../sidebar-items.js"></script><script defer src="../../static.files/main-6dc2a7f3.js"></script><noscript><link rel="stylesheet" href="../../static.files/noscript-263c88ec.css"></noscript><link rel="alternate icon" type="image/png" href="../../static.files/favicon-32x32-eab170b8.png"><link rel="icon" type="image/svg+xml" href="../../static.files/favicon-044be391.svg"></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><rustdoc-topbar><h2><a href="#">Module metrics</a></h2></rustdoc-topbar><nav class="sidebar"><div class="sidebar-crate"><h2><a href="../../cardano_vrf/index.html">cardano_<wbr>vrf</a><span class="version">0.1.0</span></h2></div><div class="sidebar-elems"><section id="rustdoc-toc"><h2 class="location"><a href="#">Module metrics</a></h2><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#supported-metrics" title="Supported Metrics">Supported Metrics</a><ul><li><a href="#prove-operations" title="Prove Operations">Prove Operations</a></li><li><a href="#verify-operations" title="Verify Operations">Verify Operations</a></li><li><a href="#hsm-operations" title="HSM Operations">HSM Operations</a></li></ul></li><li><a href="#performance" title="Performance">Performance</a></li><li><a href="#usage" title="Usage">Usage</a></li><li><a href="#integration-with-prometheus" title="Integration with Prometheus">Integration with Prometheus</a></li><li><a href="#security-considerations" title="Security Considerations">Security Considerations</a></li></ul><h3><a href="#structs">Module Items</a></h3><ul class="block"><li><a href="#structs" title="Structs">Structs</a></li></ul></section><div id="rustdoc-modnav"><h2 class="in-crate"><a href="../index.html">In crate cardano_<wbr>vrf</a></h2></div></div></nav><div class="sidebar-resizer" title="Drag to resize sidebar"></div><main><div class="width-limiter"><section id="main-content" class="content"><div class="main-heading"><div class="rustdoc-breadcrumbs"><a href="../index.html">cardano_vrf</a></div><h1>Module <span>metrics</span>&nbsp;<button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../../src/cardano_vrf/metrics.rs.html#1-584">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Production monitoring and metrics for VRF operations</p>
+<p>This module provides Prometheus-compatible metrics collection for tracking
+VRF operation performance, success rates, and error conditions. Metrics are
+designed for integration with modern observability stacks including Prometheus,
+Grafana, and cloud monitoring services.</p>
+<h2 id="supported-metrics"><a class="doc-anchor" href="#supported-metrics">§</a>Supported Metrics</h2><h3 id="prove-operations"><a class="doc-anchor" href="#prove-operations">§</a>Prove Operations</h3>
+<ul>
+<li><code>vrf_prove_total</code>: Total proof generation attempts</li>
+<li><code>vrf_prove_success</code>: Successful proof generations</li>
+<li><code>vrf_prove_failure</code>: Failed proof generations</li>
+<li><code>vrf_prove_duration_us</code>: Average proof generation time (microseconds)</li>
+</ul>
+<h3 id="verify-operations"><a class="doc-anchor" href="#verify-operations">§</a>Verify Operations</h3>
+<ul>
+<li><code>vrf_verify_total</code>: Total verification attempts</li>
+<li><code>vrf_verify_success</code>: Successful verifications</li>
+<li><code>vrf_verify_failure</code>: Failed verifications</li>
+<li><code>vrf_verify_duration_us</code>: Average verification time (microseconds)</li>
+</ul>
+<h3 id="hsm-operations"><a class="doc-anchor" href="#hsm-operations">§</a>HSM Operations</h3>
+<ul>
+<li><code>vrf_hsm_operations</code>: Total HSM interactions</li>
+<li><code>vrf_hsm_errors</code>: HSM operation failures</li>
+</ul>
+<h2 id="performance"><a class="doc-anchor" href="#performance">§</a>Performance</h2>
+<p>All metrics use lock-free atomic operations for minimal overhead. The metrics
+collector is thread-safe and can be safely shared across multiple threads
+using <code>Arc&lt;VrfMetrics&gt;</code> or by cloning (which uses internal <code>Arc</code>s).</p>
+<h2 id="usage"><a class="doc-anchor" href="#usage">§</a>Usage</h2>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>cardano_vrf::VrfMetrics;
+<span class="kw">use </span>std::time::Instant;
+
+<span class="kw">let </span>metrics = VrfMetrics::new();
+
+<span class="comment">// Track a prove operation
+</span><span class="kw">let </span>start = Instant::now();
+<span class="comment">// ... perform VRF proof generation ...
+</span><span class="kw">let </span>success = <span class="bool-val">true</span>; <span class="comment">// or false on error
+</span>metrics.record_prove(start.elapsed(), success);
+
+<span class="comment">// Export metrics in Prometheus format
+</span><span class="macro">println!</span>(<span class="string">"{}"</span>, metrics.prometheus_export());</code></pre></div><h2 id="integration-with-prometheus"><a class="doc-anchor" href="#integration-with-prometheus">§</a>Integration with Prometheus</h2>
+<p>The <code>prometheus_export()</code> method returns metrics in the standard Prometheus
+text exposition format. Serve this via an HTTP endpoint for scraping:</p>
+
+<div class="example-wrap ignore"><a href="#" class="tooltip" title="This example is not tested">ⓘ</a><pre class="rust rust-example-rendered"><code><span class="kw">use </span>actix_web::{web, App, HttpServer, Responder};
+<span class="kw">use </span>cardano_vrf::VrfMetrics;
+<span class="kw">use </span>std::sync::Arc;
+
+<span class="kw">async fn </span>metrics_handler(metrics: web::Data&lt;Arc&lt;VrfMetrics&gt;&gt;) -&gt; <span class="kw">impl </span>Responder {
+    metrics.prometheus_export()
+}
+
+<span class="attr">#[actix_web::main]
+</span><span class="kw">async fn </span>main() -&gt; std::io::Result&lt;()&gt; {
+    <span class="kw">let </span>metrics = Arc::new(VrfMetrics::new());
+
+    HttpServer::new(<span class="kw">move </span>|| {
+        App::new()
+            .app_data(web::Data::new(metrics.clone()))
+            .route(<span class="string">"/metrics"</span>, web::get().to(metrics_handler))
+    })
+    .bind(<span class="string">"127.0.0.1:9090"</span>)<span class="question-mark">?
+    </span>.run()
+    .<span class="kw">await
+</span>}</code></pre></div><h2 id="security-considerations"><a class="doc-anchor" href="#security-considerations">§</a>Security Considerations</h2>
+<ul>
+<li>Metrics may reveal operation patterns and timing information</li>
+<li>Ensure metrics endpoints are not publicly accessible</li>
+<li>Consider rate limiting and authentication for metrics endpoints</li>
+<li>Monitor for unusual patterns that may indicate attacks</li>
+</ul>
+</div></details><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.MetricsTimer.html" title="struct cardano_vrf::metrics::MetricsTimer">Metrics<wbr>Timer</a></dt><dd>Convenience timer for measuring VRF operation durations</dd><dt><a class="struct" href="struct.VrfMetrics.html" title="struct cardano_vrf::metrics::VrfMetrics">VrfMetrics</a></dt><dd>Thread-safe metrics collector for VRF operations</dd></dl></section></div></main></body></html>
