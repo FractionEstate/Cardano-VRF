@@ -79,8 +79,8 @@ pub mod metrics;
 pub use draft03::VrfDraft03;
 pub use draft13::VrfDraft13;
 pub use hsm::{HsmConfig, HsmFactory, HsmVrfSigner, HsmVrfVerifier};
-pub use logging::{LogLevel, VrfLogger, VrfOperation};
-pub use metrics::VrfMetrics;
+pub use logging::{LogEntry, LogLevel, VrfLogger, VrfOperation};
+pub use metrics::{MetricsTimer, VrfMetrics};
 
 /// Error types returned by VRF operations
 ///

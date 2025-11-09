@@ -44,12 +44,12 @@
 //! metrics.record_prove(start.elapsed(), success);
 //!
 //! // Export metrics in Prometheus format
-//! println!("{}", metrics.prometheus_export());
+//! println!("{}", metrics.prometheus_format());
 //! ```
 //!
 //! # Integration with Prometheus
 //!
-//! The `prometheus_export()` method returns metrics in the standard Prometheus
+//! The `prometheus_format()` method returns metrics in the standard Prometheus
 //! text exposition format. Serve this via an HTTP endpoint for scraping:
 //!
 //! ```rust,ignore
@@ -58,7 +58,7 @@
 //! use std::sync::Arc;
 //!
 //! async fn metrics_handler(metrics: web::Data<Arc<VrfMetrics>>) -> impl Responder {
-//!     metrics.prometheus_export()
+//!     metrics.prometheus_format()
 //! }
 //!
 //! #[actix_web::main]
@@ -102,7 +102,7 @@ use std::time::Instant;
 ///
 /// ```rust
 /// use cardano_vrf::VrfMetrics;
-/// use std::time::{Duration, Instant};
+/// use std::time::Duration;
 ///
 /// let metrics = VrfMetrics::new();
 ///
@@ -112,9 +112,8 @@ use std::time::Instant;
 /// // Record failed verification (800μs)
 /// metrics.record_verify(Duration::from_micros(800), false);
 ///
-/// // Get current statistics
-/// let stats = metrics.summary();
-/// println!("Prove success rate: {:.2}%", stats.prove_success_rate());
+/// // Export metrics in Prometheus format
+/// println!("{}", metrics.prometheus_format());
 /// ```
 #[derive(Clone)]
 pub struct VrfMetrics {
@@ -183,14 +182,14 @@ impl VrfMetrics {
     /// # Examples
     ///
     /// ```rust
-    /// use cardano_vrf::VrfMetrics;
+    /// use cardano_vrf::{VrfMetrics, VrfError};
     /// use std::time::Instant;
     ///
     /// let metrics = VrfMetrics::new();
     ///
     /// let start = Instant::now();
     /// // ... VRF proof generation code ...
-    /// let result = Ok(()); // or Err(...) on failure
+    /// let result: Result<(), VrfError> = Ok(());
     ///
     /// metrics.record_prove(start.elapsed(), result.is_ok());
     /// ```
