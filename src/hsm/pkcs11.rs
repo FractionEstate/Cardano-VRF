@@ -3,8 +3,8 @@
 //! This module provides VRF signing using PKCS#11 compliant HSMs.
 //! Requires a PKCS#11 library (e.g., SoftHSMv2, Thales nShield, etc.)
 
-use crate::{VrfError, VrfResult};
 use crate::hsm::HsmVrfSigner;
+use crate::{VrfError, VrfResult};
 
 /// PKCS#11 VRF signer (requires pkcs11 feature)
 pub struct Pkcs11VrfSigner {
@@ -28,7 +28,7 @@ impl Pkcs11VrfSigner {
     /// # Example
     ///
     /// ```no_run
-    /// use cardano_vrf::hsm::Pkcs11VrfSigner;
+    /// use cardano_vrf::hsm::pkcs11::Pkcs11VrfSigner;
     ///
     /// let signer = Pkcs11VrfSigner::new(
     ///     "/usr/lib/softhsm/libsofthsm2.so".to_string(),
@@ -56,7 +56,9 @@ impl HsmVrfSigner for Pkcs11VrfSigner {
         // 3. Find key object by label/ID
         // 4. Perform VRF prove operation
         // 5. Return proof
-        Err(VrfError::InvalidInput("PKCS#11 not yet implemented - compile with 'pkcs11' feature".into()))
+        Err(VrfError::InvalidInput(
+            "PKCS#11 not yet implemented - compile with 'pkcs11' feature".into(),
+        ))
     }
 
     fn get_public_key(&self, _key_id: &str) -> VrfResult<[u8; 32]> {

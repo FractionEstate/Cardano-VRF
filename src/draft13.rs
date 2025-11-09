@@ -2,15 +2,12 @@
 //!
 //! This implements ECVRF-ED25519-SHA512-TAI with batch verification support
 
-use curve25519_dalek::{
-    constants::ED25519_BASEPOINT_POINT,
-    scalar::Scalar,
-};
+use curve25519_dalek::{constants::ED25519_BASEPOINT_POINT, scalar::Scalar};
 use sha2::{Digest, Sha512};
 use zeroize::Zeroizing;
 
 use crate::cardano_compat::point::{cardano_clear_cofactor, cardano_hash_to_curve_draft13};
-use crate::common::{clamp_scalar, point_to_bytes, SUITE_DRAFT13, TWO, THREE};
+use crate::common::{clamp_scalar, point_to_bytes, SUITE_DRAFT13, THREE, TWO};
 use crate::{VrfError, VrfResult};
 
 /// VRF proof size for draft-13 batch-compatible (128 bytes)
@@ -74,7 +71,7 @@ impl VrfDraft13 {
         // Step 5: Compute nonce k
         let mut nonce_hasher = Sha512::new();
         nonce_hasher.update(&az[32..64]);
-        nonce_hasher.update(&h_string);
+        nonce_hasher.update(h_string);
         let nonce_hash = nonce_hasher.finalize();
         let nonce_hash_bytes: [u8; 64] = nonce_hash.into();
         let k = Scalar::from_bytes_mod_order_wide(&nonce_hash_bytes);
@@ -88,14 +85,14 @@ impl VrfDraft13 {
 
         // Step 7: Compute challenge c
         let mut c_hasher = Sha512::new();
-        c_hasher.update(&[SUITE_DRAFT13]);
-        c_hasher.update(&[TWO]);
+        c_hasher.update([SUITE_DRAFT13]);
+        c_hasher.update([TWO]);
         c_hasher.update(pk);
-        c_hasher.update(&h_string);
-        c_hasher.update(&gamma_bytes);
-        c_hasher.update(&k_b_bytes);
-        c_hasher.update(&k_h_bytes);
-        c_hasher.update(&[0x00]);
+        c_hasher.update(h_string);
+        c_hasher.update(gamma_bytes);
+        c_hasher.update(k_b_bytes);
+        c_hasher.update(k_h_bytes);
+        c_hasher.update([0x00]);
         let c_hash = c_hasher.finalize();
         let c_bytes_short: [u8; 16] = c_hash[0..16].try_into().unwrap();
 
@@ -170,14 +167,14 @@ impl VrfDraft13 {
 
         // Recompute challenge
         let mut c_hasher = Sha512::new();
-        c_hasher.update(&[SUITE_DRAFT13]);
-        c_hasher.update(&[TWO]);
+        c_hasher.update([SUITE_DRAFT13]);
+        c_hasher.update([TWO]);
         c_hasher.update(public_key);
-        c_hasher.update(&h_string);
-        c_hasher.update(&gamma_bytes);
-        c_hasher.update(&k_b_bytes);
-        c_hasher.update(&k_h_bytes);
-        c_hasher.update(&[0x00]);
+        c_hasher.update(h_string);
+        c_hasher.update(gamma_bytes);
+        c_hasher.update(k_b_bytes);
+        c_hasher.update(k_h_bytes);
+        c_hasher.update([0x00]);
         let c_hash = c_hasher.finalize();
 
         // Verify challenge using constant-time comparison (cryptographic best practice)
@@ -190,9 +187,9 @@ impl VrfDraft13 {
         // Compute VRF output
         let gamma_cleared = cardano_clear_cofactor(&gamma);
         let mut output_hasher = Sha512::new();
-        output_hasher.update(&[SUITE_DRAFT13]);
-        output_hasher.update(&[THREE]);
-        output_hasher.update(&point_to_bytes(&gamma_cleared));
+        output_hasher.update([SUITE_DRAFT13]);
+        output_hasher.update([THREE]);
+        output_hasher.update(point_to_bytes(&gamma_cleared));
         let output_hash = output_hasher.finalize();
 
         let mut output = [0u8; OUTPUT_SIZE];
@@ -218,9 +215,9 @@ impl VrfDraft13 {
         let gamma_cleared = cardano_clear_cofactor(&gamma);
 
         let mut hasher = Sha512::new();
-        hasher.update(&[SUITE_DRAFT13]);
-        hasher.update(&[THREE]);
-        hasher.update(&point_to_bytes(&gamma_cleared));
+        hasher.update([SUITE_DRAFT13]);
+        hasher.update([THREE]);
+        hasher.update(point_to_bytes(&gamma_cleared));
         let hash = hasher.finalize();
 
         let mut output = [0u8; OUTPUT_SIZE];
@@ -251,7 +248,8 @@ impl VrfDraft13 {
 
         (secret_key, public_key_bytes)
     }
-}#[cfg(test)]
+}
+#[cfg(test)]
 mod tests {
     use super::*;
 

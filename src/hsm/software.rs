@@ -3,14 +3,14 @@
 //! This module provides a software implementation of the HSM trait
 //! that stores keys in encrypted files. NOT for production use.
 
-use crate::{VrfError, VrfResult};
-use crate::hsm::HsmVrfSigner;
 use crate::cardano_compat::cardano_vrf_prove;
+use crate::hsm::HsmVrfSigner;
+use crate::{VrfError, VrfResult};
+use ed25519_dalek::SigningKey;
 use std::collections::HashMap;
 use std::fs;
 use std::path::PathBuf;
 use std::sync::RwLock;
-use ed25519_dalek::SigningKey;
 
 /// Software-based VRF signer (for testing only)
 pub struct SoftwareVrfSigner {
@@ -154,8 +154,10 @@ impl HsmVrfSigner for SoftwareVrfSigner {
         let mut keys = Vec::new();
 
         for entry in fs::read_dir(&self.storage_path)
-            .map_err(|e| VrfError::InvalidInput(format!("Cannot read directory: {}", e)))? {
-            let entry = entry.map_err(|e| VrfError::InvalidInput(format!("Cannot read entry: {}", e)))?;
+            .map_err(|e| VrfError::InvalidInput(format!("Cannot read directory: {}", e)))?
+        {
+            let entry =
+                entry.map_err(|e| VrfError::InvalidInput(format!("Cannot read entry: {}", e)))?;
             let path = entry.path();
 
             if path.extension().and_then(|s| s.to_str()) == Some("key") {
@@ -175,7 +177,9 @@ impl HsmVrfSigner for SoftwareVrfSigner {
         }
 
         if !self.storage_path.is_dir() {
-            return Err(VrfError::InvalidInput("Storage path is not a directory".into()));
+            return Err(VrfError::InvalidInput(
+                "Storage path is not a directory".into(),
+            ));
         }
 
         // Try to write a test file

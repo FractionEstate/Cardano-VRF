@@ -1,6 +1,6 @@
 //! Test scalar multiplication order
 
-use curve25519_dalek::{constants, scalar::Scalar, edwards::EdwardsPoint};
+use curve25519_dalek::{constants, scalar::Scalar};
 
 fn main() {
     let scalar_bytes = [1u8; 32];
@@ -12,6 +12,12 @@ fn main() {
     let result2 = s * point;
 
     println!("point * s == s * point: {}", result1 == result2);
-    println!("point * s: {:?}", result1.compress().to_bytes()[0..8].to_vec());
-    println!("s * point: {:?}", result2.compress().to_bytes()[0..8].to_vec());
+    println!(
+        "point * s: {:?}",
+        result1.compress().to_bytes()[0..8].to_vec()
+    );
+    println!(
+        "s * point: {:?}",
+        result2.compress().to_bytes()[0..8].to_vec()
+    );
 }

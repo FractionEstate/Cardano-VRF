@@ -7,7 +7,7 @@
 //! Test vectors are from: IntersectMBO/cardano-base
 
 use cardano_vrf::cardano_compat::{cardano_vrf_prove, cardano_vrf_verify};
-use cardano_vrf::{VrfDraft03, VrfDraft13};
+use cardano_vrf::VrfDraft13;
 use hex::FromHex;
 
 // ============================================================================
@@ -25,7 +25,7 @@ fn test_vrf_ver03_standard_10() {
 
     let sk_seed = <[u8; 32]>::from_hex(sk_hex).unwrap();
     let pk = <[u8; 32]>::from_hex(pk_hex).unwrap();
-    let alpha = b"";  // empty message
+    let alpha = b""; // empty message
     let expected_proof = <Vec<u8>>::from_hex(expected_proof_hex).unwrap();
     let expected_beta = <Vec<u8>>::from_hex(expected_beta_hex).unwrap();
 
@@ -133,11 +133,11 @@ fn test_vrf_ver03_generated_1() {
 fn test_vrf_ver03_generated_2() {
     println!("\n=== VRF Draft-03 Generated Vector 2 ===");
 
-    let sk_hex = "0101010101010101010101010101010101010101010101010101010101010101";
-    let pk_hex = "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a";
-    let alpha_hex = "72";
-    let expected_proof_hex = "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef";  // Placeholder - need actual value
-    let expected_beta_hex = "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321";  // Placeholder - need actual value
+    let _sk_hex = "0101010101010101010101010101010101010101010101010101010101010101";
+    let _pk_hex = "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a";
+    let _alpha_hex = "72";
+    let _expected_proof_hex = "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"; // Placeholder - need actual value
+    let _expected_beta_hex = "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321"; // Placeholder - need actual value
 
     // Note: These are placeholder values. The actual test vectors need to be obtained
     // from the cardano-base-rust test_vectors directory.
@@ -166,7 +166,7 @@ fn test_vrf_ver13_standard_10() {
 
     let seed_hex = "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60";
     let pk_hex = "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a";
-    let message = b"";  // empty message
+    let message = b""; // empty message
     let expected_proof_hex = "7d9c633ffeee27349264cf5c667579fc583b4bda63ab71d001f89c10003ab46f762f5c178b68f0cddcc1157918edf45ec334ac8e8286601a3256c3bbf858edd94652eba1c4612e6fce762977a59420b451e12964adbe4fbecd58a7aeff5860afcafa73589b023d14311c331a9ad15ff2fb37831e00f0acaa6d73bc9997b06501";
     let expected_beta_hex = "9d574bf9b8302ec0fc1e21c3ec5368269527b87b462ce36dab2d14ccf80c53cccf6758f058c5b1c856b116388152bbe509ee3b9ecfe63d93c3b4346c1fbc6c54";
 
@@ -208,9 +208,9 @@ fn test_vrf_ver13_generated_1() {
     println!("\n=== VRF Draft-13 Generated Vector 1 ===");
 
     let seed = [0u8; 32];
-    let pk_bytes = <[u8; 32]>::from_hex(
-        "3b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29"
-    ).unwrap();
+    let pk_bytes =
+        <[u8; 32]>::from_hex("3b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29")
+            .unwrap();
     let message = [0u8; 1]; // Single zero byte
     let expected_proof_hex = "93d70c5ed59ccb21ca9991be561756939ff9753bf85764d2a7b937d6fbf9183443cd118bee8a0f61e8bdc5403c03d6c94ead31956e98bfd6a5e02d3be5900d17a540852d586f0891caed3e3b0e0871d6a741fb0edcdb586f7f10252f79c35176474ece4936e0190b5167832c10712884ad12acdfff2e434aacb165e1f789660f";
     let expected_beta_hex = "9a4d34f87003412e413ca42feba3b6158bdf11db41c2bbde98961c5865400cfdee07149b928b376db365c5d68459378b0981f1cb0510f1e0c194c4a17603d44d";
@@ -305,17 +305,30 @@ fn test_all_official_vectors() {
     println!("║                      TEST SUMMARY                          ║");
     println!("╠════════════════════════════════════════════════════════════╣");
     println!("║  Total Official Vectors: 14                                ║");
-    println!("║  Implemented & Passing:  {}                                 ║", passed);
-    println!("║  Pending Implementation: {}                                 ║", total - passed);
+    println!(
+        "║  Implemented & Passing:  {}                                 ║",
+        passed
+    );
+    println!(
+        "║  Pending Implementation: {}                                 ║",
+        total - passed
+    );
     println!("╚════════════════════════════════════════════════════════════╝\n");
 
     if passed < total {
         println!("⚠️  WARNING: Not all test vectors have been implemented yet.");
         println!("   Need to obtain actual test vector data from cardano-base-rust repository.");
-        println!("   Currently passing: {}/{} vectors ({:.1}% coverage)",
-                 passed, total, (passed as f64 / total as f64) * 100.0);
+        println!(
+            "   Currently passing: {}/{} vectors ({:.1}% coverage)",
+            passed,
+            total,
+            (passed as f64 / total as f64) * 100.0
+        );
     } else {
         println!("✅ 100% CRYPTOGRAPHIC PARITY ACHIEVED");
-        println!("   All {} official Cardano VRF test vectors passing!", total);
+        println!(
+            "   All {} official Cardano VRF test vectors passing!",
+            total
+        );
     }
 }

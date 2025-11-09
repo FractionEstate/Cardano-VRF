@@ -1,7 +1,7 @@
 //! Azure Key Vault integration for VRF operations
 
-use crate::{VrfError, VrfResult};
 use crate::hsm::HsmVrfSigner;
+use crate::{VrfError, VrfResult};
 
 /// Azure Key Vault VRF signer
 pub struct AzureKeyVaultVrfSigner {
@@ -28,7 +28,7 @@ impl AzureKeyVaultVrfSigner {
     /// # Example
     ///
     /// ```no_run
-    /// use cardano_vrf::hsm::AzureKeyVaultVrfSigner;
+    /// use cardano_vrf::hsm::azure_keyvault::AzureKeyVaultVrfSigner;
     ///
     /// let signer = AzureKeyVaultVrfSigner::new(
     ///     "https://myvault.vault.azure.net".to_string(),
@@ -55,27 +55,39 @@ impl AzureKeyVaultVrfSigner {
 
 impl HsmVrfSigner for AzureKeyVaultVrfSigner {
     fn prove(&self, _key_id: &str, _message: &[u8]) -> VrfResult<Vec<u8>> {
-        Err(VrfError::InvalidInput("Azure Key Vault not yet implemented - compile with 'azure-keyvault' feature".into()))
+        Err(VrfError::InvalidInput(
+            "Azure Key Vault not yet implemented - compile with 'azure-keyvault' feature".into(),
+        ))
     }
 
     fn get_public_key(&self, _key_id: &str) -> VrfResult<[u8; 32]> {
-        Err(VrfError::InvalidInput("Azure Key Vault not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "Azure Key Vault not yet implemented".into(),
+        ))
     }
 
     fn generate_keypair(&self, _key_id: &str) -> VrfResult<[u8; 32]> {
-        Err(VrfError::InvalidInput("Azure Key Vault not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "Azure Key Vault not yet implemented".into(),
+        ))
     }
 
     fn delete_key(&self, _key_id: &str) -> VrfResult<()> {
-        Err(VrfError::InvalidInput("Azure Key Vault not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "Azure Key Vault not yet implemented".into(),
+        ))
     }
 
     fn list_keys(&self) -> VrfResult<Vec<String>> {
-        Err(VrfError::InvalidInput("Azure Key Vault not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "Azure Key Vault not yet implemented".into(),
+        ))
     }
 
     fn health_check(&self) -> VrfResult<()> {
-        Err(VrfError::InvalidInput("Azure Key Vault not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "Azure Key Vault not yet implemented".into(),
+        ))
     }
 }
 

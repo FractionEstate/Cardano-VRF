@@ -8,7 +8,7 @@ use zeroize::Zeroizing;
 
 use crate::cardano_compat::{cardano_vrf_prove, cardano_vrf_verify};
 use crate::common::{clamp_scalar, point_to_bytes};
-use crate::{VrfResult};
+use crate::VrfResult;
 
 /// VRF proof size for draft-03 (80 bytes)
 pub const PROOF_SIZE: usize = 80;
@@ -89,9 +89,9 @@ impl VrfDraft03 {
         let gamma_cleared = cardano_clear_cofactor(&gamma);
 
         let mut hasher = Sha512::new();
-        hasher.update(&[SUITE_DRAFT03]);
-        hasher.update(&[THREE]);
-        hasher.update(&point_to_bytes(&gamma_cleared));
+        hasher.update([SUITE_DRAFT03]);
+        hasher.update([THREE]);
+        hasher.update(point_to_bytes(&gamma_cleared));
         let hash = hasher.finalize();
 
         let mut output = [0u8; OUTPUT_SIZE];
@@ -122,7 +122,8 @@ impl VrfDraft03 {
 
         (secret_key, public_key)
     }
-}#[cfg(test)]
+}
+#[cfg(test)]
 mod tests {
     use super::*;
 

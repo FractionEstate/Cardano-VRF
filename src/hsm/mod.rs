@@ -33,10 +33,10 @@
 //! ## Software HSM (Development)
 //!
 //! ```rust
-//! use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+//! use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
 //!
 //! # fn main() -> Result<(), cardano_vrf::VrfError> {
-//! let hsm = SoftwareHsm::new();
+//! let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
 //!
 //! // Generate keypair
 //! let public_key = hsm.generate_keypair("my-vrf-key")?;
@@ -62,9 +62,9 @@
 #[allow(unused_imports)] // VrfError used in doc links
 use crate::{VrfError, VrfResult};
 
-pub mod pkcs11;
 pub mod aws_cloudhsm;
 pub mod azure_keyvault;
+pub mod pkcs11;
 pub mod software;
 
 /// Trait for VRF signing operations delegated to an HSM
@@ -107,10 +107,10 @@ pub trait HsmVrfSigner: Send + Sync {
     /// # Examples
     ///
     /// ```rust
-    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
     ///
     /// # fn main() -> Result<(), cardano_vrf::VrfError> {
-    /// let hsm = SoftwareHsm::new();
+    /// let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
     /// hsm.generate_keypair("slot-1")?;
     ///
     /// let proof = hsm.prove("slot-1", b"block-12345")?;
@@ -159,10 +159,10 @@ pub trait HsmVrfSigner: Send + Sync {
     /// # Examples
     ///
     /// ```rust
-    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
     ///
     /// # fn main() -> Result<(), cardano_vrf::VrfError> {
-    /// let hsm = SoftwareHsm::new();
+    /// let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
     /// let public_key = hsm.generate_keypair("validator-001")?;
     /// println!("Public key: {:02x?}", &public_key[0..8]);
     /// # Ok(())
@@ -202,10 +202,10 @@ pub trait HsmVrfSigner: Send + Sync {
     /// # Examples
     ///
     /// ```rust
-    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
     ///
     /// # fn main() -> Result<(), cardano_vrf::VrfError> {
-    /// let hsm = SoftwareHsm::new();
+    /// let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
     /// hsm.generate_keypair("key-1")?;
     /// hsm.generate_keypair("key-2")?;
     ///
@@ -301,18 +301,30 @@ impl HsmFactory {
     /// Create an HSM VRF signer from configuration
     pub fn create_signer(config: HsmConfig) -> VrfResult<Box<dyn HsmVrfSigner>> {
         match config {
-            HsmConfig::Pkcs11 { library_path, slot_id, pin } => {
-                pkcs11::Pkcs11VrfSigner::new(library_path, slot_id, pin)
-                    .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>)
-            }
-            HsmConfig::AwsCloudHsm { cluster_id, user, password } => {
-                aws_cloudhsm::AwsCloudHsmVrfSigner::new(cluster_id, user, password)
-                    .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>)
-            }
-            HsmConfig::AzureKeyVault { vault_url, client_id, client_secret, tenant_id } => {
-                azure_keyvault::AzureKeyVaultVrfSigner::new(vault_url, client_id, client_secret, tenant_id)
-                    .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>)
-            }
+            HsmConfig::Pkcs11 {
+                library_path,
+                slot_id,
+                pin,
+            } => pkcs11::Pkcs11VrfSigner::new(library_path, slot_id, pin)
+                .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>),
+            HsmConfig::AwsCloudHsm {
+                cluster_id,
+                user,
+                password,
+            } => aws_cloudhsm::AwsCloudHsmVrfSigner::new(cluster_id, user, password)
+                .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>),
+            HsmConfig::AzureKeyVault {
+                vault_url,
+                client_id,
+                client_secret,
+                tenant_id,
+            } => azure_keyvault::AzureKeyVaultVrfSigner::new(
+                vault_url,
+                client_id,
+                client_secret,
+                tenant_id,
+            )
+            .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>),
             HsmConfig::Software { key_storage_path } => {
                 software::SoftwareVrfSigner::new(key_storage_path)
                     .map(|s| Box::new(s) as Box<dyn HsmVrfSigner>)

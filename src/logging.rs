@@ -107,7 +107,8 @@ impl LogEntry {
 
     /// Format as JSON for structured logging
     pub fn to_json(&self) -> String {
-        let timestamp = self.timestamp
+        let timestamp = self
+            .timestamp
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();
@@ -135,7 +136,8 @@ impl LogEntry {
 
     /// Format as human-readable text
     pub fn to_text(&self) -> String {
-        let timestamp = self.timestamp
+        let timestamp = self
+            .timestamp
             .duration_since(std::time::UNIX_EPOCH)
             .unwrap()
             .as_secs();

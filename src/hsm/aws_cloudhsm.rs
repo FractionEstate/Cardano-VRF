@@ -1,7 +1,7 @@
 //! AWS CloudHSM integration for VRF operations
 
-use crate::{VrfError, VrfResult};
 use crate::hsm::HsmVrfSigner;
+use crate::{VrfError, VrfResult};
 
 /// AWS CloudHSM VRF signer
 pub struct AwsCloudHsmVrfSigner {
@@ -25,7 +25,7 @@ impl AwsCloudHsmVrfSigner {
     /// # Example
     ///
     /// ```no_run
-    /// use cardano_vrf::hsm::AwsCloudHsmVrfSigner;
+    /// use cardano_vrf::hsm::aws_cloudhsm::AwsCloudHsmVrfSigner;
     ///
     /// let signer = AwsCloudHsmVrfSigner::new(
     ///     "cluster-abc123".to_string(),
@@ -45,27 +45,39 @@ impl AwsCloudHsmVrfSigner {
 
 impl HsmVrfSigner for AwsCloudHsmVrfSigner {
     fn prove(&self, _key_id: &str, _message: &[u8]) -> VrfResult<Vec<u8>> {
-        Err(VrfError::InvalidInput("AWS CloudHSM not yet implemented - compile with 'aws-cloudhsm' feature".into()))
+        Err(VrfError::InvalidInput(
+            "AWS CloudHSM not yet implemented - compile with 'aws-cloudhsm' feature".into(),
+        ))
     }
 
     fn get_public_key(&self, _key_id: &str) -> VrfResult<[u8; 32]> {
-        Err(VrfError::InvalidInput("AWS CloudHSM not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "AWS CloudHSM not yet implemented".into(),
+        ))
     }
 
     fn generate_keypair(&self, _key_id: &str) -> VrfResult<[u8; 32]> {
-        Err(VrfError::InvalidInput("AWS CloudHSM not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "AWS CloudHSM not yet implemented".into(),
+        ))
     }
 
     fn delete_key(&self, _key_id: &str) -> VrfResult<()> {
-        Err(VrfError::InvalidInput("AWS CloudHSM not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "AWS CloudHSM not yet implemented".into(),
+        ))
     }
 
     fn list_keys(&self) -> VrfResult<Vec<String>> {
-        Err(VrfError::InvalidInput("AWS CloudHSM not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "AWS CloudHSM not yet implemented".into(),
+        ))
     }
 
     fn health_check(&self) -> VrfResult<()> {
-        Err(VrfError::InvalidInput("AWS CloudHSM not yet implemented".into()))
+        Err(VrfError::InvalidInput(
+            "AWS CloudHSM not yet implemented".into(),
+        ))
     }
 }
 

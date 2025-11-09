@@ -73,14 +73,14 @@ pub mod common;
 pub mod draft03;
 pub mod draft13;
 pub mod hsm;
-pub mod metrics;
 pub mod logging;
+pub mod metrics;
 
 pub use draft03::VrfDraft03;
 pub use draft13::VrfDraft13;
 pub use hsm::{HsmConfig, HsmFactory, HsmVrfSigner, HsmVrfVerifier};
+pub use logging::{LogLevel, VrfLogger, VrfOperation};
 pub use metrics::VrfMetrics;
-pub use logging::{VrfLogger, LogLevel, VrfOperation};
 
 /// Error types returned by VRF operations
 ///

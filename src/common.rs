@@ -13,7 +13,10 @@
 //! - Draft-03: `0x04` (ECVRF-ED25519-SHA512-ELL2)
 //! - Draft-13: `0x03` (ECVRF-ED25519-SHA512-TAI)
 
-use curve25519_dalek::{edwards::{CompressedEdwardsY, EdwardsPoint}, scalar::Scalar};
+use curve25519_dalek::{
+    edwards::{CompressedEdwardsY, EdwardsPoint},
+    scalar::Scalar,
+};
 use sha2::{Digest, Sha512};
 
 use crate::{VrfError, VrfResult};
@@ -195,9 +198,9 @@ pub fn scalar_to_bytes(scalar: &Scalar) -> [u8; 32] {
 /// ```
 #[must_use]
 pub fn clamp_scalar(mut bytes: [u8; 32]) -> [u8; 32] {
-    bytes[0] &= 248;   // Clear bottom 3 bits
-    bytes[31] &= 127;  // Clear top bit
-    bytes[31] |= 64;   // Set second-top bit
+    bytes[0] &= 248; // Clear bottom 3 bits
+    bytes[31] &= 127; // Clear top bit
+    bytes[31] |= 64; // Set second-top bit
     bytes
 }
 

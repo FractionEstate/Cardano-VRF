@@ -3,8 +3,8 @@
 <a href=#3 id=3 data-nosnippet>3</a>//! This module provides VRF signing using PKCS#11 compliant HSMs.
 <a href=#4 id=4 data-nosnippet>4</a>//! Requires a PKCS#11 library (e.g., SoftHSMv2, Thales nShield, etc.)
 <a href=#5 id=5 data-nosnippet>5</a>
-<a href=#6 id=6 data-nosnippet>6</a></span><span class="kw">use crate</span>::{VrfError, VrfResult};
-<a href=#7 id=7 data-nosnippet>7</a><span class="kw">use </span><span class="kw">crate</span>::hsm::HsmVrfSigner;
+<a href=#6 id=6 data-nosnippet>6</a></span><span class="kw">use </span><span class="kw">crate</span>::hsm::HsmVrfSigner;
+<a href=#7 id=7 data-nosnippet>7</a><span class="kw">use crate</span>::{VrfError, VrfResult};
 <a href=#8 id=8 data-nosnippet>8</a>
 <a href=#9 id=9 data-nosnippet>9</a><span class="doccomment">/// PKCS#11 VRF signer (requires pkcs11 feature)
 <a href=#10 id=10 data-nosnippet>10</a></span><span class="kw">pub struct </span>Pkcs11VrfSigner {
@@ -28,7 +28,7 @@
 <a href=#28 id=28 data-nosnippet>28</a>    /// # Example
 <a href=#29 id=29 data-nosnippet>29</a>    ///
 <a href=#30 id=30 data-nosnippet>30</a>    /// ```no_run
-<a href=#31 id=31 data-nosnippet>31</a>    /// use cardano_vrf::hsm::Pkcs11VrfSigner;
+<a href=#31 id=31 data-nosnippet>31</a>    /// use cardano_vrf::hsm::pkcs11::Pkcs11VrfSigner;
 <a href=#32 id=32 data-nosnippet>32</a>    ///
 <a href=#33 id=33 data-nosnippet>33</a>    /// let signer = Pkcs11VrfSigner::new(
 <a href=#34 id=34 data-nosnippet>34</a>    ///     "/usr/lib/softhsm/libsofthsm2.so".to_string(),
@@ -56,46 +56,48 @@
 <a href=#56 id=56 data-nosnippet>56</a>        // 3. Find key object by label/ID
 <a href=#57 id=57 data-nosnippet>57</a>        // 4. Perform VRF prove operation
 <a href=#58 id=58 data-nosnippet>58</a>        // 5. Return proof
-<a href=#59 id=59 data-nosnippet>59</a>        </span><span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented - compile with 'pkcs11' feature"</span>.into()))
-<a href=#60 id=60 data-nosnippet>60</a>    }
-<a href=#61 id=61 data-nosnippet>61</a>
-<a href=#62 id=62 data-nosnippet>62</a>    <span class="kw">fn </span>get_public_key(<span class="kw-2">&amp;</span><span class="self">self</span>, _key_id: <span class="kw-2">&amp;</span>str) -&gt; VrfResult&lt;[u8; <span class="number">32</span>]&gt; {
-<a href=#63 id=63 data-nosnippet>63</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
-<a href=#64 id=64 data-nosnippet>64</a>    }
-<a href=#65 id=65 data-nosnippet>65</a>
-<a href=#66 id=66 data-nosnippet>66</a>    <span class="kw">fn </span>generate_keypair(<span class="kw-2">&amp;</span><span class="self">self</span>, _key_id: <span class="kw-2">&amp;</span>str) -&gt; VrfResult&lt;[u8; <span class="number">32</span>]&gt; {
-<a href=#67 id=67 data-nosnippet>67</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
-<a href=#68 id=68 data-nosnippet>68</a>    }
-<a href=#69 id=69 data-nosnippet>69</a>
-<a href=#70 id=70 data-nosnippet>70</a>    <span class="kw">fn </span>delete_key(<span class="kw-2">&amp;</span><span class="self">self</span>, _key_id: <span class="kw-2">&amp;</span>str) -&gt; VrfResult&lt;()&gt; {
-<a href=#71 id=71 data-nosnippet>71</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
-<a href=#72 id=72 data-nosnippet>72</a>    }
-<a href=#73 id=73 data-nosnippet>73</a>
-<a href=#74 id=74 data-nosnippet>74</a>    <span class="kw">fn </span>list_keys(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; VrfResult&lt;Vec&lt;String&gt;&gt; {
-<a href=#75 id=75 data-nosnippet>75</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
-<a href=#76 id=76 data-nosnippet>76</a>    }
-<a href=#77 id=77 data-nosnippet>77</a>
-<a href=#78 id=78 data-nosnippet>78</a>    <span class="kw">fn </span>health_check(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; VrfResult&lt;()&gt; {
-<a href=#79 id=79 data-nosnippet>79</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
-<a href=#80 id=80 data-nosnippet>80</a>    }
-<a href=#81 id=81 data-nosnippet>81</a>}
-<a href=#82 id=82 data-nosnippet>82</a>
-<a href=#83 id=83 data-nosnippet>83</a><span class="comment">// Implementation notes for future PKCS#11 integration:
-<a href=#84 id=84 data-nosnippet>84</a>//
-<a href=#85 id=85 data-nosnippet>85</a>// Dependencies to add to Cargo.toml:
-<a href=#86 id=86 data-nosnippet>86</a>// [dependencies]
-<a href=#87 id=87 data-nosnippet>87</a>// cryptoki = "0.6"  # PKCS#11 bindings
-<a href=#88 id=88 data-nosnippet>88</a>//
-<a href=#89 id=89 data-nosnippet>89</a>// Key steps:
-<a href=#90 id=90 data-nosnippet>90</a>// 1. Initialize PKCS#11 library: Pkcs11::new(library_path)
-<a href=#91 id=91 data-nosnippet>91</a>// 2. Open session: pkcs11.open_session(slot_id)
-<a href=#92 id=92 data-nosnippet>92</a>// 3. Login: session.login(UserType::User, Some(pin))
-<a href=#93 id=93 data-nosnippet>93</a>// 4. For VRF operations, use CKM_EDDSA mechanism
-<a href=#94 id=94 data-nosnippet>94</a>// 5. Key generation: session.generate_key_pair(mechanism, pub_template, priv_template)
-<a href=#95 id=95 data-nosnippet>95</a>// 6. Signing: session.sign(mechanism, key_handle, data)
-<a href=#96 id=96 data-nosnippet>96</a>//
-<a href=#97 id=97 data-nosnippet>97</a>// Security considerations:
-<a href=#98 id=98 data-nosnippet>98</a>// - PIN must be stored securely (consider using a secrets manager)
-<a href=#99 id=99 data-nosnippet>99</a>// - Session should be closed after operations
-<a href=#100 id=100 data-nosnippet>100</a>// - Implement retry logic for transient HSM errors
-<a href=#101 id=101 data-nosnippet>101</a>// - Add audit logging for all key operations</span></code></pre></div></section></main></body></html>
+<a href=#59 id=59 data-nosnippet>59</a>        </span><span class="prelude-val">Err</span>(VrfError::InvalidInput(
+<a href=#60 id=60 data-nosnippet>60</a>            <span class="string">"PKCS#11 not yet implemented - compile with 'pkcs11' feature"</span>.into(),
+<a href=#61 id=61 data-nosnippet>61</a>        ))
+<a href=#62 id=62 data-nosnippet>62</a>    }
+<a href=#63 id=63 data-nosnippet>63</a>
+<a href=#64 id=64 data-nosnippet>64</a>    <span class="kw">fn </span>get_public_key(<span class="kw-2">&amp;</span><span class="self">self</span>, _key_id: <span class="kw-2">&amp;</span>str) -&gt; VrfResult&lt;[u8; <span class="number">32</span>]&gt; {
+<a href=#65 id=65 data-nosnippet>65</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
+<a href=#66 id=66 data-nosnippet>66</a>    }
+<a href=#67 id=67 data-nosnippet>67</a>
+<a href=#68 id=68 data-nosnippet>68</a>    <span class="kw">fn </span>generate_keypair(<span class="kw-2">&amp;</span><span class="self">self</span>, _key_id: <span class="kw-2">&amp;</span>str) -&gt; VrfResult&lt;[u8; <span class="number">32</span>]&gt; {
+<a href=#69 id=69 data-nosnippet>69</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
+<a href=#70 id=70 data-nosnippet>70</a>    }
+<a href=#71 id=71 data-nosnippet>71</a>
+<a href=#72 id=72 data-nosnippet>72</a>    <span class="kw">fn </span>delete_key(<span class="kw-2">&amp;</span><span class="self">self</span>, _key_id: <span class="kw-2">&amp;</span>str) -&gt; VrfResult&lt;()&gt; {
+<a href=#73 id=73 data-nosnippet>73</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
+<a href=#74 id=74 data-nosnippet>74</a>    }
+<a href=#75 id=75 data-nosnippet>75</a>
+<a href=#76 id=76 data-nosnippet>76</a>    <span class="kw">fn </span>list_keys(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; VrfResult&lt;Vec&lt;String&gt;&gt; {
+<a href=#77 id=77 data-nosnippet>77</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
+<a href=#78 id=78 data-nosnippet>78</a>    }
+<a href=#79 id=79 data-nosnippet>79</a>
+<a href=#80 id=80 data-nosnippet>80</a>    <span class="kw">fn </span>health_check(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; VrfResult&lt;()&gt; {
+<a href=#81 id=81 data-nosnippet>81</a>        <span class="prelude-val">Err</span>(VrfError::InvalidInput(<span class="string">"PKCS#11 not yet implemented"</span>.into()))
+<a href=#82 id=82 data-nosnippet>82</a>    }
+<a href=#83 id=83 data-nosnippet>83</a>}
+<a href=#84 id=84 data-nosnippet>84</a>
+<a href=#85 id=85 data-nosnippet>85</a><span class="comment">// Implementation notes for future PKCS#11 integration:
+<a href=#86 id=86 data-nosnippet>86</a>//
+<a href=#87 id=87 data-nosnippet>87</a>// Dependencies to add to Cargo.toml:
+<a href=#88 id=88 data-nosnippet>88</a>// [dependencies]
+<a href=#89 id=89 data-nosnippet>89</a>// cryptoki = "0.6"  # PKCS#11 bindings
+<a href=#90 id=90 data-nosnippet>90</a>//
+<a href=#91 id=91 data-nosnippet>91</a>// Key steps:
+<a href=#92 id=92 data-nosnippet>92</a>// 1. Initialize PKCS#11 library: Pkcs11::new(library_path)
+<a href=#93 id=93 data-nosnippet>93</a>// 2. Open session: pkcs11.open_session(slot_id)
+<a href=#94 id=94 data-nosnippet>94</a>// 3. Login: session.login(UserType::User, Some(pin))
+<a href=#95 id=95 data-nosnippet>95</a>// 4. For VRF operations, use CKM_EDDSA mechanism
+<a href=#96 id=96 data-nosnippet>96</a>// 5. Key generation: session.generate_key_pair(mechanism, pub_template, priv_template)
+<a href=#97 id=97 data-nosnippet>97</a>// 6. Signing: session.sign(mechanism, key_handle, data)
+<a href=#98 id=98 data-nosnippet>98</a>//
+<a href=#99 id=99 data-nosnippet>99</a>// Security considerations:
+<a href=#100 id=100 data-nosnippet>100</a>// - PIN must be stored securely (consider using a secrets manager)
+<a href=#101 id=101 data-nosnippet>101</a>// - Session should be closed after operations
+<a href=#102 id=102 data-nosnippet>102</a>// - Implement retry logic for transient HSM errors
+<a href=#103 id=103 data-nosnippet>103</a>// - Add audit logging for all key operations</span></code></pre></div></section></main></body></html>

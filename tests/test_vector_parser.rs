@@ -6,6 +6,7 @@ use std::collections::HashMap;
 
 /// Parsed VRF test vector
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 pub struct TestVector {
     pub vrf_algorithm: String,
     pub version: String,
@@ -34,13 +35,9 @@ pub fn parse_test_vector(content: &str) -> Result<TestVector, String> {
         }
     }
 
-    let vrf_algorithm = fields.get("vrf")
-        .ok_or("Missing 'vrf' field")?
-        .clone();
+    let vrf_algorithm = fields.get("vrf").ok_or("Missing 'vrf' field")?.clone();
 
-    let version = fields.get("ver")
-        .ok_or("Missing 'ver' field")?
-        .clone();
+    let version = fields.get("ver").ok_or("Missing 'ver' field")?.clone();
 
     let ciphersuite = fields.get("ciphersuite").cloned();
 
@@ -63,22 +60,20 @@ pub fn parse_test_vector(content: &str) -> Result<TestVector, String> {
 }
 
 fn parse_hex_field(fields: &HashMap<String, String>, key: &str) -> Result<Vec<u8>, String> {
-    let value = fields.get(key)
+    let value = fields
+        .get(key)
         .ok_or_else(|| format!("Missing '{}' field", key))?;
 
-    hex::decode(value)
-        .map_err(|e| format!("Invalid hex in '{}': {}", key, e))
+    hex::decode(value).map_err(|e| format!("Invalid hex in '{}': {}", key, e))
 }
 
 fn parse_alpha_field(fields: &HashMap<String, String>) -> Result<Vec<u8>, String> {
-    let value = fields.get("alpha")
-        .ok_or("Missing 'alpha' field")?;
+    let value = fields.get("alpha").ok_or("Missing 'alpha' field")?;
 
     if value == "empty" {
         Ok(Vec::new())
     } else {
-        hex::decode(value)
-            .map_err(|e| format!("Invalid hex in 'alpha': {}", e))
+        hex::decode(value).map_err(|e| format!("Invalid hex in 'alpha': {}", e))
     }
 }
 

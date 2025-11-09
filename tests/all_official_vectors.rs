@@ -7,7 +7,7 @@ mod test_vector_parser;
 use test_vector_parser::parse_test_vector;
 
 use cardano_vrf::cardano_compat::{cardano_vrf_prove, cardano_vrf_verify};
-use cardano_vrf::draft13::{VrfDraft13, PROOF_SIZE as PROOF_SIZE_13, OUTPUT_SIZE};
+use cardano_vrf::draft13::{VrfDraft13, OUTPUT_SIZE, PROOF_SIZE as PROOF_SIZE_13};
 
 const TEST_VECTORS_PATH: &str = "test_vectors";
 
@@ -18,8 +18,7 @@ macro_rules! test_draft03_vector {
             let content = std::fs::read_to_string(format!("{}/{}", TEST_VECTORS_PATH, $file))
                 .expect("Failed to read test vector file");
 
-            let vector = parse_test_vector(&content)
-                .expect("Failed to parse test vector");
+            let vector = parse_test_vector(&content).expect("Failed to parse test vector");
 
             // Verify it's a Draft-03 vector
             assert_eq!(vector.version, "ietfdraft03", "Expected Draft-03 vector");
@@ -33,19 +32,13 @@ macro_rules! test_draft03_vector {
             pk.copy_from_slice(&vector.pk);
 
             // Test prove
-            let proof = cardano_vrf_prove(&sk, &vector.alpha)
-                .expect("Proof generation failed");
+            let proof = cardano_vrf_prove(&sk, &vector.alpha).expect("Proof generation failed");
 
-            assert_eq!(
-                &proof[..],
-                &vector.pi[..],
-                "Proof mismatch for {}",
-                $file
-            );
+            assert_eq!(&proof[..], &vector.pi[..], "Proof mismatch for {}", $file);
 
             // Test verify
-            let output = cardano_vrf_verify(&pk, &proof, &vector.alpha)
-                .expect("Verification failed");
+            let output =
+                cardano_vrf_verify(&pk, &proof, &vector.alpha).expect("Verification failed");
 
             assert_eq!(
                 &output[..],
@@ -66,8 +59,7 @@ macro_rules! test_draft13_vector {
             let content = std::fs::read_to_string(format!("{}/{}", TEST_VECTORS_PATH, $file))
                 .expect("Failed to read test vector file");
 
-            let vector = parse_test_vector(&content)
-                .expect("Failed to parse test vector");
+            let vector = parse_test_vector(&content).expect("Failed to parse test vector");
 
             // Verify it's a Draft-13 vector
             assert_eq!(vector.version, "ietfdraft13", "Expected Draft-13 vector");
@@ -81,34 +73,27 @@ macro_rules! test_draft13_vector {
             pk.copy_from_slice(&vector.pk);
 
             // Test prove
-            let proof = VrfDraft13::prove(&sk, &vector.alpha)
-                .expect("Proof generation failed");
+            let proof = VrfDraft13::prove(&sk, &vector.alpha).expect("Proof generation failed");
 
-            let expected_proof: [u8; PROOF_SIZE_13] = vector.pi.as_slice()
+            let expected_proof: [u8; PROOF_SIZE_13] = vector
+                .pi
+                .as_slice()
                 .try_into()
                 .expect("Invalid proof length");
 
-            assert_eq!(
-                proof,
-                expected_proof,
-                "Proof mismatch for {}",
-                $file
-            );
+            assert_eq!(proof, expected_proof, "Proof mismatch for {}", $file);
 
             // Test verify
-            let output = VrfDraft13::verify(&pk, &proof, &vector.alpha)
-                .expect("Verification failed");
+            let output =
+                VrfDraft13::verify(&pk, &proof, &vector.alpha).expect("Verification failed");
 
-            let expected_beta: [u8; OUTPUT_SIZE] = vector.beta.as_slice()
+            let expected_beta: [u8; OUTPUT_SIZE] = vector
+                .beta
+                .as_slice()
                 .try_into()
                 .expect("Invalid beta length");
 
-            assert_eq!(
-                output,
-                expected_beta,
-                "Output mismatch for {}",
-                $file
-            );
+            assert_eq!(output, expected_beta, "Output mismatch for {}", $file);
 
             println!("✅ {} passed", $file);
         }

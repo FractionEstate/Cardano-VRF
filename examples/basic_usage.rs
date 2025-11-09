@@ -12,7 +12,7 @@ fn main() -> Result<(), VrfError> {
     let (secret_key, public_key) = VrfDraft03::keypair_from_seed(&seed);
 
     println!("Generated keypair:");
-    println!("  Public key: {}", hex::encode(&public_key));
+    println!("  Public key: {}", hex::encode(public_key));
     println!();
 
     // Create a VRF proof
@@ -20,18 +20,26 @@ fn main() -> Result<(), VrfError> {
     println!("Message: {}", String::from_utf8_lossy(message));
 
     let proof = VrfDraft03::prove(&secret_key, message)?;
-    println!("Proof generated ({} bytes): {}", proof.len(), hex::encode(&proof));
+    println!(
+        "Proof generated ({} bytes): {}",
+        proof.len(),
+        hex::encode(proof)
+    );
     println!();
 
     // Verify the proof and get VRF output
     let output = VrfDraft03::verify(&public_key, &proof, message)?;
     println!("Proof verified successfully!");
-    println!("VRF output ({} bytes): {}", output.len(), hex::encode(&output));
+    println!(
+        "VRF output ({} bytes): {}",
+        output.len(),
+        hex::encode(output)
+    );
     println!();
 
     // Extract VRF output from proof without full verification
     let hash = VrfDraft03::proof_to_hash(&proof)?;
-    println!("VRF hash (from proof): {}", hex::encode(&hash));
+    println!("VRF hash (from proof): {}", hex::encode(hash));
     println!();
 
     // Demonstrate that VRF output is deterministic

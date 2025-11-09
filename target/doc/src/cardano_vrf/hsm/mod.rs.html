@@ -33,10 +33,10 @@
 <a href=#33 id=33 data-nosnippet>33</a>//! ## Software HSM (Development)
 <a href=#34 id=34 data-nosnippet>34</a>//!
 <a href=#35 id=35 data-nosnippet>35</a>//! ```rust
-<a href=#36 id=36 data-nosnippet>36</a>//! use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+<a href=#36 id=36 data-nosnippet>36</a>//! use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
 <a href=#37 id=37 data-nosnippet>37</a>//!
 <a href=#38 id=38 data-nosnippet>38</a>//! # fn main() -&gt; Result&lt;(), cardano_vrf::VrfError&gt; {
-<a href=#39 id=39 data-nosnippet>39</a>//! let hsm = SoftwareHsm::new();
+<a href=#39 id=39 data-nosnippet>39</a>//! let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
 <a href=#40 id=40 data-nosnippet>40</a>//!
 <a href=#41 id=41 data-nosnippet>41</a>//! // Generate keypair
 <a href=#42 id=42 data-nosnippet>42</a>//! let public_key = hsm.generate_keypair("my-vrf-key")?;
@@ -62,9 +62,9 @@
 <a href=#62 id=62 data-nosnippet>62</a></span><span class="attr">#[allow(unused_imports)] </span><span class="comment">// VrfError used in doc links
 <a href=#63 id=63 data-nosnippet>63</a></span><span class="kw">use crate</span>::{VrfError, VrfResult};
 <a href=#64 id=64 data-nosnippet>64</a>
-<a href=#65 id=65 data-nosnippet>65</a><span class="kw">pub mod </span>pkcs11;
-<a href=#66 id=66 data-nosnippet>66</a><span class="kw">pub mod </span>aws_cloudhsm;
-<a href=#67 id=67 data-nosnippet>67</a><span class="kw">pub mod </span>azure_keyvault;
+<a href=#65 id=65 data-nosnippet>65</a><span class="kw">pub mod </span>aws_cloudhsm;
+<a href=#66 id=66 data-nosnippet>66</a><span class="kw">pub mod </span>azure_keyvault;
+<a href=#67 id=67 data-nosnippet>67</a><span class="kw">pub mod </span>pkcs11;
 <a href=#68 id=68 data-nosnippet>68</a><span class="kw">pub mod </span>software;
 <a href=#69 id=69 data-nosnippet>69</a>
 <a href=#70 id=70 data-nosnippet>70</a><span class="doccomment">/// Trait for VRF signing operations delegated to an HSM
@@ -107,10 +107,10 @@
 <a href=#107 id=107 data-nosnippet>107</a>    /// # Examples
 <a href=#108 id=108 data-nosnippet>108</a>    ///
 <a href=#109 id=109 data-nosnippet>109</a>    /// ```rust
-<a href=#110 id=110 data-nosnippet>110</a>    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+<a href=#110 id=110 data-nosnippet>110</a>    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
 <a href=#111 id=111 data-nosnippet>111</a>    ///
 <a href=#112 id=112 data-nosnippet>112</a>    /// # fn main() -&gt; Result&lt;(), cardano_vrf::VrfError&gt; {
-<a href=#113 id=113 data-nosnippet>113</a>    /// let hsm = SoftwareHsm::new();
+<a href=#113 id=113 data-nosnippet>113</a>    /// let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
 <a href=#114 id=114 data-nosnippet>114</a>    /// hsm.generate_keypair("slot-1")?;
 <a href=#115 id=115 data-nosnippet>115</a>    ///
 <a href=#116 id=116 data-nosnippet>116</a>    /// let proof = hsm.prove("slot-1", b"block-12345")?;
@@ -159,10 +159,10 @@
 <a href=#159 id=159 data-nosnippet>159</a>    /// # Examples
 <a href=#160 id=160 data-nosnippet>160</a>    ///
 <a href=#161 id=161 data-nosnippet>161</a>    /// ```rust
-<a href=#162 id=162 data-nosnippet>162</a>    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+<a href=#162 id=162 data-nosnippet>162</a>    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
 <a href=#163 id=163 data-nosnippet>163</a>    ///
 <a href=#164 id=164 data-nosnippet>164</a>    /// # fn main() -&gt; Result&lt;(), cardano_vrf::VrfError&gt; {
-<a href=#165 id=165 data-nosnippet>165</a>    /// let hsm = SoftwareHsm::new();
+<a href=#165 id=165 data-nosnippet>165</a>    /// let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
 <a href=#166 id=166 data-nosnippet>166</a>    /// let public_key = hsm.generate_keypair("validator-001")?;
 <a href=#167 id=167 data-nosnippet>167</a>    /// println!("Public key: {:02x?}", &amp;public_key[0..8]);
 <a href=#168 id=168 data-nosnippet>168</a>    /// # Ok(())
@@ -202,10 +202,10 @@
 <a href=#202 id=202 data-nosnippet>202</a>    /// # Examples
 <a href=#203 id=203 data-nosnippet>203</a>    ///
 <a href=#204 id=204 data-nosnippet>204</a>    /// ```rust
-<a href=#205 id=205 data-nosnippet>205</a>    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareHsm};
+<a href=#205 id=205 data-nosnippet>205</a>    /// use cardano_vrf::hsm::{HsmVrfSigner, software::SoftwareVrfSigner};
 <a href=#206 id=206 data-nosnippet>206</a>    ///
 <a href=#207 id=207 data-nosnippet>207</a>    /// # fn main() -&gt; Result&lt;(), cardano_vrf::VrfError&gt; {
-<a href=#208 id=208 data-nosnippet>208</a>    /// let hsm = SoftwareHsm::new();
+<a href=#208 id=208 data-nosnippet>208</a>    /// let hsm = SoftwareVrfSigner::new("/tmp/vrf-keys".to_string())?;
 <a href=#209 id=209 data-nosnippet>209</a>    /// hsm.generate_keypair("key-1")?;
 <a href=#210 id=210 data-nosnippet>210</a>    /// hsm.generate_keypair("key-2")?;
 <a href=#211 id=211 data-nosnippet>211</a>    ///
@@ -301,22 +301,34 @@
 <a href=#301 id=301 data-nosnippet>301</a>    <span class="doccomment">/// Create an HSM VRF signer from configuration
 <a href=#302 id=302 data-nosnippet>302</a>    </span><span class="kw">pub fn </span>create_signer(config: HsmConfig) -&gt; VrfResult&lt;Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;&gt; {
 <a href=#303 id=303 data-nosnippet>303</a>        <span class="kw">match </span>config {
-<a href=#304 id=304 data-nosnippet>304</a>            HsmConfig::Pkcs11 { library_path, slot_id, pin } =&gt; {
-<a href=#305 id=305 data-nosnippet>305</a>                pkcs11::Pkcs11VrfSigner::new(library_path, slot_id, pin)
-<a href=#306 id=306 data-nosnippet>306</a>                    .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;)
-<a href=#307 id=307 data-nosnippet>307</a>            }
-<a href=#308 id=308 data-nosnippet>308</a>            HsmConfig::AwsCloudHsm { cluster_id, user, password } =&gt; {
-<a href=#309 id=309 data-nosnippet>309</a>                aws_cloudhsm::AwsCloudHsmVrfSigner::new(cluster_id, user, password)
-<a href=#310 id=310 data-nosnippet>310</a>                    .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;)
-<a href=#311 id=311 data-nosnippet>311</a>            }
-<a href=#312 id=312 data-nosnippet>312</a>            HsmConfig::AzureKeyVault { vault_url, client_id, client_secret, tenant_id } =&gt; {
-<a href=#313 id=313 data-nosnippet>313</a>                azure_keyvault::AzureKeyVaultVrfSigner::new(vault_url, client_id, client_secret, tenant_id)
-<a href=#314 id=314 data-nosnippet>314</a>                    .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;)
-<a href=#315 id=315 data-nosnippet>315</a>            }
-<a href=#316 id=316 data-nosnippet>316</a>            HsmConfig::Software { key_storage_path } =&gt; {
-<a href=#317 id=317 data-nosnippet>317</a>                software::SoftwareVrfSigner::new(key_storage_path)
-<a href=#318 id=318 data-nosnippet>318</a>                    .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;)
-<a href=#319 id=319 data-nosnippet>319</a>            }
-<a href=#320 id=320 data-nosnippet>320</a>        }
-<a href=#321 id=321 data-nosnippet>321</a>    }
-<a href=#322 id=322 data-nosnippet>322</a>}</code></pre></div></section></main></body></html>
+<a href=#304 id=304 data-nosnippet>304</a>            HsmConfig::Pkcs11 {
+<a href=#305 id=305 data-nosnippet>305</a>                library_path,
+<a href=#306 id=306 data-nosnippet>306</a>                slot_id,
+<a href=#307 id=307 data-nosnippet>307</a>                pin,
+<a href=#308 id=308 data-nosnippet>308</a>            } =&gt; pkcs11::Pkcs11VrfSigner::new(library_path, slot_id, pin)
+<a href=#309 id=309 data-nosnippet>309</a>                .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;),
+<a href=#310 id=310 data-nosnippet>310</a>            HsmConfig::AwsCloudHsm {
+<a href=#311 id=311 data-nosnippet>311</a>                cluster_id,
+<a href=#312 id=312 data-nosnippet>312</a>                user,
+<a href=#313 id=313 data-nosnippet>313</a>                password,
+<a href=#314 id=314 data-nosnippet>314</a>            } =&gt; aws_cloudhsm::AwsCloudHsmVrfSigner::new(cluster_id, user, password)
+<a href=#315 id=315 data-nosnippet>315</a>                .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;),
+<a href=#316 id=316 data-nosnippet>316</a>            HsmConfig::AzureKeyVault {
+<a href=#317 id=317 data-nosnippet>317</a>                vault_url,
+<a href=#318 id=318 data-nosnippet>318</a>                client_id,
+<a href=#319 id=319 data-nosnippet>319</a>                client_secret,
+<a href=#320 id=320 data-nosnippet>320</a>                tenant_id,
+<a href=#321 id=321 data-nosnippet>321</a>            } =&gt; azure_keyvault::AzureKeyVaultVrfSigner::new(
+<a href=#322 id=322 data-nosnippet>322</a>                vault_url,
+<a href=#323 id=323 data-nosnippet>323</a>                client_id,
+<a href=#324 id=324 data-nosnippet>324</a>                client_secret,
+<a href=#325 id=325 data-nosnippet>325</a>                tenant_id,
+<a href=#326 id=326 data-nosnippet>326</a>            )
+<a href=#327 id=327 data-nosnippet>327</a>            .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;),
+<a href=#328 id=328 data-nosnippet>328</a>            HsmConfig::Software { key_storage_path } =&gt; {
+<a href=#329 id=329 data-nosnippet>329</a>                software::SoftwareVrfSigner::new(key_storage_path)
+<a href=#330 id=330 data-nosnippet>330</a>                    .map(|s| Box::new(s) <span class="kw">as </span>Box&lt;<span class="kw">dyn </span>HsmVrfSigner&gt;)
+<a href=#331 id=331 data-nosnippet>331</a>            }
+<a href=#332 id=332 data-nosnippet>332</a>        }
+<a href=#333 id=333 data-nosnippet>333</a>    }
+<a href=#334 id=334 data-nosnippet>334</a>}</code></pre></div></section></main></body></html>

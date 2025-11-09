@@ -1,0 +1,44 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+*.pdb
+
+# Cargo.lock for libraries (keep for binaries)
+# Uncomment if this is a library crate:
+# Cargo.lock
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test coverage
+*.profraw
+*.profdata
+/coverage/
+
+# Documentation
+/doc/
+
+# HSM test keys (software HSM development)
+/test-keys/
+*.key
+*.pem
+
+# Temporary files
+*.tmp
+*.temp
+.#*
+
+# Environment files
+.env
+.env.local
+
+# Benchmarking
+/benches/target/
+
+# Debug artifacts
+*.dSYM

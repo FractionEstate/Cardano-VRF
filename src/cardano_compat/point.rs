@@ -29,7 +29,7 @@
 use curve25519_dalek::edwards::{CompressedEdwardsY, EdwardsPoint};
 use sha2::{Digest, Sha512};
 
-use crate::common::{SUITE_DRAFT03, SUITE_DRAFT13, ONE};
+use crate::common::{ONE, SUITE_DRAFT03, SUITE_DRAFT13};
 use crate::{VrfError, VrfResult};
 
 /// Clear the cofactor from an Edwards curve point (Cardano-compatible)
@@ -113,14 +113,11 @@ pub fn cardano_clear_cofactor(point: &EdwardsPoint) -> EdwardsPoint {
 /// let (point, point_bytes) = cardano_hash_to_curve(&public_key, message)
 ///     .expect("hash-to-curve failed");
 /// ```
-pub fn cardano_hash_to_curve(
-    pk: &[u8],
-    message: &[u8],
-) -> VrfResult<(EdwardsPoint, [u8; 32])> {
+pub fn cardano_hash_to_curve(pk: &[u8], message: &[u8]) -> VrfResult<(EdwardsPoint, [u8; 32])> {
     // Compute r = SHA512(suite || 0x01 || pk || message)
     let mut hasher = Sha512::new();
-    hasher.update(&[SUITE_DRAFT03]);
-    hasher.update(&[ONE]);
+    hasher.update([SUITE_DRAFT03]);
+    hasher.update([ONE]);
     hasher.update(pk);
     hasher.update(message);
     let r_hash = hasher.finalize();
@@ -146,8 +143,8 @@ pub fn cardano_hash_to_curve(
             // For now, hash again with a counter until we get a valid point
             for i in 0..=255u8 {
                 let mut retry_hasher = Sha512::new();
-                retry_hasher.update(&r_bytes);
-                retry_hasher.update(&[i]);
+                retry_hasher.update(r_bytes);
+                retry_hasher.update([i]);
                 let retry_hash = retry_hasher.finalize();
 
                 let mut retry_bytes = [0u8; 32];
@@ -216,8 +213,8 @@ pub fn cardano_hash_to_curve_draft13(
 ) -> VrfResult<(EdwardsPoint, [u8; 32])> {
     // Compute r = SHA512(suite || 0x01 || pk || message)
     let mut hasher = Sha512::new();
-    hasher.update(&[SUITE_DRAFT13]);
-    hasher.update(&[ONE]);
+    hasher.update([SUITE_DRAFT13]);
+    hasher.update([ONE]);
     hasher.update(pk);
     hasher.update(message);
     let r_hash = hasher.finalize();
@@ -240,8 +237,8 @@ pub fn cardano_hash_to_curve_draft13(
             // Fallback with retry
             for i in 0..=255u8 {
                 let mut retry_hasher = Sha512::new();
-                retry_hasher.update(&r_bytes);
-                retry_hasher.update(&[i]);
+                retry_hasher.update(r_bytes);
+                retry_hasher.update([i]);
                 let retry_hash = retry_hasher.finalize();
 
                 let mut retry_bytes = [0u8; 32];

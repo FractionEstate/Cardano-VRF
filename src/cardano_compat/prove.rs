@@ -3,10 +3,7 @@
 //! This module implements VRF proof generation matching Cardano's libsodium
 //! implementation byte-for-byte.
 
-use curve25519_dalek::{
-    constants::ED25519_BASEPOINT_POINT,
-    scalar::Scalar,
-};
+use curve25519_dalek::{constants::ED25519_BASEPOINT_POINT, scalar::Scalar};
 use sha2::{Digest, Sha512};
 use zeroize::Zeroizing;
 
@@ -73,13 +70,16 @@ pub fn cardano_vrf_prove(secret_key: &[u8; 64], message: &[u8]) -> VrfResult<[u8
     {
         eprintln!("Prove gamma computation:");
         eprintln!("  gamma_bytes (first 8): {:02x?}", &gamma_bytes[0..8]);
-        eprintln!("  h_point bytes (first 8): {:02x?}", &point_to_bytes(&h_point)[0..8]);
+        eprintln!(
+            "  h_point bytes (first 8): {:02x?}",
+            &point_to_bytes(&h_point)[0..8]
+        );
     }
 
     // Step 5: Compute nonce k = SHA512(az[32..64] || h_string)
     let mut nonce_hasher = Sha512::new();
     nonce_hasher.update(&az[32..64]);
-    nonce_hasher.update(&h_string);
+    nonce_hasher.update(h_string);
     let nonce_hash = nonce_hasher.finalize();
     let nonce_hash_bytes: [u8; 64] = nonce_hash.into();
     let k = Scalar::from_bytes_mod_order_wide(&nonce_hash_bytes);
@@ -92,10 +92,16 @@ pub fn cardano_vrf_prove(secret_key: &[u8; 64], message: &[u8]) -> VrfResult<[u8
     #[cfg(feature = "vrf-debug")]
     {
         eprintln!("\nProve k*H computation:");
-        eprintln!("  h_point (first 8): {:02x?}", &point_to_bytes(&h_point)[0..8]);
+        eprintln!(
+            "  h_point (first 8): {:02x?}",
+            &point_to_bytes(&h_point)[0..8]
+        );
         eprintln!("  k scalar (first 8): {:02x?}", &k.to_bytes()[0..8]);
         eprintln!("  k*H (first 8): {:02x?}", &point_to_bytes(&k_h)[0..8]);
-        eprintln!("  gamma (should be x*H) (first 8): {:02x?}", &gamma_bytes[0..8]);
+        eprintln!(
+            "  gamma (should be x*H) (first 8): {:02x?}",
+            &gamma_bytes[0..8]
+        );
     }
 
     let k_b_bytes = point_to_bytes(&k_b);
@@ -103,12 +109,12 @@ pub fn cardano_vrf_prove(secret_key: &[u8; 64], message: &[u8]) -> VrfResult<[u8
 
     // Step 7: Compute challenge c = SHA512(suite || 0x02 || H || Gamma || k*B || k*H)[0..16]
     let mut c_hasher = Sha512::new();
-    c_hasher.update(&[SUITE_DRAFT03]);
-    c_hasher.update(&[TWO]);
-    c_hasher.update(&h_string);
-    c_hasher.update(&gamma_bytes);
-    c_hasher.update(&k_b_bytes);
-    c_hasher.update(&k_h_bytes);
+    c_hasher.update([SUITE_DRAFT03]);
+    c_hasher.update([TWO]);
+    c_hasher.update(h_string);
+    c_hasher.update(gamma_bytes);
+    c_hasher.update(k_b_bytes);
+    c_hasher.update(k_h_bytes);
     let c_hash = c_hasher.finalize();
     let c_bytes_short: [u8; 16] = c_hash[0..16].try_into().unwrap();
 
@@ -135,32 +141,50 @@ pub fn cardano_vrf_prove(secret_key: &[u8; 64], message: &[u8]) -> VrfResult<[u8
         let rhs = h_k + h_cx;
 
         eprintln!("Distributive property test:");
-        eprintln!("  h*(k + c*x) (first 8): {:02x?}", &point_to_bytes(&lhs)[0..8]);
+        eprintln!(
+            "  h*(k + c*x) (first 8): {:02x?}",
+            &point_to_bytes(&lhs)[0..8]
+        );
         eprintln!("  h*k (first 8): {:02x?}", &point_to_bytes(&h_k)[0..8]);
         eprintln!("  h*(c*x) (first 8): {:02x?}", &point_to_bytes(&h_cx)[0..8]);
-        eprintln!("  h*k + h*(c*x) (first 8): {:02x?}", &point_to_bytes(&rhs)[0..8]);
+        eprintln!(
+            "  h*k + h*(c*x) (first 8): {:02x?}",
+            &point_to_bytes(&rhs)[0..8]
+        );
         eprintln!("  Match: {}", point_to_bytes(&lhs) == point_to_bytes(&rhs));
 
         // Also try: (h*k) + h*(c*x) vs s*H - k*H
         let s_h_minus_k_h = lhs - h_k;
         eprintln!("\nAlternative check:");
-        eprintln!("  s*H - k*H (first 8): {:02x?}", &point_to_bytes(&s_h_minus_k_h)[0..8]);
+        eprintln!(
+            "  s*H - k*H (first 8): {:02x?}",
+            &point_to_bytes(&s_h_minus_k_h)[0..8]
+        );
         eprintln!("  h*(c*x) (first 8): {:02x?}", &point_to_bytes(&h_cx)[0..8]);
-        eprintln!("  Should match: {}", point_to_bytes(&s_h_minus_k_h) == point_to_bytes(&h_cx));
+        eprintln!(
+            "  Should match: {}",
+            point_to_bytes(&s_h_minus_k_h) == point_to_bytes(&h_cx)
+        );
 
         // Now test if h*c*x == c*(h*x)
         let h_x = h_point * x;
-        let c_h_x = h_x * c;  // Changed from c * h_x
+        let c_h_x = h_x * c; // Changed from c * h_x
         eprintln!("\nAssociative property test:");
         eprintln!("  h*(c*x) (first 8): {:02x?}", &point_to_bytes(&h_cx)[0..8]);
-        eprintln!("  (h*x)*c (first 8): {:02x?}", &point_to_bytes(&c_h_x)[0..8]);
-        eprintln!("  Match: {}", point_to_bytes(&h_cx) == point_to_bytes(&c_h_x));
+        eprintln!(
+            "  (h*x)*c (first 8): {:02x?}",
+            &point_to_bytes(&c_h_x)[0..8]
+        );
+        eprintln!(
+            "  Match: {}",
+            point_to_bytes(&h_cx) == point_to_bytes(&c_h_x)
+        );
 
         eprintln!("\nGamma should be h*x:");
         eprintln!("  gamma (first 8): {:02x?}", &gamma_bytes[0..8]);
         eprintln!("  h*x (first 8): {:02x?}", &point_to_bytes(&h_x)[0..8]);
-        eprintln!("  Match: {}", &gamma_bytes[..] == &point_to_bytes(&h_x)[..]);
-    }    // Step 8: Compute s = k + c*x mod L
+        eprintln!("  Match: {}", gamma_bytes[..] == point_to_bytes(&h_x)[..]);
+    } // Step 8: Compute s = k + c*x mod L
     let s = k + (c * x);
     let s_bytes = s.to_bytes();
 
@@ -172,7 +196,10 @@ pub fn cardano_vrf_prove(secret_key: &[u8; 64], message: &[u8]) -> VrfResult<[u8
         eprintln!("  k (first 8): {:02x?}", &k.to_bytes()[0..8]);
         eprintln!("  x (first 8): {:02x?}", &x.to_bytes()[0..8]);
         eprintln!("  c*x (first 8): {:02x?}", &(c * x).to_bytes()[0..8]);
-        eprintln!("  k + c*x (first 8): {:02x?}", &(k + (c * x)).to_bytes()[0..8]);
+        eprintln!(
+            "  k + c*x (first 8): {:02x?}",
+            &(k + (c * x)).to_bytes()[0..8]
+        );
     }
 
     // Step 9: Construct proof (80 bytes)

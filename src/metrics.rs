@@ -51,7 +51,8 @@ impl VrfMetrics {
     /// Record a prove operation
     pub fn record_prove(&self, duration: std::time::Duration, success: bool) {
         self.prove_total.fetch_add(1, Ordering::Relaxed);
-        self.prove_duration_us.fetch_add(duration.as_micros() as u64, Ordering::Relaxed);
+        self.prove_duration_us
+            .fetch_add(duration.as_micros() as u64, Ordering::Relaxed);
 
         if success {
             self.prove_success.fetch_add(1, Ordering::Relaxed);
@@ -63,7 +64,8 @@ impl VrfMetrics {
     /// Record a verify operation
     pub fn record_verify(&self, duration: std::time::Duration, success: bool) {
         self.verify_total.fetch_add(1, Ordering::Relaxed);
-        self.verify_duration_us.fetch_add(duration.as_micros() as u64, Ordering::Relaxed);
+        self.verify_duration_us
+            .fetch_add(duration.as_micros() as u64, Ordering::Relaxed);
 
         if success {
             self.verify_success.fetch_add(1, Ordering::Relaxed);
@@ -95,8 +97,16 @@ impl VrfMetrics {
         let hsm_ops = self.hsm_operations.load(Ordering::Relaxed);
         let hsm_errors = self.hsm_errors.load(Ordering::Relaxed);
 
-        let avg_prove_us = if prove_total > 0 { prove_duration / prove_total } else { 0 };
-        let avg_verify_us = if verify_total > 0 { verify_duration / verify_total } else { 0 };
+        let avg_prove_us = if prove_total > 0 {
+            prove_duration / prove_total
+        } else {
+            0
+        };
+        let avg_verify_us = if verify_total > 0 {
+            verify_duration / verify_total
+        } else {
+            0
+        };
 
         format!(
             "# HELP vrf_prove_total Total VRF prove operations\n\
@@ -138,9 +148,16 @@ impl VrfMetrics {
              # HELP vrf_hsm_errors HSM operation errors\n\
              # TYPE vrf_hsm_errors counter\n\
              vrf_hsm_errors {}\n",
-            prove_total, prove_success, prove_failure, avg_prove_us,
-            verify_total, verify_success, verify_failure, avg_verify_us,
-            hsm_ops, hsm_errors
+            prove_total,
+            prove_success,
+            prove_failure,
+            avg_prove_us,
+            verify_total,
+            verify_success,
+            verify_failure,
+            avg_verify_us,
+            hsm_ops,
+            hsm_errors
         )
     }
 
@@ -159,8 +176,16 @@ impl VrfMetrics {
         let hsm_ops = self.hsm_operations.load(Ordering::Relaxed);
         let hsm_errors = self.hsm_errors.load(Ordering::Relaxed);
 
-        let avg_prove_us = if prove_total > 0 { prove_duration / prove_total } else { 0 };
-        let avg_verify_us = if verify_total > 0 { verify_duration / verify_total } else { 0 };
+        let avg_prove_us = if prove_total > 0 {
+            prove_duration / prove_total
+        } else {
+            0
+        };
+        let avg_verify_us = if verify_total > 0 {
+            verify_duration / verify_total
+        } else {
+            0
+        };
 
         format!(
             "{{\
@@ -181,9 +206,16 @@ impl VrfMetrics {
                     \"errors\": {}\
                 }}\
             }}",
-            prove_total, prove_success, prove_failure, avg_prove_us,
-            verify_total, verify_success, verify_failure, avg_verify_us,
-            hsm_ops, hsm_errors
+            prove_total,
+            prove_success,
+            prove_failure,
+            avg_prove_us,
+            verify_total,
+            verify_success,
+            verify_failure,
+            avg_verify_us,
+            hsm_ops,
+            hsm_errors
         )
     }
 }

@@ -3,15 +3,15 @@
 //! This module implements VRF proof verification matching Cardano's libsodium
 //! implementation byte-for-byte.
 
+#[cfg(feature = "vrf-debug")]
+use curve25519_dalek::traits::IsIdentity;
 use curve25519_dalek::{
-    constants::ED25519_BASEPOINT_POINT,
-    edwards::CompressedEdwardsY,
-    scalar::Scalar,
+    constants::ED25519_BASEPOINT_POINT, edwards::CompressedEdwardsY, scalar::Scalar,
 };
 use sha2::{Digest, Sha512};
 
 use super::point::{cardano_clear_cofactor, cardano_hash_to_curve};
-use crate::common::{point_to_bytes, SUITE_DRAFT03, TWO, THREE};
+use crate::common::{point_to_bytes, SUITE_DRAFT03, THREE, TWO};
 use crate::{VrfError, VrfResult};
 
 /// Verify VRF proof using Cardano-compatible method
@@ -72,7 +72,7 @@ pub fn cardano_vrf_verify(
         eprintln!("Verify gamma parsing:");
         eprintln!("  gamma_bytes (first 8): {:02x?}", &gamma_bytes[0..8]);
         eprintln!("  gamma is_torsion_free: {}", gamma.is_torsion_free());
-    }    // Parse s
+    } // Parse s
     let s = Scalar::from_bytes_mod_order(s_bytes);
 
     // Expand c to 32 bytes
@@ -93,7 +93,10 @@ pub fn cardano_vrf_verify(
     #[cfg(feature = "vrf-debug")]
     {
         eprintln!("Verify h_point:");
-        eprintln!("  h_point bytes (first 8): {:02x?}", &point_to_bytes(&h_point)[0..8]);
+        eprintln!(
+            "  h_point bytes (first 8): {:02x?}",
+            &point_to_bytes(&h_point)[0..8]
+        );
     }
 
     // Step 3 & 4: Verify equations using batch scalar multiplication
@@ -119,11 +122,20 @@ pub fn cardano_vrf_verify(
         eprintln!("  c scalar (first 8): {:02x?}", &c.to_bytes()[0..8]);
         eprintln!("  neg_c scalar (first 8): {:02x?}", &neg_c.to_bytes()[0..8]);
         eprintln!("  c + neg_c is zero: {}", (c + neg_c) == Scalar::ZERO);
-        eprintln!("  h_point (first 8): {:02x?}", &point_to_bytes(&h_point)[0..8]);
+        eprintln!(
+            "  h_point (first 8): {:02x?}",
+            &point_to_bytes(&h_point)[0..8]
+        );
         eprintln!("  gamma (first 8): {:02x?}", &point_to_bytes(&gamma)[0..8]);
         eprintln!("  s*H (first 8): {:02x?}", &point_to_bytes(&s_h)[0..8]);
-        eprintln!("  gamma*neg_c (first 8): {:02x?}", &point_to_bytes(&c_gamma)[0..8]);
-        eprintln!("  k*H = s*H + gamma*neg_c (first 8): {:02x?}", &point_to_bytes(&k_h)[0..8]);
+        eprintln!(
+            "  gamma*neg_c (first 8): {:02x?}",
+            &point_to_bytes(&c_gamma)[0..8]
+        );
+        eprintln!(
+            "  k*H = s*H + gamma*neg_c (first 8): {:02x?}",
+            &point_to_bytes(&k_h)[0..8]
+        );
 
         // Also compute c*gamma for verification
         let pos_c_gamma = gamma * c;
@@ -134,25 +146,62 @@ pub fn cardano_vrf_verify(
         let test_c_pt = test_pt * c;
         let test_negc_pt = test_pt * neg_c;
         let neg_test_c_pt = -test_c_pt;
-        eprintln!("  DEBUG: basepoint * neg_c == -(basepoint * c): {}", test_negc_pt == neg_test_c_pt);
-        eprintln!("  DEBUG: gamma is_torsion_free: {}", gamma.is_torsion_free());
+        eprintln!(
+            "  DEBUG: basepoint * neg_c == -(basepoint * c): {}",
+            test_negc_pt == neg_test_c_pt
+        );
+        eprintln!(
+            "  DEBUG: gamma is_torsion_free: {}",
+            gamma.is_torsion_free()
+        );
 
         // Test with gamma directly multiplied by small scalars
         let gamma_times_2 = gamma * Scalar::from(2u64);
         let gamma_plus_gamma = gamma + gamma;
-        eprintln!("  DEBUG: gamma*2 == gamma+gamma: {}", gamma_times_2 == gamma_plus_gamma);
+        eprintln!(
+            "  DEBUG: gamma*2 == gamma+gamma: {}",
+            gamma_times_2 == gamma_plus_gamma
+        );
 
-        eprintln!("  gamma*c (for reference) (first 8): {:02x?}", &point_to_bytes(&pos_c_gamma)[0..8]);
-        eprintln!("  -(gamma*c) (first 8): {:02x?}", &point_to_bytes(&neg_pos_c_gamma)[0..8]);
-        eprintln!("  gamma*neg_c (first 8): {:02x?}", &point_to_bytes(&c_gamma)[0..8]);
-        eprintln!("  gamma*neg_c (before compress) == -(gamma*c): {}", c_gamma == neg_pos_c_gamma);
-        eprintln!("  gamma*neg_c (after compress) == -(gamma*c): {}", point_to_bytes(&c_gamma) == point_to_bytes(&neg_pos_c_gamma));
-        eprintln!("  (gamma*neg_c) + (gamma*c) is_identity: {}", (c_gamma + pos_c_gamma).is_identity());
-        eprintln!("  c + neg_c == Scalar::ZERO: {}", (c + neg_c) == Scalar::ZERO);
-        eprintln!("  gamma * (c + neg_c) is_identity: {}", (gamma * (c + neg_c)).is_identity());
-        eprintln!("  gamma * Scalar::ZERO is_identity: {}", (gamma * Scalar::ZERO).is_identity());
+        eprintln!(
+            "  gamma*c (for reference) (first 8): {:02x?}",
+            &point_to_bytes(&pos_c_gamma)[0..8]
+        );
+        eprintln!(
+            "  -(gamma*c) (first 8): {:02x?}",
+            &point_to_bytes(&neg_pos_c_gamma)[0..8]
+        );
+        eprintln!(
+            "  gamma*neg_c (first 8): {:02x?}",
+            &point_to_bytes(&c_gamma)[0..8]
+        );
+        eprintln!(
+            "  gamma*neg_c (before compress) == -(gamma*c): {}",
+            c_gamma == neg_pos_c_gamma
+        );
+        eprintln!(
+            "  gamma*neg_c (after compress) == -(gamma*c): {}",
+            point_to_bytes(&c_gamma) == point_to_bytes(&neg_pos_c_gamma)
+        );
+        eprintln!(
+            "  (gamma*neg_c) + (gamma*c) is_identity: {}",
+            (c_gamma + pos_c_gamma).is_identity()
+        );
+        eprintln!(
+            "  c + neg_c == Scalar::ZERO: {}",
+            (c + neg_c) == Scalar::ZERO
+        );
+        eprintln!(
+            "  gamma * (c + neg_c) is_identity: {}",
+            (gamma * (c + neg_c)).is_identity()
+        );
+        eprintln!(
+            "  gamma * Scalar::ZERO is_identity: {}",
+            (gamma * Scalar::ZERO).is_identity()
+        );
         eprintln!("  Expected: s*H - c*gamma should equal k*H from proof");
-    }    let k_b_bytes = point_to_bytes(&k_b);
+    }
+    let k_b_bytes = point_to_bytes(&k_b);
     let k_h_bytes = point_to_bytes(&k_h);
 
     #[cfg(feature = "vrf-debug")]
@@ -167,12 +216,12 @@ pub fn cardano_vrf_verify(
 
     // Step 5: Recompute challenge
     let mut c_hasher = Sha512::new();
-    c_hasher.update(&[SUITE_DRAFT03]);
-    c_hasher.update(&[TWO]);
-    c_hasher.update(&h_string);
-    c_hasher.update(&gamma_bytes);
-    c_hasher.update(&k_b_bytes);
-    c_hasher.update(&k_h_bytes);
+    c_hasher.update([SUITE_DRAFT03]);
+    c_hasher.update([TWO]);
+    c_hasher.update(h_string);
+    c_hasher.update(gamma_bytes);
+    c_hasher.update(k_b_bytes);
+    c_hasher.update(k_h_bytes);
     let c_hash = c_hasher.finalize();
 
     // Step 6: Verify challenge matches
@@ -181,7 +230,7 @@ pub fn cardano_vrf_verify(
         eprintln!("Verification debug:");
         eprintln!("  Original c: {:02x?}", &c_bytes_short[0..8]);
         eprintln!("  Computed c: {:02x?}", &c_hash[0..8]);
-        eprintln!("  Match: {}", &c_hash[0..16] == &c_bytes_short[..]);
+        eprintln!("  Match: {}", c_hash[0..16] == c_bytes_short[..]);
     }
 
     // Step 6: Verify challenge matches using constant-time comparison
@@ -195,9 +244,9 @@ pub fn cardano_vrf_verify(
     // Step 7: Compute VRF output
     let gamma_cleared = cardano_clear_cofactor(&gamma);
     let mut output_hasher = Sha512::new();
-    output_hasher.update(&[SUITE_DRAFT03]);
-    output_hasher.update(&[THREE]);
-    output_hasher.update(&point_to_bytes(&gamma_cleared));
+    output_hasher.update([SUITE_DRAFT03]);
+    output_hasher.update([THREE]);
+    output_hasher.update(point_to_bytes(&gamma_cleared));
     let output_hash = output_hasher.finalize();
 
     let mut output = [0u8; 64];

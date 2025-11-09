@@ -6,10 +6,7 @@
 //! - Audit logging
 //! - Error handling
 
-use cardano_vrf::{
-    HsmConfig, HsmFactory, HsmVrfSigner,
-    VrfMetrics, VrfLogger, LogLevel, VrfOperation, VrfResult, VrfError,
-};
+use cardano_vrf::{HsmConfig, HsmFactory, LogLevel, VrfLogger, VrfMetrics, VrfOperation};
 use std::time::Instant;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -17,7 +14,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let metrics = VrfMetrics::new();
     let logger = VrfLogger::new(LogLevel::Info);
 
-    logger.info(VrfOperation::HsmOperation, "Initializing VRF service".to_string());
+    logger.info(
+        VrfOperation::HsmOperation,
+        "Initializing VRF service".to_string(),
+    );
 
     // Create HSM signer (software implementation for demo)
     let hsm_config = HsmConfig::Software {
@@ -26,40 +26,58 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let signer = match HsmFactory::create_signer(hsm_config) {
         Ok(s) => {
-            logger.info(VrfOperation::HsmOperation, "HSM initialized successfully".to_string());
+            logger.info(
+                VrfOperation::HsmOperation,
+                "HSM initialized successfully".to_string(),
+            );
             metrics.record_hsm_operation(true);
             s
         }
         Err(e) => {
-            logger.error(VrfOperation::HsmOperation, format!("HSM initialization failed: {}", e));
+            logger.error(
+                VrfOperation::HsmOperation,
+                format!("HSM initialization failed: {}", e),
+            );
             metrics.record_hsm_operation(false);
             return Err(Box::new(e));
         }
     };
 
     // Health check
-    logger.info(VrfOperation::HsmOperation, "Performing HSM health check".to_string());
+    logger.info(
+        VrfOperation::HsmOperation,
+        "Performing HSM health check".to_string(),
+    );
     if let Err(e) = signer.health_check() {
-        logger.error(VrfOperation::HsmOperation, format!("Health check failed: {}", e));
+        logger.error(
+            VrfOperation::HsmOperation,
+            format!("Health check failed: {}", e),
+        );
         return Err(Box::new(e));
     }
 
     // Generate a keypair
-    logger.info(VrfOperation::KeyGeneration, "Generating VRF keypair".to_string());
+    logger.info(
+        VrfOperation::KeyGeneration,
+        "Generating VRF keypair".to_string(),
+    );
     let key_id = "production_vrf_key_001";
 
     let start = Instant::now();
     let public_key = match signer.generate_keypair(key_id) {
         Ok(pk) => {
-            let duration = start.elapsed();
+            let _duration = start.elapsed();
             logger.info(
                 VrfOperation::KeyGeneration,
-                format!("Keypair generated: {}", hex::encode(pk))
+                format!("Keypair generated: {}", hex::encode(pk)),
             );
             pk
         }
         Err(e) => {
-            logger.error(VrfOperation::KeyGeneration, format!("Key generation failed: {}", e));
+            logger.error(
+                VrfOperation::KeyGeneration,
+                format!("Key generation failed: {}", e),
+            );
             return Err(Box::new(e));
         }
     };
@@ -68,7 +86,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let message = b"Cardano block #12345";
     logger.info(
         VrfOperation::Prove,
-        format!("Creating VRF proof for message: {:?}", String::from_utf8_lossy(message))
+        format!(
+            "Creating VRF proof for message: {:?}",
+            String::from_utf8_lossy(message)
+        ),
     );
 
     let start = Instant::now();
@@ -78,7 +99,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             metrics.record_prove(duration, true);
             logger.info(
                 VrfOperation::Prove,
-                format!("Proof generated in {:?}: {}", duration, hex::encode(&p[..16]))
+                format!(
+                    "Proof generated in {:?}: {}",
+                    duration,
+                    hex::encode(&p[..16])
+                ),
             );
             p
         }
@@ -103,7 +128,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             metrics.record_verify(duration, true);
             logger.info(
                 VrfOperation::Verify,
-                format!("Verification succeeded in {:?}: {}", duration, hex::encode(&output[..16]))
+                format!(
+                    "Verification succeeded in {:?}: {}",
+                    duration,
+                    hex::encode(&output[..16])
+                ),
             );
             println!("\n✅ VRF Operation Successful!");
             println!("   Public Key: {}", hex::encode(public_key));
@@ -130,14 +159,23 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             println!("\n🔑 HSM Keys: {:?}", keys);
         }
         Err(e) => {
-            logger.error(VrfOperation::HsmOperation, format!("Failed to list keys: {}", e));
+            logger.error(
+                VrfOperation::HsmOperation,
+                format!("Failed to list keys: {}", e),
+            );
         }
     }
 
     // Cleanup (optional - comment out to keep keys)
-    logger.info(VrfOperation::HsmOperation, format!("Deleting key: {}", key_id));
+    logger.info(
+        VrfOperation::HsmOperation,
+        format!("Deleting key: {}", key_id),
+    );
     if let Err(e) = signer.delete_key(key_id) {
-        logger.error(VrfOperation::HsmOperation, format!("Failed to delete key: {}", e));
+        logger.error(
+            VrfOperation::HsmOperation,
+            format!("Failed to delete key: {}", e),
+        );
     }
 
     println!("\n✅ Production VRF service completed successfully");

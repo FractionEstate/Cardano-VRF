@@ -8,7 +8,7 @@
 <a href=#8 id=8 data-nosnippet>8</a>
 <a href=#9 id=9 data-nosnippet>9</a><span class="kw">use </span><span class="kw">crate</span>::cardano_compat::{cardano_vrf_prove, cardano_vrf_verify};
 <a href=#10 id=10 data-nosnippet>10</a><span class="kw">use </span><span class="kw">crate</span>::common::{clamp_scalar, point_to_bytes};
-<a href=#11 id=11 data-nosnippet>11</a><span class="kw">use crate</span>::{VrfResult};
+<a href=#11 id=11 data-nosnippet>11</a><span class="kw">use </span><span class="kw">crate</span>::VrfResult;
 <a href=#12 id=12 data-nosnippet>12</a>
 <a href=#13 id=13 data-nosnippet>13</a><span class="doccomment">/// VRF proof size for draft-03 (80 bytes)
 <a href=#14 id=14 data-nosnippet>14</a></span><span class="kw">pub const </span>PROOF_SIZE: usize = <span class="number">80</span>;
@@ -89,9 +89,9 @@
 <a href=#89 id=89 data-nosnippet>89</a>        <span class="kw">let </span>gamma_cleared = cardano_clear_cofactor(<span class="kw-2">&amp;</span>gamma);
 <a href=#90 id=90 data-nosnippet>90</a>
 <a href=#91 id=91 data-nosnippet>91</a>        <span class="kw">let </span><span class="kw-2">mut </span>hasher = Sha512::new();
-<a href=#92 id=92 data-nosnippet>92</a>        hasher.update(<span class="kw-2">&amp;</span>[SUITE_DRAFT03]);
-<a href=#93 id=93 data-nosnippet>93</a>        hasher.update(<span class="kw-2">&amp;</span>[THREE]);
-<a href=#94 id=94 data-nosnippet>94</a>        hasher.update(<span class="kw-2">&amp;</span>point_to_bytes(<span class="kw-2">&amp;</span>gamma_cleared));
+<a href=#92 id=92 data-nosnippet>92</a>        hasher.update([SUITE_DRAFT03]);
+<a href=#93 id=93 data-nosnippet>93</a>        hasher.update([THREE]);
+<a href=#94 id=94 data-nosnippet>94</a>        hasher.update(point_to_bytes(<span class="kw-2">&amp;</span>gamma_cleared));
 <a href=#95 id=95 data-nosnippet>95</a>        <span class="kw">let </span>hash = hasher.finalize();
 <a href=#96 id=96 data-nosnippet>96</a>
 <a href=#97 id=97 data-nosnippet>97</a>        <span class="kw">let </span><span class="kw-2">mut </span>output = [<span class="number">0u8</span>; OUTPUT_SIZE];
@@ -122,44 +122,45 @@
 <a href=#122 id=122 data-nosnippet>122</a>
 <a href=#123 id=123 data-nosnippet>123</a>        (secret_key, public_key)
 <a href=#124 id=124 data-nosnippet>124</a>    }
-<a href=#125 id=125 data-nosnippet>125</a>}<span class="attr">#[cfg(test)]
-<a href=#126 id=126 data-nosnippet>126</a></span><span class="kw">mod </span>tests {
-<a href=#127 id=127 data-nosnippet>127</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
-<a href=#128 id=128 data-nosnippet>128</a>
-<a href=#129 id=129 data-nosnippet>129</a>    <span class="attr">#[test]
-<a href=#130 id=130 data-nosnippet>130</a>    </span><span class="kw">fn </span>test_prove_verify_roundtrip() {
-<a href=#131 id=131 data-nosnippet>131</a>        <span class="kw">let </span>seed = [<span class="number">42u8</span>; SEED_SIZE];
-<a href=#132 id=132 data-nosnippet>132</a>        <span class="kw">let </span>(sk, pk) = VrfDraft03::keypair_from_seed(<span class="kw-2">&amp;</span>seed);
-<a href=#133 id=133 data-nosnippet>133</a>        <span class="kw">let </span>message = <span class="string">b"test message"</span>;
-<a href=#134 id=134 data-nosnippet>134</a>
-<a href=#135 id=135 data-nosnippet>135</a>        <span class="kw">let </span>proof = VrfDraft03::prove(<span class="kw-2">&amp;</span>sk, message).expect(<span class="string">"prove failed"</span>);
-<a href=#136 id=136 data-nosnippet>136</a>        <span class="kw">let </span>output = VrfDraft03::verify(<span class="kw-2">&amp;</span>pk, <span class="kw-2">&amp;</span>proof, message).expect(<span class="string">"verify failed"</span>);
-<a href=#137 id=137 data-nosnippet>137</a>
-<a href=#138 id=138 data-nosnippet>138</a>        <span class="macro">assert_eq!</span>(output.len(), OUTPUT_SIZE);
-<a href=#139 id=139 data-nosnippet>139</a>    }
-<a href=#140 id=140 data-nosnippet>140</a>
-<a href=#141 id=141 data-nosnippet>141</a>    <span class="attr">#[test]
-<a href=#142 id=142 data-nosnippet>142</a>    </span><span class="kw">fn </span>test_verify_rejects_invalid_proof() {
-<a href=#143 id=143 data-nosnippet>143</a>        <span class="kw">let </span>seed = [<span class="number">42u8</span>; SEED_SIZE];
-<a href=#144 id=144 data-nosnippet>144</a>        <span class="kw">let </span>(_sk, pk) = VrfDraft03::keypair_from_seed(<span class="kw-2">&amp;</span>seed);
-<a href=#145 id=145 data-nosnippet>145</a>        <span class="kw">let </span>message = <span class="string">b"test message"</span>;
-<a href=#146 id=146 data-nosnippet>146</a>
-<a href=#147 id=147 data-nosnippet>147</a>        <span class="kw">let </span>invalid_proof = [<span class="number">0u8</span>; PROOF_SIZE];
-<a href=#148 id=148 data-nosnippet>148</a>        <span class="kw">let </span>result = VrfDraft03::verify(<span class="kw-2">&amp;</span>pk, <span class="kw-2">&amp;</span>invalid_proof, message);
-<a href=#149 id=149 data-nosnippet>149</a>
-<a href=#150 id=150 data-nosnippet>150</a>        <span class="macro">assert!</span>(result.is_err());
-<a href=#151 id=151 data-nosnippet>151</a>    }
-<a href=#152 id=152 data-nosnippet>152</a>
-<a href=#153 id=153 data-nosnippet>153</a>    <span class="attr">#[test]
-<a href=#154 id=154 data-nosnippet>154</a>    </span><span class="kw">fn </span>test_proof_to_hash_deterministic() {
-<a href=#155 id=155 data-nosnippet>155</a>        <span class="kw">let </span>seed = [<span class="number">42u8</span>; SEED_SIZE];
-<a href=#156 id=156 data-nosnippet>156</a>        <span class="kw">let </span>(sk, _pk) = VrfDraft03::keypair_from_seed(<span class="kw-2">&amp;</span>seed);
-<a href=#157 id=157 data-nosnippet>157</a>        <span class="kw">let </span>message = <span class="string">b"test message"</span>;
-<a href=#158 id=158 data-nosnippet>158</a>
-<a href=#159 id=159 data-nosnippet>159</a>        <span class="kw">let </span>proof = VrfDraft03::prove(<span class="kw-2">&amp;</span>sk, message).expect(<span class="string">"prove failed"</span>);
-<a href=#160 id=160 data-nosnippet>160</a>        <span class="kw">let </span>hash1 = VrfDraft03::proof_to_hash(<span class="kw-2">&amp;</span>proof).expect(<span class="string">"hash failed"</span>);
-<a href=#161 id=161 data-nosnippet>161</a>        <span class="kw">let </span>hash2 = VrfDraft03::proof_to_hash(<span class="kw-2">&amp;</span>proof).expect(<span class="string">"hash failed"</span>);
-<a href=#162 id=162 data-nosnippet>162</a>
-<a href=#163 id=163 data-nosnippet>163</a>        <span class="macro">assert_eq!</span>(hash1, hash2);
-<a href=#164 id=164 data-nosnippet>164</a>    }
-<a href=#165 id=165 data-nosnippet>165</a>}</code></pre></div></section></main></body></html>
+<a href=#125 id=125 data-nosnippet>125</a>}
+<a href=#126 id=126 data-nosnippet>126</a><span class="attr">#[cfg(test)]
+<a href=#127 id=127 data-nosnippet>127</a></span><span class="kw">mod </span>tests {
+<a href=#128 id=128 data-nosnippet>128</a>    <span class="kw">use super</span>::<span class="kw-2">*</span>;
+<a href=#129 id=129 data-nosnippet>129</a>
+<a href=#130 id=130 data-nosnippet>130</a>    <span class="attr">#[test]
+<a href=#131 id=131 data-nosnippet>131</a>    </span><span class="kw">fn </span>test_prove_verify_roundtrip() {
+<a href=#132 id=132 data-nosnippet>132</a>        <span class="kw">let </span>seed = [<span class="number">42u8</span>; SEED_SIZE];
+<a href=#133 id=133 data-nosnippet>133</a>        <span class="kw">let </span>(sk, pk) = VrfDraft03::keypair_from_seed(<span class="kw-2">&amp;</span>seed);
+<a href=#134 id=134 data-nosnippet>134</a>        <span class="kw">let </span>message = <span class="string">b"test message"</span>;
+<a href=#135 id=135 data-nosnippet>135</a>
+<a href=#136 id=136 data-nosnippet>136</a>        <span class="kw">let </span>proof = VrfDraft03::prove(<span class="kw-2">&amp;</span>sk, message).expect(<span class="string">"prove failed"</span>);
+<a href=#137 id=137 data-nosnippet>137</a>        <span class="kw">let </span>output = VrfDraft03::verify(<span class="kw-2">&amp;</span>pk, <span class="kw-2">&amp;</span>proof, message).expect(<span class="string">"verify failed"</span>);
+<a href=#138 id=138 data-nosnippet>138</a>
+<a href=#139 id=139 data-nosnippet>139</a>        <span class="macro">assert_eq!</span>(output.len(), OUTPUT_SIZE);
+<a href=#140 id=140 data-nosnippet>140</a>    }
+<a href=#141 id=141 data-nosnippet>141</a>
+<a href=#142 id=142 data-nosnippet>142</a>    <span class="attr">#[test]
+<a href=#143 id=143 data-nosnippet>143</a>    </span><span class="kw">fn </span>test_verify_rejects_invalid_proof() {
+<a href=#144 id=144 data-nosnippet>144</a>        <span class="kw">let </span>seed = [<span class="number">42u8</span>; SEED_SIZE];
+<a href=#145 id=145 data-nosnippet>145</a>        <span class="kw">let </span>(_sk, pk) = VrfDraft03::keypair_from_seed(<span class="kw-2">&amp;</span>seed);
+<a href=#146 id=146 data-nosnippet>146</a>        <span class="kw">let </span>message = <span class="string">b"test message"</span>;
+<a href=#147 id=147 data-nosnippet>147</a>
+<a href=#148 id=148 data-nosnippet>148</a>        <span class="kw">let </span>invalid_proof = [<span class="number">0u8</span>; PROOF_SIZE];
+<a href=#149 id=149 data-nosnippet>149</a>        <span class="kw">let </span>result = VrfDraft03::verify(<span class="kw-2">&amp;</span>pk, <span class="kw-2">&amp;</span>invalid_proof, message);
+<a href=#150 id=150 data-nosnippet>150</a>
+<a href=#151 id=151 data-nosnippet>151</a>        <span class="macro">assert!</span>(result.is_err());
+<a href=#152 id=152 data-nosnippet>152</a>    }
+<a href=#153 id=153 data-nosnippet>153</a>
+<a href=#154 id=154 data-nosnippet>154</a>    <span class="attr">#[test]
+<a href=#155 id=155 data-nosnippet>155</a>    </span><span class="kw">fn </span>test_proof_to_hash_deterministic() {
+<a href=#156 id=156 data-nosnippet>156</a>        <span class="kw">let </span>seed = [<span class="number">42u8</span>; SEED_SIZE];
+<a href=#157 id=157 data-nosnippet>157</a>        <span class="kw">let </span>(sk, _pk) = VrfDraft03::keypair_from_seed(<span class="kw-2">&amp;</span>seed);
+<a href=#158 id=158 data-nosnippet>158</a>        <span class="kw">let </span>message = <span class="string">b"test message"</span>;
+<a href=#159 id=159 data-nosnippet>159</a>
+<a href=#160 id=160 data-nosnippet>160</a>        <span class="kw">let </span>proof = VrfDraft03::prove(<span class="kw-2">&amp;</span>sk, message).expect(<span class="string">"prove failed"</span>);
+<a href=#161 id=161 data-nosnippet>161</a>        <span class="kw">let </span>hash1 = VrfDraft03::proof_to_hash(<span class="kw-2">&amp;</span>proof).expect(<span class="string">"hash failed"</span>);
+<a href=#162 id=162 data-nosnippet>162</a>        <span class="kw">let </span>hash2 = VrfDraft03::proof_to_hash(<span class="kw-2">&amp;</span>proof).expect(<span class="string">"hash failed"</span>);
+<a href=#163 id=163 data-nosnippet>163</a>
+<a href=#164 id=164 data-nosnippet>164</a>        <span class="macro">assert_eq!</span>(hash1, hash2);
+<a href=#165 id=165 data-nosnippet>165</a>    }
+<a href=#166 id=166 data-nosnippet>166</a>}</code></pre></div></section></main></body></html>

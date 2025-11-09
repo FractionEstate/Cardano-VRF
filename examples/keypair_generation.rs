@@ -11,10 +11,10 @@ fn main() {
     println!("1. Deterministic keypair generation:");
     let seed = [1u8; 32];
     let (sk_03, pk_03) = VrfDraft03::keypair_from_seed(&seed);
-    println!("  Draft-03 Public Key: {}", hex::encode(&pk_03));
+    println!("  Draft-03 Public Key: {}", hex::encode(pk_03));
 
-    let (sk_13, pk_13) = VrfDraft13::keypair_from_seed(&seed);
-    println!("  Draft-13 Public Key: {}", hex::encode(&pk_13));
+    let (_sk_13, pk_13) = VrfDraft13::keypair_from_seed(&seed);
+    println!("  Draft-13 Public Key: {}", hex::encode(pk_13));
     println!();
 
     // Method 2: Generate from random seed (using rand crate)
@@ -25,7 +25,7 @@ fn main() {
     rng.fill_bytes(&mut random_seed);
 
     let (_sk, pk) = VrfDraft03::keypair_from_seed(&random_seed);
-    println!("  Random Public Key: {}", hex::encode(&pk));
+    println!("  Random Public Key: {}", hex::encode(pk));
     println!();
 
     // Method 3: Demonstrate keypair structure

@@ -12,8 +12,8 @@ fn test_official_vector_standard_10() {
     // Test vector from cardano-base official test suite
     let sk_hex = "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60";
     let pk_hex = "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a";
-    let alpha_hex = "";  // empty message
-    let expected_proof_hex = "b6b4699f87d56126c9117a7502ea93c7b82ee0a5eff4af25bb9d16b3f7e8f8aa8e7e5ae3a3913f55f1b3d60e8e9d2c6e2e6f1f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f0602900";
+    let alpha_hex = ""; // empty message
+    let _expected_proof_hex = "b6b4699f87d56126c9117a7502ea93c7b82ee0a5eff4af25bb9d16b3f7e8f8aa8e7e5ae3a3913f55f1b3d60e8e9d2c6e2e6f1f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f8f0602900";
 
     let sk_seed = <[u8; 32]>::from_hex(sk_hex).expect("valid hex");
     let pk = <[u8; 32]>::from_hex(pk_hex).expect("valid hex");
@@ -104,7 +104,10 @@ fn test_verify_fails_wrong_message() {
 
     // Try to verify with message2 - should fail
     let result = cardano_vrf_verify(&pk_seed, &proof, message2);
-    assert!(result.is_err(), "Verification should fail with wrong message");
+    assert!(
+        result.is_err(),
+        "Verification should fail with wrong message"
+    );
 
     println!("✓ Wrong message rejection test passed");
 }
@@ -128,7 +131,10 @@ fn test_verify_fails_corrupted_proof() {
 
     // Try to verify corrupted proof - should fail
     let result = cardano_vrf_verify(&pk_seed, &proof, message);
-    assert!(result.is_err(), "Verification should fail with corrupted proof");
+    assert!(
+        result.is_err(),
+        "Verification should fail with corrupted proof"
+    );
 
     println!("✓ Corrupted proof rejection test passed");
 }
