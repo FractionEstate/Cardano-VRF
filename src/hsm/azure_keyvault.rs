@@ -5,9 +5,13 @@ use crate::hsm::HsmVrfSigner;
 
 /// Azure Key Vault VRF signer
 pub struct AzureKeyVaultVrfSigner {
+    #[allow(dead_code)] // Used when Azure Key Vault feature is fully implemented
     vault_url: String,
+    #[allow(dead_code)] // Used when Azure Key Vault feature is fully implemented
     client_id: String,
+    #[allow(dead_code)] // Used when Azure Key Vault feature is fully implemented
     client_secret: String,
+    #[allow(dead_code)] // Used when Azure Key Vault feature is fully implemented
     tenant_id: String,
 }
 

@@ -59,6 +59,7 @@
 //! let proof = hsm.prove("production-vrf-key", message)?;
 //! ```
 
+#[allow(unused_imports)] // VrfError used in doc links
 use crate::{VrfError, VrfResult};
 
 pub mod pkcs11;

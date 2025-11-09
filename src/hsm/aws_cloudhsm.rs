@@ -5,8 +5,11 @@ use crate::hsm::HsmVrfSigner;
 
 /// AWS CloudHSM VRF signer
 pub struct AwsCloudHsmVrfSigner {
+    #[allow(dead_code)] // Used when AWS CloudHSM feature is fully implemented
     cluster_id: String,
+    #[allow(dead_code)] // Used when AWS CloudHSM feature is fully implemented
     user: String,
+    #[allow(dead_code)] // Used when AWS CloudHSM feature is fully implemented
     password: String,
 }
 

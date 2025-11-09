@@ -3,16 +3,14 @@
 //! This implements ECVRF-ED25519-SHA512-TAI with batch verification support
 
 use curve25519_dalek::{
-    constants::{ED25519_BASEPOINT_POINT},
-    edwards::{CompressedEdwardsY, EdwardsPoint},
+    constants::ED25519_BASEPOINT_POINT,
     scalar::Scalar,
-    traits::Identity,
 };
 use sha2::{Digest, Sha512};
-use zeroize::{Zeroize, Zeroizing};
+use zeroize::Zeroizing;
 
 use crate::cardano_compat::point::{cardano_clear_cofactor, cardano_hash_to_curve_draft13};
-use crate::common::{clamp_scalar, point_to_bytes, SUITE_DRAFT13, ONE, TWO, THREE};
+use crate::common::{clamp_scalar, point_to_bytes, SUITE_DRAFT13, TWO, THREE};
 use crate::{VrfError, VrfResult};
 
 /// VRF proof size for draft-13 batch-compatible (128 bytes)

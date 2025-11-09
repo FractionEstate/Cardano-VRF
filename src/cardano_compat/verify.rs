@@ -5,9 +5,8 @@
 
 use curve25519_dalek::{
     constants::ED25519_BASEPOINT_POINT,
-    edwards::{CompressedEdwardsY, EdwardsPoint},
+    edwards::CompressedEdwardsY,
     scalar::Scalar,
-    traits::IsIdentity,
 };
 use sha2::{Digest, Sha512};
 

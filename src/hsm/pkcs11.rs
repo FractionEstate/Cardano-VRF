@@ -8,8 +8,11 @@ use crate::hsm::HsmVrfSigner;
 
 /// PKCS#11 VRF signer (requires pkcs11 feature)
 pub struct Pkcs11VrfSigner {
+    #[allow(dead_code)] // Used when PKCS#11 feature is fully implemented
     library_path: String,
+    #[allow(dead_code)] // Used when PKCS#11 feature is fully implemented
     slot_id: u64,
+    #[allow(dead_code)] // Used when PKCS#11 feature is fully implemented
     pin: String,
 }
 

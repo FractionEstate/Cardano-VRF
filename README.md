@@ -1,21 +1,21 @@
 # Cardano VRF
 
-[![Crates.io](https://img.shields.io/crates/v/cardano-vrf.svg)](https://crates.io/crates/cardano-vrf)
-[![Documentation](https://docs.rs/cardano-vrf/badge.svg)](https://docs.rs/cardano-vrf)
-[![License](https://img.shields.io/crates/l/cardano-vrf.svg)](LICENSE)
+[![Build Status](https://github.com/FractionEstate/Cardano-VRF/workflows/CI/badge.svg)](https://github.com/FractionEstate/Cardano-VRF/actions)
+[![License: MIT OR Apache-2.0](https://img.shields.io/badge/License-MIT%20OR%20Apache--2.0-blue.svg)](LICENSE-MIT)
+[![Rust Version](https://img.shields.io/badge/rust-1.70%2B-orange.svg)](https://www.rust-lang.org)
 
-A pure Rust implementation of Cardano's Curve25519 VRF (Verifiable Random Function) that provides byte-for-byte compatibility with the production libsodium reference implementation.
+A pure Rust implementation of Cardano's Curve25519 VRF (Verifiable Random Function) that provides byte-for-byte compatibility with the Cardano blockchain's VRF implementation.
 
 ## Features
 
 - ✅ **Pure Rust** - No FFI dependencies, 100% safe Rust
-- ✅ **Cardano Compatible** - Byte-for-byte parity with Cardano's libsodium VRF implementation
+- ✅ **Cardano Compatible** - Byte-for-byte parity with Cardano's VRF implementation
 - ✅ **Two VRF Variants**:
   - Draft-03 (ECVRF-ED25519-SHA512-Elligator2) - 80-byte proofs
   - Draft-13 (ECVRF-ED25519-SHA512-TAI) - 128-byte proofs (batch-compatible)
 - ✅ **Memory Safe** - Uses zeroize for sensitive data
 - ✅ **Well Tested** - Validated against official Cardano test vectors
-- ✅ **No Std Support** - Can be used in embedded environments
+- ✅ **No Std Support** - Can be used in embedded environments (requires `alloc`)
 - ✅ **Constant Time** - Cryptographic operations use constant-time implementations
 
 ## Installation
@@ -217,9 +217,9 @@ Typical performance on modern hardware:
 
 ## Compatibility
 
-This implementation is tested against official Cardano test vectors and produces identical outputs to:
-- Cardano's libsodium VRF implementation
-- Haskell `cardano-base`/`cardano-crypto-praos`
+This implementation is tested against official Cardano test vectors and produces identical outputs to the Cardano blockchain's VRF implementation, including:
+- Cardano node VRF operations
+- Haskell `cardano-base`/`cardano-crypto-praos` libraries
 
 ## Security Considerations
 
@@ -246,18 +246,30 @@ This implementation follows industry-standard cryptographic best practices:
 ### Compliance
 
 - ✅ Tested against official Cardano test vectors
-- ✅ Byte-for-byte compatible with Cardano's libsodium VRF
+- ✅ Byte-for-byte compatible with Cardano blockchain VRF
 - ✅ Follows IETF VRF Draft-03 and Draft-13 specifications
-- ✅ Matches reference implementation cryptographic approach
+- ✅ Cryptographically secure implementation
 
 ### Production Readiness
 
-- All cryptographic operations audited for correctness
-- 0Comprehensive test suite with official vectors
-- No known security vulnerabilities
-- Suitable for production Cardano applications
+- ✅ All cryptographic operations validated for correctness
+- ✅ Comprehensive test suite with official vectors
+- ✅ No known security vulnerabilities
+- ✅ Suitable for production Cardano applications
 
-See [SECURITY_IMPLEMENTATION.md](SECURITY_IMPLEMENTATION.md) for detailed security documentation.
+## Documentation
+
+Generate and view the full API documentation:
+
+```bash
+cargo doc --no-deps --open
+```
+
+The documentation includes:
+- Detailed API reference for all public types and functions
+- Security considerations and best practices
+- Algorithm descriptions for hash-to-curve implementations
+- Examples for common use cases
 
 ## References
 
@@ -279,6 +291,42 @@ at your option.
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+### CI/CD Setup
+
+This repository includes automated workflows:
+
+- **CI** (`ci.yml`) - Runs tests, clippy, formatting checks, and documentation builds on every push/PR
+- **Documentation** (`deploy-docs.yml`) - Automatically deploys rustdoc to GitHub Pages
+- **Release** (`release.yml`) - Publishes to crates.io when a version tag is pushed
+
+#### Setting up GitHub Pages
+
+1. Go to your repository settings
+2. Navigate to **Pages** → **Source**
+3. Select **GitHub Actions** as the source
+
+#### Setting up crates.io Publishing
+
+1. Get your API token from https://crates.io/me
+2. Add it as a repository secret named `CARGO_TOKEN`:
+   - Repository Settings → Secrets and variables → Actions → New repository secret
+   - Name: `CARGO_TOKEN`
+   - Value: Your crates.io API token
+
+#### Publishing a Release
+
+```bash
+# Update version in Cargo.toml, commit, then:
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The release workflow will automatically:
+- Verify the tag matches the Cargo.toml version
+- Run tests
+- Publish to crates.io
+- Create a GitHub release
+
 ## Acknowledgments
 
-This implementation is based on the work from [FractionEstate/cardano-base-rust](https://github.com/FractionEstate/cardano-base-rust), which provides a comprehensive pure Rust port of Cardano's cryptographic primitives
+This implementation provides a pure Rust port of Cardano's cryptographic VRF primitives, enabling Rust developers to interact with Cardano's VRF functionality without FFI dependencies.

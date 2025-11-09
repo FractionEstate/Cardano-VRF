@@ -11,7 +11,6 @@ use std::fs;
 use std::path::PathBuf;
 use std::sync::RwLock;
 use ed25519_dalek::SigningKey;
-use zeroize::Zeroizing;
 
 /// Software-based VRF signer (for testing only)
 pub struct SoftwareVrfSigner {
